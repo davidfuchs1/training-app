@@ -159,7 +159,7 @@
       "pflicht": false,
       "sportart": "rad",
       "titel": "Rolle Kraftausdauer K3",
-      "tag_vorschlag": "2026-09-13",
+      "tag_vorschlag": "2026-09-07",
       "dauer_min": 60,
       "ziel": "Muskelausdauer der Beine bei niedriger Trittfrequenz.",
       "status": "ausgelassen",
@@ -213,7 +213,7 @@
         "id": "m-a",
         "titel": "Mobility & Core A – Hüfte & Rumpf",
         "dauer_min": 12,
-        "tag_vorschlag": "2026-09-07",
+        "tag_vorschlag": "2026-09-08",
         "status": "erledigt",
         "uebungen": [
           {

@@ -123,7 +123,7 @@ Archivdatei zusätzlich: `format_version`, `athlet`.
 | `pflicht` | bool | ja | |
 | `sportart` | Text | ja | bekannt: `kraft` `laufen` `rad` `schwimmen` `koppel` `mobility` `core` `ski` `wandern` `sonstiges` (anderes → Warnung) |
 | `titel` | Text | ja | kurz, z. B. „Kraft A – Beine exzentrisch“ |
-| `tag_vorschlag` | Datum oder null | ja | innerhalb der Woche; null = frei wählbar |
+| `tag_vorschlag` | Datum | ja | geplanter Tag innerhalb der Woche – **nie null**, auch bei optionalen Einheiten |
 | `dauer_min` | Zahl | ja | Gesamtdauer |
 | `ziel` | Text | ja | Zweck der Einheit |
 | `bloecke` | Liste Block | * | Ablauf (Ausdauer) |
@@ -167,7 +167,7 @@ Archivdatei zusätzlich: `format_version`, `athlet`.
 "mobility": {
   "soll_pro_woche": 3,
   "einheiten": [
-    {"id": "m-a", "titel": "Mobility & Core A", "dauer_min": 12, "tag_vorschlag": null,
+    {"id": "m-a", "titel": "Mobility & Core A", "dauer_min": 12, "tag_vorschlag": "2026-10-09",
      "status": "geplant",
      "uebungen": [{"id": "mob-hueftbeuger-kniend", "dauer_s": 45, "seitig": true}]}
   ]
@@ -179,6 +179,18 @@ Regeln (Fehler, wenn verletzt):
 - Jede Einheit hat ≥ 1 Übungsverweis, davon mind. einer der Kategorie
   `mobility`, `faszien` oder `core`.
 - Einheiten-`status` wie bei Einheit.
+- `tag_vorschlag` Pflicht (Datum innerhalb der Woche), wie bei Einheit.
+
+### Tagesverteilung (Warnungen, nicht blockierend)
+
+Über alle Wochen eines Athleten (auch über Wochengrenzen) meldet das
+Prüfskript als Warnung:
+- zwei **intensive** Einheiten am selben Tag oder an Folgetagen – intensiv =
+  `sportart` `kraft`, Übung der Kategorie `plyometrie`, Block `intervall` oder
+  Block mit Zone `Z3`–`Z5`
+- mehr als **3 Trainingstage am Stück** (Mobility zählt nicht)
+
+Bewusste Abweichungen sind erlaubt und werden in `notiz_coach` begründet.
 
 ---
 
