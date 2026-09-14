@@ -3,7 +3,7 @@
 App-artige Webseite (PWA auf GitHub Pages), die Trainingspläne anzeigt.
 **Dieses Repository ist öffentlich.** Private Daten (Profile, Logs) und der
 Coach-Skill liegen in einem separaten privaten Repository (`training-daten`,
-lokal `~/Developer/training-daten`).
+lokal im Nachbarordner `../training-daten`).
 
 ## Datenschutz – gilt für jede Änderung
 - Nur Trainingsinhalte. Keine echten Namen (nur Anzeigenamen), kein Gewicht,
