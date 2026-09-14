@@ -274,7 +274,7 @@
           "pflicht": false,
           "sportart": "rad",
           "titel": "Rolle Kraftausdauer K3",
-          "tag_vorschlag": null,
+          "tag_vorschlag": "2026-09-14",
           "dauer_min": 60,
           "ziel": "Muskelausdauer der Beine bei niedriger Trittfrequenz.",
           "status": "geplant",
@@ -328,7 +328,7 @@
             "id": "m-a",
             "titel": "Mobility & Core A – Hüfte & Rumpf",
             "dauer_min": 12,
-            "tag_vorschlag": "2026-09-14",
+            "tag_vorschlag": "2026-09-15",
             "status": "geplant",
             "uebungen": [
               {
@@ -389,7 +389,7 @@
             "id": "m-c",
             "titel": "Mobility & Core C – Rollen & Stütz",
             "dauer_min": 13,
-            "tag_vorschlag": null,
+            "tag_vorschlag": "2026-09-20",
             "status": "geplant",
             "uebungen": [
               {
@@ -551,7 +551,7 @@
           "pflicht": false,
           "sportart": "laufen",
           "titel": "Lauf locker 30 min",
-          "tag_vorschlag": null,
+          "tag_vorschlag": "2026-09-25",
           "dauer_min": 30,
           "ziel": "Laufbasis für Marathon-Ziel erhalten.",
           "status": "geplant",

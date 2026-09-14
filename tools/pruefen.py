@@ -278,7 +278,8 @@ class Pruefer:
         einheiten = self.pflicht(w, "einheiten", list, ort) or []
         ids = set()
         kennzahlen = {"geplant_min": 0, "pflicht": 0, "optional": 0,
-                      "erl_pflicht": 0, "erl_optional": 0, "erl_minuten": 0}
+                      "erl_pflicht": 0, "erl_optional": 0, "erl_minuten": 0,
+                      "trainingstage": []}  # (Datum, intensiv, id) je Einheit, für die Verteilungs-Hinweise
         for i, e in enumerate(einheiten):
             eort = f"{ort} einheiten[{i}]"
             if not isinstance(e, dict):
@@ -295,10 +296,7 @@ class Pruefer:
             if sportart is not None and sportart not in SPORTARTEN:
                 self.w(eort, f"sportart '{sportart}' nicht in bekannter Liste")
             self.pflicht(e, "titel", str, eort, erlaubt_leer=False)
-            if "tag_vorschlag" not in e:
-                self.f(eort, "Pflichtfeld 'tag_vorschlag' fehlt (null = frei wählbar)")
-            else:
-                self.tag_in_woche(e, eort, start, ende)
+            tag = self.tag_pflicht(e, eort, start, ende)
             dauer = self.pflicht(e, "dauer_min", (int, float), eort)
             self.pflicht(e, "ziel", str, eort, erlaubt_leer=False)
             status = self.pflicht(e, "status", str, eort)
@@ -320,6 +318,8 @@ class Pruefer:
                 self.pflicht(alt, "titel", str, aort)
                 self.pflicht(alt, "beschreibung", str, aort)
 
+            if tag is not None:
+                kennzahlen["trainingstage"].append((tag, self.ist_intensiv(e, katalog), eid))
             if dauer is not None:
                 kennzahlen["geplant_min"] += dauer
             if ist_pflicht is not None:
@@ -347,6 +347,55 @@ class Pruefer:
         kennzahlen.update({"iso_woche": iso, "nr": nr, "start": w.get("start"), "ende": w.get("ende"),
                            "phase": w.get("phase"), "typ": typ})
         return kennzahlen
+
+    def tag_pflicht(self, obj, ort, start, ende):
+        """Jede Einheit (auch optionale und Mobility) braucht einen konkreten Tag."""
+        if obj.get("tag_vorschlag") is None:
+            self.f(ort, "'tag_vorschlag' fehlt – jede Einheit braucht einen Tag, auch optionale und Mobility")
+            return None
+        tag = self.datum(obj, "tag_vorschlag", ort)
+        if tag and start and ende and not (start <= tag <= ende):
+            self.f(ort, f"'tag_vorschlag' {tag} liegt außerhalb der Woche {start}–{ende}")
+        return tag
+
+    @staticmethod
+    def ist_intensiv(einheit, katalog):
+        """Intensiv = Kraft, Plyometrie-Übung, Intervallblock oder Block in Zone Z3–Z5."""
+        if einheit.get("sportart") == "kraft":
+            return True
+        for u in einheit.get("uebungen") or []:
+            if isinstance(u, dict) and katalog.get(u.get("id"), {}).get("kategorie") == "plyometrie":
+                return True
+        for b in einheit.get("bloecke") or []:
+            if isinstance(b, dict) and (b.get("typ") == "intervall" or b.get("zone") in {"Z3", "Z4", "Z5"}):
+                return True
+        return False
+
+    def verteilung(self, aid, wochen_je_datei):
+        """Hinweise zur Tagesverteilung über alle Wochen eines Athleten (nur Warnungen)."""
+        einheiten = sorted(
+            (tag, intensiv, iso, eid)
+            for iso, (k, _) in wochen_je_datei.items()
+            for tag, intensiv, eid in k.get("trainingstage", [])
+        )
+        intensive = [x for x in einheiten if x[1]]
+        for i, (tag1, _, iso1, id1) in enumerate(intensive):
+            for tag2, _, iso2, id2 in intensive[i + 1:]:
+                abstand = (tag2 - tag1).days
+                if abstand > 1:
+                    break
+                wann = "am selben Tag" if abstand == 0 else "an Folgetagen"
+                self.w(aid, f"zwei intensive Einheiten {wann}: {iso1} {id1} ({tag1}) und {iso2} {id2} ({tag2}) – bewusst geplant?")
+
+        tage = sorted({x[0] for x in einheiten})
+        serie = [tage[0]] if tage else []
+        for tag in tage[1:] + [None]:
+            if tag is not None and (tag - serie[-1]).days == 1:
+                serie.append(tag)
+                continue
+            if len(serie) > 3:
+                self.w(aid, f"{len(serie)} Trainingstage am Stück ({serie[0]} bis {serie[-1]}) – Erholung ausreichend?")
+            serie = [tag] if tag is not None else []
 
     def tag_in_woche(self, obj, ort, start, ende, feld="tag_vorschlag"):
         if obj.get(feld) is None:
@@ -382,8 +431,7 @@ class Pruefer:
                 einheit_ids.add(eid)
             self.pflicht(e, "titel", str, eort, erlaubt_leer=False)
             self.pflicht(e, "dauer_min", (int, float), eort)
-            if "tag_vorschlag" in e:
-                self.tag_in_woche(e, eort, start, ende)
+            self.tag_pflicht(e, eort, start, ende)
             status = self.pflicht(e, "status", str, eort)
             if status is not None and status not in EINHEIT_STATUS:
                 self.f(eort, f"status '{status}' unbekannt")
@@ -511,6 +559,7 @@ class Pruefer:
         if len(nrs_vorhanden) != len(set(nrs_vorhanden)):
             self.f(f"{aid}", "Wochennummern doppelt vergeben")
 
+        self.verteilung(aid, wochen_je_datei)
         self.index(basis, aid, wochen_je_datei)
 
     def eintragen(self, verzeichnis, k, datei, ort):
