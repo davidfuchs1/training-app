@@ -1,0 +1,87 @@
+/* Farbverzeichnis – die einzige Stelle, an der Farbwerte stehen.
+
+   Ebene 1 „Palette“: rohe Farbwerte, benannt nach Farbton.
+   Ebene 2 „Rollen“:  Bedeutungen, die die Oberfläche verwendet (stil.css
+                      nutzt ausschließlich diese).
+
+   Farbe tauschen: Wert in der Palette ändern (wirkt überall, wo der Ton
+   vorkommt) oder eine Rolle auf einen anderen Palettenton zeigen lassen
+   (wirkt nur für diese Bedeutung).
+
+   Stand: Lime entfernt, Akzent vorläufig neutral. Die Palette wird noch
+   gemeinsam festgelegt (Wunsch: Navy #000080 einbinden). */
+
+:root {
+  /* ---------- Ebene 1: Palette ---------- */
+  --grau-950: #050607;
+  --grau-900: #0b0d10;
+  --grau-850: #16191e;
+  --grau-800: #1f232a;
+  --grau-750: #2a2f37;
+  --grau-700: #3a404a;
+  --grau-400: #8d96a3;
+  --grau-100: #dfe3e8;
+  --grau-50: #f2f4f7;
+
+  --navy: #000080;          /* noch nicht verwendet */
+  --blaugrau: #6f8ba5;
+  --gruen: #36d08a;
+  --gelb: #f3c443;
+  --orange: #ff8a3d;
+  --rot: #ff4d61;
+  --violett: #b28cff;
+  --himmelblau: #4db4ff;
+
+  /* ---------- Ebene 2: Rollen ---------- */
+
+  /* Flächen und Text */
+  --farbe-grund-aussen: var(--grau-950);   /* neben der App (breiter Bildschirm) */
+  --farbe-grund: var(--grau-900);
+  --farbe-flaeche: var(--grau-850);        /* Karten */
+  --farbe-flaeche-2: var(--grau-800);      /* Elemente in Karten */
+  --farbe-linie: var(--grau-750);
+  --farbe-neutral: var(--grau-700);        /* Abschnitt ohne Zone */
+  --farbe-text: var(--grau-50);
+  --farbe-text-leise: var(--grau-400);
+  --farbe-text-auf-farbe: var(--grau-900); /* Schrift auf farbigen Flächen */
+  --farbe-abdunkeln: rgb(0 0 0 / 0.6);     /* hinter dem Übungsblatt */
+
+  /* Akzent: antippbar, aktiv, hervorgehoben – VORLÄUFIG neutral */
+  --farbe-akzent: var(--grau-50);
+  --farbe-text-auf-akzent: var(--grau-900);
+
+  /* Trainingszonen (kühl → heiß) */
+  --farbe-zone-1: var(--blaugrau);
+  --farbe-zone-2: var(--gruen);
+  --farbe-zone-3: var(--gelb);
+  --farbe-zone-4: var(--orange);
+  --farbe-zone-5: var(--rot);
+
+  /* Sportarten */
+  --farbe-sport-kraft: var(--violett);
+  --farbe-sport-rad: var(--himmelblau);
+  --farbe-sport-laufen: var(--orange);
+  --farbe-sport-mobility: var(--gruen);
+  --farbe-sport-sonstiges: var(--grau-400);
+
+  /* Wochenarten */
+  --farbe-woche-eingewoehnung: var(--blaugrau);
+  --farbe-woche-aufbau: var(--grau-100);
+  --farbe-woche-entlastung: var(--himmelblau);
+  --farbe-woche-taper: var(--violett);
+  --farbe-woche-wettkampf: var(--rot);
+  --farbe-woche-pause: var(--grau-700);
+
+  /* Übungskategorien */
+  --farbe-kategorie-mobility: var(--gruen);
+  --farbe-kategorie-faszien: var(--himmelblau);
+  --farbe-kategorie-core: var(--gelb);
+  --farbe-kategorie-kraft: var(--violett);
+  --farbe-kategorie-plyometrie: var(--rot);
+
+  /* Hinweise und Zustände */
+  --farbe-hinweis-coach: var(--farbe-akzent);
+  --farbe-hinweis-ernaehrung: var(--gelb);
+  --farbe-fehler: var(--rot);
+  --farbe-ausgelassen: var(--grau-700);
+}
