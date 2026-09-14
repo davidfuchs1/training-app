@@ -1,0 +1,65 @@
+# Übernimmt Branches von Claude-Cloud-Sitzungen (claude/**) automatisch nach main,
+# wenn nur Plandateien (plaene/**) geändert wurden und das Prüfskript fehlerfrei ist.
+# Sonst schlägt der Lauf fehl und der Branch bleibt für ein manuelles Merge liegen.
+name: Auto-Merge claude-Branches
+
+on:
+  push:
+    branches: ["claude/**"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: auto-merge-main
+  cancel-in-progress: false
+
+env:
+  ERLAUBTER_ORDNER: plaene
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Geänderte Dateien prüfen
+        run: |
+          git fetch origin main
+          BASIS=$(git merge-base origin/main HEAD)
+          GEAENDERT=$(git diff --name-only "$BASIS" HEAD)
+          echo "Geänderte Dateien:"
+          echo "$GEAENDERT"
+          if [ -z "$GEAENDERT" ]; then
+            echo "::error::Keine Änderungen gegenüber main."
+            exit 1
+          fi
+          VERBOTEN=$(echo "$GEAENDERT" | grep -v "^${ERLAUBTER_ORDNER}/" || true)
+          if [ -n "$VERBOTEN" ]; then
+            echo "::error::Änderungen außerhalb von ${ERLAUBTER_ORDNER}/ – bitte manuell mergen:"
+            echo "$VERBOTEN"
+            exit 1
+          fi
+
+      - name: Plandateien prüfen
+        run: python3 tools/pruefen.py plaene
+
+      - name: Nach main übernehmen
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          BRANCH="${GITHUB_REF_NAME}"
+          git checkout -B main origin/main
+          if ! git merge --ff-only "origin/${BRANCH}" 2>/dev/null; then
+            if ! git merge --no-edit "origin/${BRANCH}" -m "Auto-Merge ${BRANCH}"; then
+              git merge --abort
+              echo "::error::Merge-Konflikt mit main – bitte manuell mergen."
+              exit 1
+            fi
+            python3 tools/pruefen.py plaene
+          fi
+          git push origin main
+          git push origin --delete "${BRANCH}"
