@@ -1,4 +1,6 @@
 {
   "format_version": 1,
-  "athleten": []
+  "athleten": [
+    {"id": "demo", "anzeigename": "Demo", "sportarten": ["kraft", "rad", "laufen"], "testdaten": true}
+  ]
 }

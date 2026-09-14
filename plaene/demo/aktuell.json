@@ -1,0 +1,686 @@
+{
+  "format_version": 1,
+  "athlet": "demo",
+  "aktualisiert": "2026-09-14T12:00:00+02:00",
+  "block": {
+    "name": "Demo-Block (Testdaten)",
+    "ziel": "Testdaten für die App – kein echter Trainingsplan",
+    "zieldatum": "2026-10-31",
+    "start": "2026-09-02",
+    "ende": "2026-10-25",
+    "phasen": [
+      {
+        "name": "Eingewöhnung",
+        "typ": "eingewoehnung",
+        "wochen": [
+          1,
+          2
+        ]
+      },
+      {
+        "name": "Aufbau 1",
+        "typ": "aufbau",
+        "wochen": [
+          3
+        ]
+      },
+      {
+        "name": "Entlastung",
+        "typ": "entlastung",
+        "wochen": [
+          4
+        ]
+      },
+      {
+        "name": "Aufbau 2",
+        "typ": "aufbau",
+        "wochen": [
+          5,
+          6,
+          7
+        ]
+      },
+      {
+        "name": "Taper",
+        "typ": "taper",
+        "wochen": [
+          8
+        ]
+      }
+    ]
+  },
+  "zonen": {
+    "stand": "2026-04",
+    "hf": {
+      "Z1": [
+        null,
+        135
+      ],
+      "Z2": [
+        136,
+        147
+      ],
+      "Z3": [
+        147,
+        160
+      ],
+      "Z4": [
+        160,
+        171
+      ],
+      "Z5": [
+        171,
+        null
+      ]
+    },
+    "leistung_w": {
+      "Z1": [
+        null,
+        125
+      ],
+      "Z2": [
+        128,
+        171
+      ],
+      "Z3": [
+        173,
+        205
+      ],
+      "Z4": [
+        207,
+        239
+      ],
+      "Z5": [
+        242,
+        null
+      ]
+    },
+    "pace": {
+      "Z2": [
+        "6:23",
+        "6:50"
+      ],
+      "Z3": [
+        "5:50",
+        "6:10"
+      ],
+      "Z4": [
+        "5:30",
+        "5:50"
+      ]
+    }
+  },
+  "wochen": [
+    {
+      "iso_woche": "2026-W38",
+      "nr": 3,
+      "start": "2026-09-14",
+      "ende": "2026-09-20",
+      "phase": "Aufbau 1",
+      "typ": "aufbau",
+      "fokus": "Erste Aufbauwoche: Exzentrik einführen, lange Einheit verlängern.",
+      "notiz_coach": "Neue Übungen mit Tempo – Muskelkater in den ersten Tagen ist normal.",
+      "einheiten": [
+        {
+          "id": "e1",
+          "pflicht": true,
+          "sportart": "kraft",
+          "titel": "Kraft B – Exzentrik & lateral",
+          "tag_vorschlag": "2026-09-16",
+          "dauer_min": 55,
+          "ziel": "Bremsende Beinkraft und seitliche Stabilität für lange Skitage.",
+          "status": "geplant",
+          "bloecke": [
+            {
+              "typ": "aufwaermen",
+              "dauer_min": 8,
+              "zone": "Z1",
+              "beschreibung": "Locker auf der Rolle oder Seilspringen, danach 2 Mobility-Übungen aus Einheit A."
+            }
+          ],
+          "uebungen": [
+            {
+              "id": "kraft-tempo-kniebeuge",
+              "saetze": 3,
+              "wdh": 10,
+              "tempo": "4-2-1",
+              "pause_s": 75
+            },
+            {
+              "id": "kraft-step-down",
+              "saetze": 3,
+              "wdh": 8,
+              "seitig": true,
+              "tempo": "4-0-1",
+              "pause_s": 60
+            },
+            {
+              "id": "kraft-seitlicher-ausfallschritt",
+              "saetze": 3,
+              "wdh": 8,
+              "seitig": true,
+              "pause_s": 60
+            },
+            {
+              "id": "kraft-einbeiniges-kreuzheben",
+              "saetze": 3,
+              "wdh": 8,
+              "seitig": true,
+              "pause_s": 60
+            },
+            {
+              "id": "kraft-wandsitz",
+              "saetze": 3,
+              "dauer_s": 60,
+              "pause_s": 60
+            },
+            {
+              "id": "core-pallof-press",
+              "saetze": 3,
+              "wdh": 10,
+              "seitig": true,
+              "pause_s": 30
+            }
+          ]
+        },
+        {
+          "id": "e2",
+          "pflicht": true,
+          "sportart": "rad",
+          "titel": "Lange Grundlage Rolle 105 min",
+          "tag_vorschlag": "2026-09-19",
+          "dauer_min": 105,
+          "ziel": "Aerobe Basis für lange Skitage, Zonendisziplin.",
+          "status": "geplant",
+          "bloecke": [
+            {
+              "typ": "aufwaermen",
+              "dauer_min": 10,
+              "zone": "Z1",
+              "leistung_w": [
+                100,
+                125
+              ]
+            },
+            {
+              "typ": "haupt",
+              "dauer_min": 85,
+              "zone": "Z2",
+              "hf": [
+                136,
+                147
+              ],
+              "leistung_w": [
+                150,
+                170
+              ],
+              "trittfrequenz": [
+                85,
+                95
+              ],
+              "beschreibung": "Alle 15 min 1 min mit 100+ U/min einstreuen."
+            },
+            {
+              "typ": "cooldown",
+              "dauer_min": 10,
+              "zone": "Z1"
+            }
+          ],
+          "alternativen": [
+            {
+              "titel": "Draußen",
+              "beschreibung": "131 min flach bis wellig, HF in Z2 halten."
+            }
+          ]
+        },
+        {
+          "id": "e3",
+          "pflicht": false,
+          "sportart": "laufen",
+          "titel": "Lauf locker 45 min",
+          "tag_vorschlag": "2026-09-17",
+          "dauer_min": 45,
+          "ziel": "Laufbasis für Marathon-Ziel erhalten.",
+          "status": "geplant",
+          "bloecke": [
+            {
+              "typ": "aufwaermen",
+              "dauer_min": 10,
+              "zone": "Z1",
+              "beschreibung": "Locker einlaufen."
+            },
+            {
+              "typ": "haupt",
+              "dauer_min": 30,
+              "zone": "Z2",
+              "hf": [
+                136,
+                147
+              ],
+              "pace": [
+                "6:23",
+                "6:50"
+              ]
+            },
+            {
+              "typ": "cooldown",
+              "dauer_min": 5,
+              "zone": "Z1"
+            }
+          ]
+        },
+        {
+          "id": "e4",
+          "pflicht": false,
+          "sportart": "rad",
+          "titel": "Rolle Kraftausdauer K3",
+          "tag_vorschlag": null,
+          "dauer_min": 60,
+          "ziel": "Muskelausdauer der Beine bei niedriger Trittfrequenz.",
+          "status": "geplant",
+          "bloecke": [
+            {
+              "typ": "aufwaermen",
+              "dauer_min": 12,
+              "zone": "Z1"
+            },
+            {
+              "typ": "intervall",
+              "dauer_min": 5,
+              "wiederholungen": 4,
+              "zone": "Z3",
+              "leistung_w": [
+                180,
+                200
+              ],
+              "trittfrequenz": [
+                55,
+                65
+              ],
+              "beschreibung": "Oberkörper ruhig, runder Tritt.",
+              "pause": {
+                "dauer_min": 3,
+                "zone": "Z1",
+                "beschreibung": "locker kurbeln"
+              }
+            },
+            {
+              "typ": "haupt",
+              "dauer_min": 6,
+              "zone": "Z2",
+              "leistung_w": [
+                150,
+                170
+              ]
+            },
+            {
+              "typ": "cooldown",
+              "dauer_min": 10,
+              "zone": "Z1"
+            }
+          ]
+        }
+      ],
+      "mobility": {
+        "soll_pro_woche": 3,
+        "einheiten": [
+          {
+            "id": "m-a",
+            "titel": "Mobility & Core A – Hüfte & Rumpf",
+            "dauer_min": 12,
+            "tag_vorschlag": "2026-09-14",
+            "status": "geplant",
+            "uebungen": [
+              {
+                "id": "mob-hueftbeuger-kniend",
+                "dauer_s": 45,
+                "seitig": true
+              },
+              {
+                "id": "mob-knie-zur-wand",
+                "wdh": 10,
+                "seitig": true
+              },
+              {
+                "id": "core-dead-bug",
+                "saetze": 2,
+                "wdh": 8,
+                "seitig": true
+              },
+              {
+                "id": "core-seitstuetz",
+                "saetze": 2,
+                "dauer_s": 30,
+                "seitig": true
+              }
+            ]
+          },
+          {
+            "id": "m-b",
+            "titel": "Mobility & Core B – Rotation",
+            "dauer_min": 12,
+            "tag_vorschlag": "2026-09-17",
+            "status": "geplant",
+            "uebungen": [
+              {
+                "id": "mob-90-90",
+                "wdh": 8
+              },
+              {
+                "id": "mob-worlds-greatest-stretch",
+                "wdh": 5,
+                "seitig": true
+              },
+              {
+                "id": "core-bird-dog",
+                "saetze": 2,
+                "wdh": 8,
+                "seitig": true
+              },
+              {
+                "id": "core-pallof-press",
+                "saetze": 2,
+                "wdh": 10,
+                "seitig": true
+              }
+            ]
+          },
+          {
+            "id": "m-c",
+            "titel": "Mobility & Core C – Rollen & Stütz",
+            "dauer_min": 13,
+            "tag_vorschlag": null,
+            "status": "geplant",
+            "uebungen": [
+              {
+                "id": "faszien-oberschenkel-vorne",
+                "dauer_s": 90
+              },
+              {
+                "id": "faszien-wade",
+                "dauer_s": 60,
+                "seitig": true
+              },
+              {
+                "id": "mob-adduktoren-frosch",
+                "wdh": 10
+              },
+              {
+                "id": "core-unterarmstuetz",
+                "saetze": 3,
+                "dauer_s": 40
+              }
+            ]
+          }
+        ]
+      },
+      "ernaehrung_hinweise": [
+        {
+          "tag": "2026-09-19",
+          "text": "Vor der langen Einheit kohlenhydratreich essen; ab 75 min ca. 40–60 g Kohlenhydrate pro Stunde."
+        },
+        {
+          "tag": null,
+          "text": "Nach der Krafteinheit eine proteinreiche Mahlzeit."
+        }
+      ]
+    },
+    {
+      "iso_woche": "2026-W39",
+      "nr": 4,
+      "start": "2026-09-21",
+      "ende": "2026-09-27",
+      "phase": "Entlastung",
+      "typ": "entlastung",
+      "fokus": "Entlastung: Umfang runter, Qualität halten, Mobility vollständig.",
+      "einheiten": [
+        {
+          "id": "e1",
+          "pflicht": true,
+          "sportart": "kraft",
+          "titel": "Kraft B – reduziert",
+          "tag_vorschlag": "2026-09-23",
+          "dauer_min": 35,
+          "ziel": "Bremsende Beinkraft und seitliche Stabilität für lange Skitage.",
+          "status": "geplant",
+          "bloecke": [
+            {
+              "typ": "aufwaermen",
+              "dauer_min": 8,
+              "zone": "Z1",
+              "beschreibung": "Locker auf der Rolle oder Seilspringen, danach 2 Mobility-Übungen aus Einheit A."
+            }
+          ],
+          "uebungen": [
+            {
+              "id": "kraft-tempo-kniebeuge",
+              "saetze": 2,
+              "wdh": 10,
+              "tempo": "4-2-1",
+              "pause_s": 75
+            },
+            {
+              "id": "kraft-step-down",
+              "saetze": 2,
+              "wdh": 8,
+              "seitig": true,
+              "tempo": "4-0-1",
+              "pause_s": 60
+            },
+            {
+              "id": "kraft-seitlicher-ausfallschritt",
+              "saetze": 2,
+              "wdh": 8,
+              "seitig": true,
+              "pause_s": 60
+            },
+            {
+              "id": "kraft-einbeiniges-kreuzheben",
+              "saetze": 2,
+              "wdh": 8,
+              "seitig": true,
+              "pause_s": 60
+            },
+            {
+              "id": "kraft-wandsitz",
+              "saetze": 2,
+              "dauer_s": 60,
+              "pause_s": 60
+            },
+            {
+              "id": "core-pallof-press",
+              "saetze": 2,
+              "wdh": 10,
+              "seitig": true,
+              "pause_s": 30
+            }
+          ]
+        },
+        {
+          "id": "e2",
+          "pflicht": true,
+          "sportart": "rad",
+          "titel": "Lange Grundlage Rolle 60 min",
+          "tag_vorschlag": "2026-09-26",
+          "dauer_min": 60,
+          "ziel": "Aerobe Basis für lange Skitage, Zonendisziplin.",
+          "status": "geplant",
+          "bloecke": [
+            {
+              "typ": "aufwaermen",
+              "dauer_min": 10,
+              "zone": "Z1",
+              "leistung_w": [
+                100,
+                125
+              ]
+            },
+            {
+              "typ": "haupt",
+              "dauer_min": 40,
+              "zone": "Z2",
+              "hf": [
+                136,
+                147
+              ],
+              "leistung_w": [
+                150,
+                170
+              ],
+              "trittfrequenz": [
+                85,
+                95
+              ],
+              "beschreibung": "Alle 15 min 1 min mit 100+ U/min einstreuen."
+            },
+            {
+              "typ": "cooldown",
+              "dauer_min": 10,
+              "zone": "Z1"
+            }
+          ],
+          "alternativen": [
+            {
+              "titel": "Draußen",
+              "beschreibung": "75 min flach bis wellig, HF in Z2 halten."
+            }
+          ]
+        },
+        {
+          "id": "e3",
+          "pflicht": false,
+          "sportart": "laufen",
+          "titel": "Lauf locker 30 min",
+          "tag_vorschlag": null,
+          "dauer_min": 30,
+          "ziel": "Laufbasis für Marathon-Ziel erhalten.",
+          "status": "geplant",
+          "bloecke": [
+            {
+              "typ": "aufwaermen",
+              "dauer_min": 10,
+              "zone": "Z1",
+              "beschreibung": "Locker einlaufen."
+            },
+            {
+              "typ": "haupt",
+              "dauer_min": 11,
+              "zone": "Z2",
+              "hf": [
+                136,
+                147
+              ],
+              "pace": [
+                "6:23",
+                "6:50"
+              ]
+            },
+            {
+              "typ": "technik",
+              "dauer_min": 4,
+              "beschreibung": "4 × 20 s Steigerungslauf, dazwischen locker gehen."
+            },
+            {
+              "typ": "cooldown",
+              "dauer_min": 5,
+              "zone": "Z1"
+            }
+          ]
+        }
+      ],
+      "mobility": {
+        "soll_pro_woche": 3,
+        "einheiten": [
+          {
+            "id": "m-a",
+            "titel": "Mobility & Core A – Hüfte & Rumpf",
+            "dauer_min": 12,
+            "tag_vorschlag": "2026-09-21",
+            "status": "geplant",
+            "uebungen": [
+              {
+                "id": "mob-hueftbeuger-kniend",
+                "dauer_s": 45,
+                "seitig": true
+              },
+              {
+                "id": "mob-knie-zur-wand",
+                "wdh": 10,
+                "seitig": true
+              },
+              {
+                "id": "core-dead-bug",
+                "saetze": 2,
+                "wdh": 8,
+                "seitig": true
+              },
+              {
+                "id": "core-seitstuetz",
+                "saetze": 2,
+                "dauer_s": 30,
+                "seitig": true
+              }
+            ]
+          },
+          {
+            "id": "m-b",
+            "titel": "Mobility & Core B – Rotation",
+            "dauer_min": 12,
+            "tag_vorschlag": "2026-09-24",
+            "status": "geplant",
+            "uebungen": [
+              {
+                "id": "mob-90-90",
+                "wdh": 8
+              },
+              {
+                "id": "mob-worlds-greatest-stretch",
+                "wdh": 5,
+                "seitig": true
+              },
+              {
+                "id": "core-bird-dog",
+                "saetze": 2,
+                "wdh": 8,
+                "seitig": true
+              },
+              {
+                "id": "core-pallof-press",
+                "saetze": 2,
+                "wdh": 10,
+                "seitig": true
+              }
+            ]
+          },
+          {
+            "id": "m-c",
+            "titel": "Mobility & Core C – Rollen & Stütz",
+            "dauer_min": 13,
+            "tag_vorschlag": "2026-09-27",
+            "status": "geplant",
+            "uebungen": [
+              {
+                "id": "faszien-oberschenkel-vorne",
+                "dauer_s": 90
+              },
+              {
+                "id": "faszien-wade",
+                "dauer_s": 60,
+                "seitig": true
+              },
+              {
+                "id": "mob-adduktoren-frosch",
+                "wdh": 10
+              },
+              {
+                "id": "core-unterarmstuetz",
+                "saetze": 3,
+                "dauer_s": 40
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

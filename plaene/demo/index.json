@@ -1,0 +1,76 @@
+{
+  "format_version": 1,
+  "athlet": "demo",
+  "wochen": [
+    {
+      "iso_woche": "2026-W36",
+      "nr": 1,
+      "start": "2026-09-02",
+      "ende": "2026-09-06",
+      "phase": "Eingewöhnung",
+      "typ": "eingewoehnung",
+      "status": "abgeschlossen",
+      "geplant_min": 160,
+      "einheiten_pflicht": 2,
+      "einheiten_optional": 1,
+      "mobility_soll": 3,
+      "erledigt": {
+        "einheiten_pflicht": 2,
+        "einheiten_optional": 0,
+        "mobility": 2,
+        "minuten": 120
+      },
+      "datei": "wochen/2026-W36.json"
+    },
+    {
+      "iso_woche": "2026-W37",
+      "nr": 2,
+      "start": "2026-09-07",
+      "ende": "2026-09-13",
+      "phase": "Eingewöhnung",
+      "typ": "eingewoehnung",
+      "status": "abgeschlossen",
+      "geplant_min": 240,
+      "einheiten_pflicht": 2,
+      "einheiten_optional": 2,
+      "mobility_soll": 3,
+      "erledigt": {
+        "einheiten_pflicht": 2,
+        "einheiten_optional": 1,
+        "mobility": 3,
+        "minuten": 180
+      },
+      "datei": "wochen/2026-W37.json"
+    },
+    {
+      "iso_woche": "2026-W38",
+      "nr": 3,
+      "start": "2026-09-14",
+      "ende": "2026-09-20",
+      "phase": "Aufbau 1",
+      "typ": "aufbau",
+      "status": "laufend",
+      "geplant_min": 265,
+      "einheiten_pflicht": 2,
+      "einheiten_optional": 2,
+      "mobility_soll": 3,
+      "erledigt": null,
+      "datei": "aktuell.json"
+    },
+    {
+      "iso_woche": "2026-W39",
+      "nr": 4,
+      "start": "2026-09-21",
+      "ende": "2026-09-27",
+      "phase": "Entlastung",
+      "typ": "entlastung",
+      "status": "geplant",
+      "geplant_min": 125,
+      "einheiten_pflicht": 2,
+      "einheiten_optional": 1,
+      "mobility_soll": 3,
+      "erledigt": null,
+      "datei": "aktuell.json"
+    }
+  ]
+}
