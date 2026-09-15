@@ -23,9 +23,12 @@ ZONEN = {"Z1", "Z2", "Z3", "Z4", "Z5"}
 
 KATEGORIEN = {"mobility", "faszien", "core", "kraft", "plyometrie", "lauf-abc", "aufwaermen"}
 MOBILITY_KATEGORIEN = {"mobility", "faszien", "core"}
-WOCHEN_TYPEN = {"eingewoehnung", "aufbau", "entlastung", "taper", "wettkampf", "pause"}
+WOCHEN_TYPEN = {"eingewoehnung", "grundlage", "aufbau", "entlastung", "peak", "taper", "wettkampf", "pause"}
 SPORTARTEN = {"kraft", "laufen", "rad", "schwimmen", "koppel", "mobility", "core", "ski", "wandern", "sonstiges"}
 BLOCK_TYPEN = {"aufwaermen", "haupt", "intervall", "technik", "cooldown"}
+# Unbekannte Übungskategorie, Sportart oder Phasentyp → Warnung: nur nach Genehmigung
+# verwenden; mit der Genehmigung wird auch die Farbe in der Webseite festgelegt.
+GENEHMIGUNG = "nicht in bekannter Liste – vor Verwendung genehmigen lassen und Farbe festlegen"
 EINHEIT_STATUS = {"geplant", "erledigt", "teilweise", "ausgelassen"}
 INDEX_STATUS = {"abgeschlossen", "laufend", "geplant"}
 
@@ -208,7 +211,7 @@ class Pruefer:
             self.pflicht(u, "name", str, ort, erlaubt_leer=False)
             kat = self.pflicht(u, "kategorie", str, ort)
             if kat is not None and kat not in KATEGORIEN:
-                self.f(ort, f"kategorie '{kat}' unbekannt ({', '.join(sorted(KATEGORIEN))})")
+                self.w(ort, f"kategorie '{kat}' {GENEHMIGUNG}")
             self.pflicht(u, "sportarten", list, ort, erlaubt_leer=False)
             self.pflicht(u, "equipment", list, ort)
             ablauf = self.pflicht(u, "ablauf", list, ort)
@@ -256,7 +259,7 @@ class Pruefer:
         self.pflicht(w, "phase", str, ort, erlaubt_leer=False)
         typ = self.pflicht(w, "typ", str, ort)
         if typ is not None and typ not in WOCHEN_TYPEN:
-            self.f(ort, f"typ '{typ}' unbekannt ({', '.join(sorted(WOCHEN_TYPEN))})")
+            self.w(ort, f"typ '{typ}' {GENEHMIGUNG}")
         self.pflicht(w, "fokus", str, ort, erlaubt_leer=False)
         self.optional(w, "notiz_coach", str, ort)
 
@@ -294,7 +297,7 @@ class Pruefer:
             ist_pflicht = self.pflicht(e, "pflicht", bool, eort)
             sportart = self.pflicht(e, "sportart", str, eort)
             if sportart is not None and sportart not in SPORTARTEN:
-                self.w(eort, f"sportart '{sportart}' nicht in bekannter Liste")
+                self.w(eort, f"sportart '{sportart}' {GENEHMIGUNG}")
             self.pflicht(e, "titel", str, eort, erlaubt_leer=False)
             tag = self.tag_pflicht(e, eort, start, ende)
             dauer = self.pflicht(e, "dauer_min", (int, float), eort)
@@ -339,10 +342,13 @@ class Pruefer:
                 self.f(hort, "muss Objekt sein")
                 continue
             self.pflicht(h, "text", str, hort, erlaubt_leer=False)
-            if "tag" not in h:
-                self.f(hort, "Pflichtfeld 'tag' fehlt (null = ganze Woche)")
+            if h.get("tag") is None:
+                self.f(hort, "'tag' fehlt – jeder Ernährungshinweis gehört zu einem Tag mit Einheit")
             else:
                 self.tag_in_woche(h, hort, start, ende, feld="tag")
+                einheiten_tage = {e.get("tag_vorschlag") for e in (w.get("einheiten") or []) if isinstance(e, dict)}
+                if h["tag"] not in einheiten_tage:
+                    self.w(hort, f"am {h['tag']} liegt keine Trainingseinheit – Hinweis soll sich auf eine Einheit beziehen")
 
         kennzahlen.update({"iso_woche": iso, "nr": nr, "start": w.get("start"), "ende": w.get("ende"),
                            "phase": w.get("phase"), "typ": typ})
@@ -601,7 +607,7 @@ class Pruefer:
             name = self.pflicht(p, "name", str, port)
             typ = self.pflicht(p, "typ", str, port)
             if typ is not None and typ not in WOCHEN_TYPEN:
-                self.f(port, f"typ '{typ}' unbekannt")
+                self.w(port, f"typ '{typ}' {GENEHMIGUNG}")
             for nr in self.pflicht(p, "wochen", list, port, erlaubt_leer=False) or []:
                 if not self.typ_ok(nr, int):
                     self.f(port, "'wochen' enthält nur Wochennummern")
