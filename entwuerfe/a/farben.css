@@ -81,7 +81,6 @@
 
   /* Hinweise und Zustände */
   --farbe-hinweis-coach: var(--farbe-akzent);
-  --farbe-hinweis-ernaehrung: var(--gelb);
   --farbe-fehler: var(--rot);
   --farbe-ausgelassen: var(--grau-700);
 }

@@ -17,6 +17,8 @@ const archiv = new Map(); // Wochen-Nr → Woche | 'laedt' | Error
 // ---------- Laden & Navigation ----------
 
 async function start() {
+  // Beim Öffnen immer auf heute, auch wenn zuletzt ein anderer Tag angesehen wurde
+  if (location.hash.startsWith('#heute/')) history.replaceState(null, '', `${location.pathname}${location.search}#heute`);
   try {
     daten = await D.laden(D.athletId());
     zeichnen();
@@ -58,6 +60,21 @@ function wocheNachNr(nr) {
       .finally(() => zeichnen(false));
   }
   return { woche: null, quelle: 'laedt' };
+}
+
+// Nummer der Blockwoche, in die ein Datum fällt (kann < 1 oder > Blocklänge sein)
+function nrFuerTag(tag) {
+  const montag1 = D.plusTage(daten.aktuell.block.start, -D.wochentag(daten.aktuell.block.start));
+  return Math.floor(D.tageZwischen(montag1, tag) / 7) + 1;
+}
+
+// Woche zu einem Datum; außerhalb des Blocks „leer“ ohne Rahmen
+function wocheFuerTag(tag) {
+  const nr = nrFuerTag(tag);
+  const block = daten.aktuell.block;
+  if (nr < 1 || nr > D.blockWochen(block)) return { woche: null, quelle: 'leer', rahmen: null, nr };
+  const { woche, quelle } = wocheNachNr(nr);
+  return { woche, quelle, rahmen: woche || D.wochenRahmen(block, nr), nr };
 }
 
 const nrJetzt = () => daten.aktuell.wochen[D.aktuelleWoche(daten.aktuell, D.heute())].nr;
@@ -147,6 +164,7 @@ function karteGross(e, nr) {
       <span class="icon">${sp.icon}</span>
       ${e.art === 'mobility' ? '' : `<span class="sp-name">${esc(sp.name)}</span>`}
       ${artBadge(e)}
+      ${STATUS_TEXT[e.status] ? `${punkt(e)}<span class="status">${STATUS_TEXT[e.status]}</span>` : ''}
       <span class="dauer">${D.fmtDauer(e.dauer_min)}</span>
     </div>
     <h3>${esc(e.titel)}</h3>
@@ -168,71 +186,115 @@ function zeileKompakt(e, nr) {
   </a>`;
 }
 
+// Ernährungshinweise eines Tages, direkt unter dessen Einheiten
+function ernaehrungAmTag(w, tag) {
+  return D.ernaehrung(w, tag).map((h) => `<p class="essen-klein">🍝 ${esc(h.text)}</p>`).join('');
+}
+
 function zaehler(label, ist, soll) {
   const punkte = Array.from({ length: soll }, (_, i) => `<i class="${i < ist ? 'voll' : ''}"></i>`).join('');
   return `<div class="zaehler"><div class="punkte">${punkte}</div><b>${ist}<small>/${soll}</small></b><span>${label}</span></div>`;
 }
 
-// ---------- Seite: Heute ----------
+// ---------- Seite: Heute (ein Tag, mit ‹ › blätterbar) ----------
 
-function seiteHeute() {
+// Blätterbereich: Blockzeitraum, mindestens aber bis heute
+function tagesGrenzen() {
+  const { start, ende } = daten.aktuell.block;
   const heute = D.heute();
-  const wochen = daten.aktuell.wochen;
-  const w = wochen[D.aktuelleWoche(daten.aktuell, heute)];
+  return { min: heute < start ? heute : start, max: heute > ende ? heute : ende };
+}
+
+function tagUeberschrift(tag, heute) {
+  const abstand = D.tageZwischen(heute, tag);
+  if (abstand === 0) return 'Heute';
+  if (abstand === -1) return 'Gestern';
+  if (abstand === 1) return 'Morgen';
+  return D.TAGE_LANG[D.wochentag(tag)];
+}
+
+// Einheiten eines Tages als kompakte Zeilen (für „Als Nächstes“)
+function tagKompakt(tag) {
+  const { woche, quelle, rahmen } = wocheFuerTag(tag);
+  let rechts;
+  if (quelle === 'laedt') rechts = `<p class="leise klein">lädt …</p>`;
+  else if (!woche) rechts = `<p class="leise klein">noch nicht geplant</p>`;
+  else if (tag < rahmen.start || tag > rahmen.ende) rechts = `<p class="leise klein">außerhalb des Blocks</p>`;
+  else {
+    const liste = D.amTag(woche, tag);
+    rechts = liste.length
+      ? liste.map((e) => zeileKompakt(e, woche.nr)).join('') + ernaehrungAmTag(woche, tag)
+      : `<p class="leise klein">Ruhetag</p>`;
+  }
+  return `<div class="tag-gruppe">
+    <a class="tag-label" href="#heute/${tag}"><b>${D.TAGE_KURZ[D.wochentag(tag)]}</b><span>${D.datum(tag).getDate()}.</span></a>
+    <div class="tag-liste">${rechts}</div>
+  </div>`;
+}
+
+function seiteHeute(teile) {
+  const heute = D.heute();
+  const grenzen = tagesGrenzen();
+  const gewuenscht = /^\d{4}-\d{2}-\d{2}$/.test(teile[0] || '') ? teile[0] : heute;
+  const tag = gewuenscht < grenzen.min ? grenzen.min : gewuenscht > grenzen.max ? grenzen.max : gewuenscht;
   const block = daten.aktuell.block;
-  const heuteListe = D.amTag(w, heute);
-  const frei = D.freiWaehlbar(w);
-  const z = D.wochenZahlen(w);
+  const n = D.blockWochen(block);
+  const { woche: w, quelle, rahmen, nr } = wocheFuerTag(tag);
 
-  let html = `<section class="titel">
-    <p class="ueber">${D.TAGE_LANG[D.wochentag(heute)]}, ${D.fmtTag(heute)}</p>
-    <h1>Heute</h1>
-    <p class="unter">KW ${D.kw(w)} · Woche ${w.nr} von ${D.blockWochen(block)} · ${typBadge(w)}</p>
-  </section>`;
+  const vorher = D.plusTage(tag, -1);
+  const nachher = D.plusTage(tag, 1);
+  const pfeil = (ziel, zeichen, name, aus) => (aus
+    ? `<span class="pfeil aus" aria-hidden="true">${zeichen}</span>`
+    : `<a class="pfeil" href="#heute/${ziel}" aria-label="${name}">${zeichen}</a>`);
+  const wocheInfo = rahmen
+    ? `KW ${D.kw(rahmen)} · Woche ${nr} von ${n}${rahmen.phase ? ` · ${typBadge(rahmen)}` : ''}`
+    : 'außerhalb des Blocks';
 
-  if (heuteListe.length) {
-    html += heuteListe.map((e) => karteGross(e, w.nr)).join('');
+  let html = `<section class="wochen-nav tag-nav">
+      ${pfeil(vorher, '‹', 'Vorheriger Tag', vorher < grenzen.min)}
+      <div class="kw">
+        <p class="ueber">${D.TAGE_LANG[D.wochentag(tag)]}, ${D.fmtTag(tag)}</p>
+        <h1>${tagUeberschrift(tag, heute)}</h1>
+        <p class="tag-info">${wocheInfo}</p>
+      </div>
+      ${pfeil(nachher, '›', 'Nächster Tag', nachher > grenzen.max)}
+    </section>
+    ${tag !== heute ? `<div class="heute-leiste"><a class="heute-knopf" href="#heute">Zurück zu heute</a></div>` : ''}`;
+
+  if (quelle === 'laedt') return `${html}<p class="laden">Lade Tag …</p>`;
+  if (quelle === 'fehler') return `${html}<div class="karte fehler"><h2>Woche nicht geladen</h2></div>`;
+
+  if (!w) {
+    html += `<div class="karte leer-woche">
+      <h2>Bisher kein Training geplant</h2>
+      <p class="leise">Der Plan für diese Woche entsteht beim Wochen-Check.</p>
+    </div>`;
+  } else if (tag < rahmen.start || tag > rahmen.ende) {
+    html += `<div class="karte ruhetag"><p class="ueber">Kein Plantag</p><h3>Außerhalb des Blocks</h3></div>`;
   } else {
-    html += `<div class="karte ruhetag">
-      <p class="ueber">Kein fester Termin</p>
-      <h3>Ruhetag – oder eine freie Einheit</h3>
-      ${frei.length ? `<p class="leise">Diese Woche frei wählbar:</p>${frei.map((e) => zeileKompakt(e, w.nr)).join('')}` : ''}
-    </div>`;
+    const liste = D.amTag(w, tag);
+    html += liste.length
+      ? liste.map((e) => karteGross(e, w.nr)).join('')
+      : `<div class="karte ruhetag">
+          <p class="ueber">Kein Training</p>
+          <h3>Ruhetag</h3>
+          <p class="leise">Erholung gehört zum Plan.</p>
+        </div>`;
+    html += ernaehrungAmTag(w, tag);
+    if (w.notiz_coach) {
+      html += `<div class="hinweis coach"><span class="ueber">Coach</span>${esc(w.notiz_coach)}</div>`;
+    }
+    const z = D.wochenZahlen(w);
+    html += `<h2 class="abschnitt">${nr === nrJetzt() ? 'Diese Woche' : `KW ${D.kw(w)}`} <a href="#woche/${nr}">Plan ›</a></h2>
+      <div class="karte fortschritt">
+        ${zaehler('Pflicht', z.pflichtErledigt, z.pflicht)}
+        ${zaehler('Optional', z.optionalErledigt, z.optional)}
+        ${zaehler('Mobility', z.mobilityErledigt, z.mobilitySoll)}
+      </div>`;
   }
 
-  for (const h of D.ernaehrung(w, heute)) {
-    html += `<div class="hinweis essen"><span class="ueber">Ernährung heute</span>${esc(h.text)}</div>`;
-  }
-  if (w.notiz_coach) {
-    html += `<div class="hinweis coach"><span class="ueber">Coach</span>${esc(w.notiz_coach)}</div>`;
-  }
-
-  html += `<h2 class="abschnitt">Diese Woche <a href="#woche/${w.nr}">Plan ›</a></h2>
-    <div class="karte fortschritt">
-      ${zaehler('Pflicht', z.pflichtErledigt, z.pflicht)}
-      ${zaehler('Optional', z.optionalErledigt, z.optional)}
-      ${zaehler('Mobility', z.mobilityErledigt, z.mobilitySoll)}
-    </div>`;
-
-  const kommend = [];
-  for (let i = 1; i <= 7; i++) {
-    const tag = D.plusTage(heute, i);
-    const wo = wochen.find((x) => tag >= x.start && tag <= x.ende);
-    if (!wo) continue;
-    const liste = D.amTag(wo, tag);
-    if (liste.length) kommend.push({ tag, nr: wo.nr, liste });
-  }
-  if (kommend.length) {
-    html += `<h2 class="abschnitt">Als Nächstes</h2>`;
-    html += kommend.map((k) => `<div class="tag-gruppe">
-      <div class="tag-label"><b>${D.TAGE_KURZ[D.wochentag(k.tag)]}</b><span>${D.datum(k.tag).getDate()}.</span></div>
-      <div class="tag-liste">${k.liste.map((e) => zeileKompakt(e, k.nr)).join('')}</div>
-    </div>`).join('');
-  }
-  if (heuteListe.length && frei.length) {
-    html += `<h2 class="abschnitt">Frei wählbar</h2>
-      <div class="tag-liste">${frei.map((e) => zeileKompakt(e, w.nr)).join('')}</div>`;
-  }
+  html += `<h2 class="abschnitt">Als Nächstes</h2>`;
+  html += [1, 2].map((i) => tagKompakt(D.plusTage(tag, i))).join('');
   return html;
 }
 
@@ -301,20 +363,17 @@ function seiteWoche(teile) {
 
   const tagesListe = tage.map((t) => {
     const liste = D.amTag(w, t.datum);
-    const essen = D.ernaehrung(w, t.datum);
     let rechts;
     if (!t.imPlan) rechts = `<p class="leise klein">außerhalb des Blocks</p>`;
     else if (!liste.length) rechts = `<p class="leise klein">Ruhetag</p>`;
     else rechts = liste.map((e) => zeileKompakt(e, nr)).join('');
-    if (essen.length) rechts += essen.map((h) => `<p class="essen-klein">🍝 ${esc(h.text)}</p>`).join('');
+    rechts += ernaehrungAmTag(w, t.datum);
     return `<div class="tag-gruppe ${t.datum === heute ? 'ist-heute' : ''} ${t.imPlan ? '' : 'aussen'}" id="tag-${t.datum}">
       <div class="tag-label"><b>${D.TAGE_KURZ[t.index]}</b><span>${D.datum(t.datum).getDate()}.</span></div>
       <div class="tag-liste">${rechts}</div>
     </div>`;
   }).join('');
 
-  const frei = D.freiWaehlbar(w);
-  const allgemein = D.ernaehrung(w, null);
 
   return `${html}
     <div class="karte wochenkopf">
@@ -329,9 +388,7 @@ function seiteWoche(teile) {
     </div>
     ${w.notiz_coach ? `<div class="hinweis coach"><span class="ueber">Coach</span>${esc(w.notiz_coach)}</div>` : ''}
     <h2 class="abschnitt">Tage</h2>
-    ${tagesListe}
-    ${frei.length ? `<h2 class="abschnitt">Frei wählbar</h2><div class="tag-liste">${frei.map((e) => zeileKompakt(e, nr)).join('')}</div>` : ''}
-    ${allgemein.length ? `<h2 class="abschnitt">Ernährung</h2>${allgemein.map((h) => `<div class="hinweis essen">${esc(h.text)}</div>`).join('')}` : ''}`;
+    ${tagesListe}`;
 }
 
 // ---------- Seite: Einheit ----------
@@ -349,7 +406,7 @@ function seiteEinheit(nr, id) {
     <p class="ueber">${sp.icon} ${e.art === 'mobility' ? '' : `${esc(sp.name)} · `}${artBadge(e)}
       ${STATUS_TEXT[e.status] ? `${punkt(e)}<span class="status">${STATUS_TEXT[e.status]}</span>` : ''}</p>
     <h1>${esc(e.titel)}</h1>
-    <p class="unter">${e.tag_vorschlag ? `${D.TAGE_LANG[D.wochentag(e.tag_vorschlag)]}, ${D.fmtTag(e.tag_vorschlag)}` : 'Tag frei wählbar'} · ${D.fmtDauer(e.dauer_min)}</p>
+    <p class="unter">${D.TAGE_LANG[D.wochentag(e.tag_vorschlag)]}, ${D.fmtTag(e.tag_vorschlag)} · ${D.fmtDauer(e.dauer_min)}</p>
     ${e.ziel ? `<p class="ziel">${esc(e.ziel)}</p>` : ''}
   </section>`;
 
@@ -591,6 +648,25 @@ document.addEventListener('input', (ev) => {
     b.hidden = q && !b.dataset.suche.includes(q);
   });
 });
+
+// Wischen auf der Heute-Seite: nach links = nächster Tag, nach rechts = vorheriger Tag
+let wischStart = null;
+inhalt.addEventListener('touchstart', (ev) => {
+  const t = ev.touches[0];
+  wischStart = ev.touches.length === 1 ? { x: t.clientX, y: t.clientY } : null;
+}, { passive: true });
+inhalt.addEventListener('touchend', (ev) => {
+  if (!wischStart || !sheet.hidden) return;
+  const [seite = 'heute'] = location.hash.slice(1).split('/');
+  if (seite !== 'heute') return;
+  const t = ev.changedTouches[0];
+  const dx = t.clientX - wischStart.x;
+  const dy = t.clientY - wischStart.y;
+  wischStart = null;
+  if (Math.abs(dx) < 60 || Math.abs(dy) > Math.abs(dx) * 0.6) return;
+  const ziel = document.querySelector(`.tag-nav a.pfeil[aria-label="${dx < 0 ? 'Nächster Tag' : 'Vorheriger Tag'}"]`);
+  if (ziel) location.hash = ziel.getAttribute('href');
+}, { passive: true });
 
 window.addEventListener('hashchange', () => zeichnen());
 start();

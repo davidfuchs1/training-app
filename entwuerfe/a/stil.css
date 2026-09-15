@@ -211,7 +211,6 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 }
 .hinweis .ueber { display: block; }
 .hinweis.coach { border-left-color: var(--farbe-hinweis-coach); }
-.hinweis.essen { border-left-color: var(--farbe-hinweis-ernaehrung); }
 .fussnote { font-size: 12px; color: var(--farbe-text-leise); margin: 6px 2px; }
 
 /* ---------- Heute: Fortschritt ---------- */
@@ -409,3 +408,13 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
   background: var(--farbe-text); color: var(--farbe-grund); font-weight: 600; font-size: 14px;
   padding: 10px 16px; border-radius: 99px; white-space: nowrap;
 }
+
+/* ---------- Heute: Tag blättern ---------- */
+.tag-nav { padding-bottom: 10px; }
+.tag-nav .tag-info { display: flex; justify-content: center; align-items: center; gap: 6px; flex-wrap: wrap; }
+.heute-leiste { display: flex; justify-content: center; margin: -2px 0 14px; }
+.heute-knopf {
+  font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 99px;
+  background: var(--farbe-akzent); color: var(--farbe-text-auf-akzent);
+}
+a.tag-label { color: inherit; }

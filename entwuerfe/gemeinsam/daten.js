@@ -1,4 +1,4 @@
-/* Gemeinsame Datenfunktionen für die Design-Entwürfe A und B.
+/* Gemeinsame Datenfunktionen für die Design-Entwürfe.
    Entwurfsstand: wird bei der finalen Umsetzung neu geschrieben.
    Liest die Plandateien laut docs/datenformat.md. */
 (function () {
@@ -138,8 +138,8 @@
   const rang = (e) => (e.art === 'mobility' ? 2 : e.pflicht ? 0 : 1);
   const sortieren = (liste) => [...liste].sort((a, b) => rang(a) - rang(b));
 
+  // Jede Einheit hat einen Tag (Datenformat 1.1); mehrere Einheiten pro Tag möglich
   const amTag = (woche, tag) => sortieren(alleEinheiten(woche).filter((e) => e.tag_vorschlag === tag));
-  const freiWaehlbar = (woche) => sortieren(alleEinheiten(woche).filter((e) => !e.tag_vorschlag));
   const einheit = (woche, id) => alleEinheiten(woche).find((e) => e.id === id);
   const ernaehrung = (woche, tag) => (woche.ernaehrung_hinweise || []).filter((h) => h.tag === tag);
   const istErledigt = (e) => e.status === 'erledigt' || e.status === 'teilweise';
@@ -278,7 +278,7 @@
     TAGE_KURZ, TAGE_LANG, MONATE, datum, iso, plusTage, tageZwischen, wochentag, heute,
     fmtTag, fmtZeitraum, fmtZeitpunkt, fmtUhrzeit, fmtDauer, kw, wochenTage, aktuelleWoche,
     isoWoche, wochenRahmen,
-    alleEinheiten, sortieren, amTag, freiWaehlbar, einheit, ernaehrung, istErledigt, wochenZahlen,
+    alleEinheiten, sortieren, amTag, einheit, ernaehrung, istErledigt, wochenZahlen,
     blockWochen, phaseVonNr, bereich, hauptBlock, intensitaet, segmente, zonenZeilen,
     dosis, dosisDetails, sport, WOCHEN_TYP, BLOCK_TYP, KATEGORIE, esc,
   };
