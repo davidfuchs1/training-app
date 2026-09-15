@@ -258,8 +258,8 @@
   const sport = (s) => SPORT[s] || { name: s, icon: '•' };
 
   const WOCHEN_TYP = {
-    eingewoehnung: 'Eingewöhnung', aufbau: 'Aufbau', entlastung: 'Entlastung',
-    taper: 'Taper', wettkampf: 'Wettkampf', pause: 'Pause',
+    eingewoehnung: 'Eingewöhnung', grundlage: 'Grundlage', aufbau: 'Aufbau', entlastung: 'Entlastung',
+    peak: 'Peak', taper: 'Taper', wettkampf: 'Wettkampf', pause: 'Pause',
   };
   const BLOCK_TYP = {
     aufwaermen: 'Aufwärmen', haupt: 'Hauptteil', intervall: 'Intervalle',

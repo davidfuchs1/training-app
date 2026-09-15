@@ -93,7 +93,12 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 .sp-rad { --sp: var(--farbe-sport-rad); }
 .sp-laufen { --sp: var(--farbe-sport-laufen); }
 .sp-mobility, .sp-core { --sp: var(--farbe-sport-mobility); }
-.sp-schwimmen, .sp-koppel, .sp-ski, .sp-wandern, .sp-sonstiges { --sp: var(--farbe-sport-sonstiges); }
+.sp-schwimmen { --sp: var(--farbe-sport-schwimmen); }
+.sp-wandern { --sp: var(--farbe-sport-wandern); }
+.sp-ski { --sp: var(--farbe-sport-ski); }
+.sp-koppel { --sp: var(--farbe-sport-koppel); }
+.sp-sonstiges { --sp: var(--farbe-sport-sonstiges); }
+/* unbekannte Sportart: kein --sp → Standardgrau über den Rückfallwert var(--sp, …) */
 
 /* Pflicht / Optional / Mobility */
 .art {
@@ -104,18 +109,21 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 .art-optional { border: 1px solid var(--farbe-linie); color: var(--farbe-text-leise); }
 .art-mob { background: color-mix(in srgb, var(--farbe-sport-mobility) 18%, transparent); color: var(--farbe-sport-mobility); }
 
-/* Wochenart als lokale Variable --wt */
-.wt-eingewoehnung { --wt: var(--farbe-woche-eingewoehnung); }
-.wt-aufbau { --wt: var(--farbe-woche-aufbau); }
-.wt-entlastung { --wt: var(--farbe-woche-entlastung); }
-.wt-taper { --wt: var(--farbe-woche-taper); }
-.wt-wettkampf { --wt: var(--farbe-woche-wettkampf); }
-.wt-pause, .wt- { --wt: var(--farbe-woche-pause); }
+/* Phase als lokale Variablen --wt (Fläche) und --wt-text (Schrift, schwarz oder weiß) */
+[class*="wt-"] { --wt: var(--farbe-standard); --wt-text: var(--farbe-text-auf-farbe); }
+.wt-eingewoehnung { --wt: var(--farbe-phase-eingewoehnung); --wt-text: var(--farbe-phase-eingewoehnung-text); }
+.wt-grundlage { --wt: var(--farbe-phase-grundlage); --wt-text: var(--farbe-phase-grundlage-text); }
+.wt-aufbau { --wt: var(--farbe-phase-aufbau); --wt-text: var(--farbe-phase-aufbau-text); }
+.wt-entlastung { --wt: var(--farbe-phase-entlastung); --wt-text: var(--farbe-phase-entlastung-text); }
+.wt-peak { --wt: var(--farbe-phase-peak); --wt-text: var(--farbe-phase-peak-text); }
+.wt-taper { --wt: var(--farbe-phase-taper); --wt-text: var(--farbe-phase-taper-text); }
+.wt-wettkampf { --wt: var(--farbe-phase-wettkampf); --wt-text: var(--farbe-phase-wettkampf-text); }
+.wt-pause { --wt: var(--farbe-phase-pause); --wt-text: var(--farbe-phase-pause-text); }
 .typ {
   font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 99px; text-transform: none; letter-spacing: 0;
-  background: color-mix(in srgb, var(--wt) 20%, transparent); color: var(--wt);
+  background: var(--wt); color: var(--wt-text);
 }
-.typ-flaeche { background: var(--wt); color: var(--farbe-text-auf-farbe); }
+.typ-flaeche { background: var(--wt); color: var(--wt-text); }
 
 /* ---------- Chips & Zonen ---------- */
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
@@ -180,12 +188,14 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
   background: var(--farbe-flaeche-2); font-size: 13px; font-weight: 700;
 }
 .marke { font-size: 11px; font-weight: 700; color: var(--farbe-akzent); white-space: nowrap; }
-.kat-punkt { display: inline-block; width: 10px; height: 10px; border-radius: 3px; flex: none; }
+.kat-punkt { display: inline-block; width: 10px; height: 10px; border-radius: 3px; flex: none; background: var(--farbe-standard); }
 .kat-mobility { background: var(--farbe-kategorie-mobility); }
 .kat-faszien { background: var(--farbe-kategorie-faszien); }
 .kat-core { background: var(--farbe-kategorie-core); }
 .kat-kraft { background: var(--farbe-kategorie-kraft); }
 .kat-plyometrie { background: var(--farbe-kategorie-plyometrie); }
+.kat-lauf-abc { background: var(--farbe-kategorie-lauf-abc); }
+.kat-aufwaermen { background: var(--farbe-kategorie-aufwaermen); }
 
 /* Tage mit Trennlinien */
 .tag-gruppe { display: flex; gap: 12px; padding: 10px 0; scroll-margin-top: 64px; }
