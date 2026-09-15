@@ -22,6 +22,7 @@ lokal im Nachbarordner `../training-daten`).
 | `plaene/demo/` | Testdaten zum Entwickeln |
 | `docs/datenformat.md` | **verbindliches Datenformat** – vor Arbeit an Daten oder Anzeige lesen |
 | `tools/pruefen.py` | Prüfskript; Original im Coach-Skill, beide synchron halten |
+| `entwuerfe/` | Design-Entwurf A (nur Branch `entwuerfe`); Farben ausschließlich in `entwuerfe/a/farben.css` |
 | `.github/workflows/auto-merge-claude.yml` | übernimmt `claude/**`-Branches nach `main`, wenn nur `plaene/**` geändert und Prüfung ok |
 
 Vor jedem Commit mit Änderungen in `plaene/`:
@@ -44,12 +45,22 @@ Ideensammlung (nicht entschieden): „Heute“-Karte zuerst, Intervalle als
 Blockdiagramm, Saison-Zeitstrahl, Form-Kurve, Mobility-Raster à la
 GitHub-Contributions, Ernährungshinweis pro Tag. Später: Push-Benachrichtigungen.
 
-## Stand
-- Fundament fertig (Datenformat v1, Übungsbibliothek, Demo-Daten, Auto-Merge-Action).
-- GitHub Pages ist noch **nicht** eingeschaltet.
-- **Nächster Schritt:** zwei deutlich unterschiedliche, anklickbare Design-Entwürfe
-  mit den Demo-Daten, auf dem Handy testen, dann auswählen oder kombinieren.
-- Offen: prüfen, ob GitHub Pages neu baut, wenn die Action nach `main` pusht.
+## Stand (2026-09-15)
+- Fundament fertig (Datenformat v1 inkl. Tag-Pflicht für Einheiten und
+  Ernährungshinweise, Phasen `grundlage`/`peak`, Übungsbibliothek, Demo-Daten,
+  Auto-Merge-Action); Prüfskript synchron mit Coach-Skill 1.2.0.
+- Design: **Entwurf A „Heute“** (dunkel, Tab-Leiste, Tage/Wochen blättern)
+  gewählt, Entwurf B verworfen. Farben für Zonen, Sportarten, Kategorien und
+  Phasen festgelegt; Akzent neutral hell. Liegt auf Branch `entwuerfe`.
+- **GitHub Pages ist aktiv**, Quelle Branch `entwuerfe` (Root):
+  https://davidfuchs1.github.io/training-app/entwuerfe/a/?id=demo
+  Die Seite liest `plaene/` dieses Branches – Änderungen auf `main` erst nach
+  Merge in `entwuerfe` sichtbar.
+- **Nächster Schritt:** finale Umsetzung aus Entwurf A im Wurzelverzeichnis
+  (PWA mit Icon, Service Worker/Offline-Fallback, Adresse `/plan/<id>`),
+  danach Pages auf `main` umstellen.
+- Offen: prüfen, ob GitHub Pages neu baut, wenn die Action nach `main` pusht;
+  Ski-Farbe `#F0F7FD` ist kaum vom hellen Akzent zu unterscheiden (bewusst so belassen).
 
 ## Arbeitsweise
 - Plan-Modus: Plan zeigen, Freigabe abwarten, unterwegs kurz erklären –
