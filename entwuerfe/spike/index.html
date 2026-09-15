@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; connect-src https://api.github.com; script-src 'self'; style-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Spike">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="spike.css">
+  <title>Spike · Token &amp; Status</title>
+</head>
+<body>
+  <main>
+    <h1>Spike: Token &amp; Status</h1>
+    <p class="leise">Prüft die Annahmen aus Schritt 0 gegen <code>davidfuchs1/plan-test</code>.
+      Enthält keine Daten; der Schlüssel bleibt nur auf diesem Gerät.</p>
+    <p id="modus" class="marke"></p>
+
+    <section class="karte">
+      <h2>Schlüssel</h2>
+      <div id="schluessel-da" hidden>
+        <p id="schluessel-info"></p>
+        <button id="entfernen" class="zweit">Schlüssel entfernen</button>
+      </div>
+      <form id="schluessel-form" hidden>
+        <input class="unsichtbar" type="text" name="username" autocomplete="username" value="coach-mac" tabindex="-1" aria-hidden="true">
+        <label for="token">Token einfügen (<code>github_pat_…</code>)</label>
+        <input id="token" name="password" type="password" autocomplete="current-password" spellcheck="false" autocapitalize="off">
+        <button type="submit">Speichern</button>
+      </form>
+    </section>
+
+    <section class="karte">
+      <h2>Tests</h2>
+      <button id="start" disabled>Alle Tests starten</button>
+      <ol id="ergebnisse"></ol>
+    </section>
+  </main>
+  <script src="spike.js"></script>
+</body>
+</html>
