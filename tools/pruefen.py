@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
 """Prüft Plandateien gegen das Datenformat (format_version 1).
 
-Aufruf:  python3 pruefen.py <pfad-zum-plaene-ordner>
-Exit-Code 0 = keine Fehler (Warnungen möglich), 1 = Fehler.
+Aufruf:
+  python3 pruefen.py <pfad-zum-plaene-ordner>
+      Ordner mit athleten.json, uebungen.json und je einem Ordner pro Athlet
+      (Demo- und Beispieldaten).
+  python3 pruefen.py --plan <pfad-zum-plan-repo> --uebungen <pfad-zu-uebungen.json>
+      Privates Plan-Repo einer Person (athlet.json, aktuell.json, index.json,
+      wochen/, status.json) gegen die öffentliche Übungsbibliothek.
+Exit-Code 0 = keine Fehler (Warnungen möglich), 1 = Fehler, 2 = falscher Aufruf.
 Nur Python-Standardbibliothek (ab 3.8).
 
 Hinweis: Kopie liegt in training-app/tools/pruefen.py – beide synchron halten.
@@ -30,9 +36,12 @@ BLOCK_TYPEN = {"aufwaermen", "haupt", "intervall", "technik", "cooldown"}
 # verwenden; mit der Genehmigung wird auch die Farbe in der Webseite festgelegt.
 GENEHMIGUNG = "nicht in bekannter Liste – vor Verwendung genehmigen lassen und Farbe festlegen"
 EINHEIT_STATUS = {"geplant", "erledigt", "teilweise", "ausgelassen"}
+# status.json (von der App geschrieben): nur gemeldete Werte; „geplant“ = Eintrag entfernen
+GEMELDETER_STATUS = {"erledigt", "teilweise", "ausgelassen"}
+STATUS_SCHLUESSEL = {"format_version", "athlet", "aktualisiert", "wochen"}
 INDEX_STATUS = {"abgeschlossen", "laufend", "geplant"}
 
-# Schlüssel, die in öffentlichen Dateien nicht vorkommen dürfen (Datenschutz).
+# Schlüssel, die in Plandateien nicht vorkommen dürfen (Datenschutz).
 GESPERRTE_SCHLUESSEL = {
     "vorname", "nachname", "echter_name", "geburtsdatum", "alter", "email", "telefon", "adresse",
     "gewicht", "koerpergewicht", "groesse", "ruhe_hf", "ruhepuls", "hrv", "schlaf",
@@ -54,8 +63,16 @@ class Pruefer:
 
     # ---------- Hilfsfunktionen ----------
 
+    @staticmethod
+    def rel(pfad, basis):
+        """Ortsangabe relativ zur Basis; Dateien außerhalb (Übungsbibliothek) nur mit Namen."""
+        try:
+            return str(pfad.relative_to(basis))
+        except ValueError:
+            return pfad.name
+
     def lade(self, pfad, basis):
-        ort = str(pfad.relative_to(basis))
+        ort = self.rel(pfad, basis)
         try:
             with open(pfad, encoding="utf-8") as datei:
                 daten = json.load(datei)
@@ -191,10 +208,28 @@ class Pruefer:
                 ergebnis[aid] = a
         return ergebnis
 
+    # ---------- athlet.json (Plan-Repo) ----------
+
+    def athlet(self, basis):
+        pfad = basis / "athlet.json"
+        if not pfad.exists():
+            self.f("athlet.json", "Datei fehlt")
+            return None
+        daten = self.lade(pfad, basis)
+        if daten is None:
+            return None
+        ort = "athlet.json"
+        aid = self.pflicht(daten, "id", str, ort)
+        self.pflicht(daten, "anzeigename", str, ort, erlaubt_leer=False)
+        self.pflicht(daten, "sportarten", list, ort)
+        self.optional(daten, "testdaten", bool, ort)
+        if aid is None or not self.id_format(aid, ort):
+            return None
+        return daten
+
     # ---------- uebungen.json ----------
 
-    def uebungen(self, basis):
-        pfad = basis / "uebungen.json"
+    def uebungen(self, pfad, basis):
         if not pfad.exists():
             self.f("uebungen.json", "Datei fehlt")
             return {}
@@ -350,6 +385,9 @@ class Pruefer:
                 if h["tag"] not in einheiten_tage:
                     self.w(hort, f"am {h['tag']} liegt keine Trainingseinheit – Hinweis soll sich auf eine Einheit beziehen")
 
+        mob = w.get("mobility") if isinstance(w.get("mobility"), dict) else {}
+        alle = [e for teil in (einheiten, mob.get("einheiten")) if isinstance(teil, list) for e in teil]
+        kennzahlen["status"] = {e.get("id"): e.get("status") for e in alle if isinstance(e, dict) and e.get("id")}
         kennzahlen.update({"iso_woche": iso, "nr": nr, "start": w.get("start"), "ende": w.get("ende"),
                            "phase": w.get("phase"), "typ": typ})
         return kennzahlen
@@ -492,19 +530,19 @@ class Pruefer:
 
     # ---------- Athletenordner ----------
 
-    def athletenordner(self, basis, aid, katalog):
-        ordner = basis / aid
+    def athletenordner(self, basis, ordner, aid, katalog):
+        """Prüft einen Athletenordner (plaene/<id>) oder ein Plan-Repo (ordner = basis)."""
         wochen_je_datei = {}  # iso_woche -> (kennzahlen, datei)
         nrs_vorhanden = []
 
         aktuell_pfad = ordner / "aktuell.json"
         phasen_wochen = {}
         if not aktuell_pfad.exists():
-            self.f(f"{aid}/aktuell.json", "Datei fehlt")
+            self.f(self.rel(aktuell_pfad, basis), "Datei fehlt")
         else:
             daten = self.lade(aktuell_pfad, basis)
             if daten is not None:
-                ort = f"{aid}/aktuell.json"
+                ort = self.rel(aktuell_pfad, basis)
                 if daten.get("athlet") != aid:
                     self.f(ort, f"'athlet' muss '{aid}' sein")
                 self.zeitpunkt(daten, "aktualisiert", ort)
@@ -540,7 +578,7 @@ class Pruefer:
                 daten = self.lade(pfad, basis)
                 if daten is None:
                     continue
-                ort = str(pfad.relative_to(basis))
+                ort = self.rel(pfad, basis)
                 if daten.get("athlet") != aid:
                     self.f(ort, f"'athlet' muss '{aid}' sein")
                 k = self.woche(daten, ort, katalog)
@@ -566,7 +604,8 @@ class Pruefer:
             self.f(f"{aid}", "Wochennummern doppelt vergeben")
 
         self.verteilung(aid, wochen_je_datei)
-        self.index(basis, aid, wochen_je_datei)
+        self.index(basis, ordner, aid, wochen_je_datei)
+        self.status(basis, ordner, aid, wochen_je_datei)
 
     def eintragen(self, verzeichnis, k, datei, ort):
         iso = k["iso_woche"]
@@ -587,7 +626,8 @@ class Pruefer:
             if zeit.tzinfo is None:
                 self.f(ort, f"'{feld}' braucht eine Zeitzone, z. B. +02:00")
         except ValueError:
-            self.f(ort, f"'{feld}' muss ISO-Zeitpunkt sein, z. B. 2026-10-05T19:30:00+02:00")
+            self.f(ort, f"'{feld}' muss ISO-Zeitpunkt mit Zeitzone +hh:mm sein (nicht 'Z', ohne Millisekunden), "
+                        "z. B. 2026-10-05T19:30:00+02:00")
 
     def block_info(self, daten, ort):
         bort = ort + " block"
@@ -630,9 +670,9 @@ class Pruefer:
                     self.f(f"{zort} {art}", f"Zone '{zone}' muss Z1–Z5 sein")
                 self.bereich({art: bereich}, art, f"{zort} {art}.{zone}")
 
-    def index(self, basis, aid, wochen_je_datei):
-        pfad = basis / aid / "index.json"
-        ort = f"{aid}/index.json"
+    def index(self, basis, ordner, aid, wochen_je_datei):
+        pfad = ordner / "index.json"
+        ort = self.rel(pfad, basis)
         if not pfad.exists():
             self.f(ort, "Datei fehlt")
             return
@@ -699,31 +739,97 @@ class Pruefer:
             if iso not in gesehen:
                 self.f(ort, f"{iso} ({quelle}) fehlt im Index")
 
+    # ---------- status.json ----------
+
+    def status(self, basis, ordner, aid, wochen_je_datei):
+        """Von der App gemeldeter Status. Optional; nur feste Schlüssel und Werte, kein Freitext."""
+        pfad = ordner / "status.json"
+        if not pfad.exists():
+            return
+        ort = self.rel(pfad, basis)
+        daten = self.lade(pfad, basis)
+        if daten is None:
+            return
+        for schluessel in sorted(set(daten) - STATUS_SCHLUESSEL):
+            self.f(ort, f"unbekannter Schlüssel '{schluessel}' – status.json enthält nur Status, keinen Text")
+        if daten.get("athlet") != aid:
+            self.f(ort, f"'athlet' muss '{aid}' sein")
+        self.zeitpunkt(daten, "aktualisiert", ort)
+        wochen = self.pflicht(daten, "wochen", dict, ort) or {}
+        for iso, eintraege in wochen.items():
+            wort = f"{ort} wochen.{iso}"
+            if not ISO_WOCHE_RE.match(iso):
+                self.f(wort, "Schlüssel muss ISO-Woche JJJJ-Www sein")
+                continue
+            if not isinstance(eintraege, dict):
+                self.f(wort, "muss Objekt {einheit-id: status} sein")
+                continue
+            if iso not in wochen_je_datei:
+                self.f(wort, "Woche steht weder in aktuell.json noch im Archiv")
+                continue
+            k, quelle = wochen_je_datei[iso]
+            if quelle != "aktuell.json" and eintraege:
+                self.w(wort, f"Woche ist archiviert ({quelle}) – Einträge entfernt die App beim nächsten Speichern")
+            for eid, wert in eintraege.items():
+                eort = f"{wort}.{eid}"
+                if not isinstance(wert, str) or wert not in GEMELDETER_STATUS:
+                    self.f(eort, f"Status {wert!r} ungültig ({', '.join(sorted(GEMELDETER_STATUS))}; zurücksetzen = Eintrag entfernen)")
+                    continue
+                if eid not in k["status"]:
+                    self.f(eort, f"Einheit '{eid}' gibt es in {iso} nicht")
+                elif quelle != "aktuell.json" and k["status"][eid] != wert:
+                    self.w(eort, f"App meldete '{wert}', Archiv sagt '{k['status'][eid]}' – bewusst korrigiert?")
+
     # ---------- Gesamt ----------
 
     def alles(self, basis):
         athleten = self.athleten(basis)
-        katalog = self.uebungen(basis)
+        katalog = self.uebungen(basis / "uebungen.json", basis)
         ordner = {p.name for p in basis.iterdir() if p.is_dir() and not p.name.startswith(".")}
         for aid in sorted(ordner - set(athleten)):
             self.f(aid, "Athletenordner ohne Eintrag in athleten.json")
         for aid in sorted(set(athleten) - ordner):
             self.f("athleten.json", f"'{aid}' hat keinen Ordner")
         for aid in sorted(ordner & set(athleten)):
-            self.athletenordner(basis, aid, katalog)
+            self.athletenordner(basis, basis / aid, aid, katalog)
         return athleten, katalog
+
+    def plan(self, basis, uebungen_pfad):
+        """Privates Plan-Repo: athlet.json statt athleten.json, Übungen aus der öffentlichen Bibliothek."""
+        katalog = self.uebungen(uebungen_pfad, basis)
+        athlet = self.athlet(basis)
+        if athlet is not None:
+            self.athletenordner(basis, basis, athlet["id"], katalog)
+        return ({athlet["id"]: athlet} if athlet else {}), katalog
+
+
+AUFRUF = ("Aufruf: python3 pruefen.py <pfad-zum-plaene-ordner>\n"
+          "       python3 pruefen.py --plan <pfad-zum-plan-repo> --uebungen <pfad-zu-uebungen.json>")
 
 
 def main():
-    if len(sys.argv) != 2:
-        print("Aufruf: python3 pruefen.py <pfad-zum-plaene-ordner>")
-        return 2
-    basis = Path(sys.argv[1]).resolve()
-    if not basis.is_dir():
-        print(f"Ordner nicht gefunden: {basis}")
-        return 2
+    args = sys.argv[1:]
     p = Pruefer()
-    athleten, katalog = p.alles(basis)
+    if len(args) == 1 and not args[0].startswith("--"):
+        basis = Path(args[0]).resolve()
+        if not basis.is_dir():
+            print(f"Ordner nicht gefunden: {basis}")
+            return 2
+        athleten, katalog = p.alles(basis)
+    elif len(args) == 4 and sorted(args[0::2]) == ["--plan", "--uebungen"]:
+        optionen = dict(zip(args[0::2], args[1::2]))
+        basis = Path(optionen["--plan"]).resolve()
+        uebungen = Path(optionen["--uebungen"]).resolve()
+        if not basis.is_dir():
+            print(f"Plan-Repo nicht gefunden: {basis}")
+            return 2
+        if not uebungen.is_file():
+            print(f"Übungsbibliothek nicht gefunden: {uebungen}")
+            return 2
+        athleten, katalog = p.plan(basis, uebungen)
+    else:
+        print(AUFRUF)
+        return 2
     for text in p.warnungen:
         print(f"WARNUNG  {text}")
     for text in p.fehler:

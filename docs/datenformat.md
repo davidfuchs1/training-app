@@ -1,6 +1,6 @@
 # Datenformat (format_version 1)
 
-Verbindlich für alle öffentlichen Plandateien. Geprüft durch
+Verbindlich für alle Plandateien (öffentliche Testdaten und private Plan-Repos). Geprüft durch
 `tools/pruefen.py` (Original im Coach-Skill: `scripts/pruefen.py`).
 Gültige Beispiele: `plaene/demo/` und die Beispiele im Coach-Skill.
 
@@ -8,8 +8,8 @@ Gültige Beispiele: `plaene/demo/` und die Beispiele im Coach-Skill.
 
 - Kodierung UTF-8, JSON mit 2 Leerzeichen Einrückung.
 - Jede Datei hat `"format_version": 1` auf oberster Ebene.
-- Datum: `JJJJ-MM-TT`. Zeitpunkt: ISO 8601 mit Zeitzone
-  (`2026-10-05T19:30:00+02:00`). Woche: ISO-Woche `JJJJ-Www` (`2026-W41`),
+- Datum: `JJJJ-MM-TT`. Zeitpunkt: ISO 8601 mit Zeitzone als `+hh:mm`, ohne
+  Millisekunden, nicht `Z` (`2026-10-05T19:30:00+02:00`). Woche: ISO-Woche `JJJJ-Www` (`2026-W41`),
   **Montag–Sonntag**.
 - IDs: Kleinbuchstaben, Ziffern, Bindestriche (`core-dead-bug`).
 - Bereiche: zweielementige Liste `[von, bis]`; `null` für offene Enden.
@@ -20,18 +20,33 @@ Gültige Beispiele: `plaene/demo/` und die Beispiele im Coach-Skill.
 
 ## Verzeichnis
 
+Pläne echter Personen liegen je in einem **privaten Plan-Repo**
+`davidfuchs1/plan-<id>`; die App liest sie mit dem Schlüssel (Token) der
+Person über die GitHub-API. Im öffentlichen Repo `training-app` liegen nur die
+Übungsbibliothek und Testdaten.
+
 ```
-plaene/
-├── athleten.json
-├── uebungen.json
-└── <athlet-id>/
-    ├── aktuell.json          laufende + nächste Woche
-    ├── index.json            Kennzahlen aller Wochen
-    └── wochen/<JJJJ-Www>.json   abgeschlossene Wochen
+training-app/plaene/          öffentlich
+├── athleten.json             nur Testathleten (demo)
+├── uebungen.json             Übungsbibliothek für alle Pläne
+└── demo/                     gleicher Aufbau wie ein Plan-Repo, ohne athlet.json
+
+plan-<id>/                    privat, ein Repo pro Person
+├── athlet.json               id, Anzeigename, Sportarten
+├── aktuell.json              laufende + nächste Woche      (schreibt der Coach)
+├── index.json                Kennzahlen aller Wochen       (schreibt der Coach)
+├── wochen/<JJJJ-Www>.json    abgeschlossene Wochen         (schreibt der Coach)
+└── status.json               gemeldeter Status             (schreibt nur die App)
 ```
 
 Eine Woche steht **entweder** in `aktuell.json` **oder** in `wochen/` –
 nie in beiden.
+
+Prüfen:
+```bash
+python3 tools/pruefen.py plaene                                          # Demo
+python3 tools/pruefen.py --plan ../plan-<id> --uebungen plaene/uebungen.json  # Plan-Repo
+```
 
 ---
 
@@ -53,7 +68,25 @@ nie in beiden.
 | `sportarten` | Liste Text | ja | für Filter/Anzeige |
 | `testdaten` | bool | nein (false) | Testathlet, nicht coachen |
 
-Jeder Athletenordner muss hier stehen und umgekehrt.
+Jeder Athletenordner muss hier stehen und umgekehrt. Nur für `plaene/`
+(Testdaten); echte Personen stehen nicht in dieser Liste.
+
+---
+
+## athlet.json (Plan-Repo)
+
+```json
+{
+  "format_version": 1,
+  "id": "david",
+  "anzeigename": "david",
+  "sportarten": ["kraft", "rad", "laufen"]
+}
+```
+
+Felder wie ein Eintrag in `athleten.json` (`id`, `anzeigename`, `sportarten`,
+optional `testdaten`). `athlet` in allen anderen Dateien des Repos muss `id`
+entsprechen. Repo-Name: `plan-<id>`.
 
 ---
 
@@ -273,6 +306,52 @@ Webseite den Eintrag grau.
 
 Jede Woche aus Archiv und `aktuell.json` steht genau einmal im Index, sortiert
 nach `nr`; die Werte müssen zur Wochendatei passen.
+
+`status.json` fließt **nicht** in den Index ein: `erledigt` gibt es erst für
+abgeschlossene Wochen und wird aus der Archivdatei berechnet.
+
+---
+
+## status.json
+
+Von der App geschriebener Status der Einheiten. Optional (fehlt, solange
+nichts gemeldet wurde). **Einziger Schreiber ist die App**; der Coach ändert
+die Datei nicht.
+
+```json
+{
+  "format_version": 1,
+  "athlet": "demo",
+  "aktualisiert": "2026-09-16T19:42:00+02:00",
+  "wochen": {
+    "2026-W38": {"e1": "erledigt", "m-a": "erledigt", "e2": "teilweise"}
+  }
+}
+```
+
+| Feld | Typ | Pflicht | Bedeutung |
+|---|---|---|---|
+| `athlet` | ID | ja | wie in allen Dateien |
+| `aktualisiert` | Zeitpunkt | ja | letzte Meldung |
+| `wochen` | Objekt | ja | Schlüssel ISO-Woche → Objekt `{einheit-id: status}` |
+
+Regeln:
+- **Nur diese Schlüssel, kein Freitext** – andere Schlüssel sind Fehler.
+- Status: `erledigt`, `teilweise` oder `ausgelassen`. Zurücksetzen auf
+  „geplant“ = Eintrag entfernen.
+- Einheit-IDs aus `einheiten` **und** `mobility.einheiten` der Woche; sie
+  müssen existieren (Fehler).
+- Wochen nur aus `aktuell.json`. Steht die Woche schon im Archiv → Warnung;
+  die App entfernt solche Wochen beim nächsten Speichern. Weicht der gemeldete
+  vom archivierten Status ab → Warnung („bewusst korrigiert?“).
+- Unbekannte Woche → Fehler.
+
+**Anzeige:** Für Wochen aus `aktuell.json` gilt der Status aus `status.json`
+vor `einheit.status`. Archivwochen zeigen den Status der Archivdatei.
+
+**Wochen-Check:** Der Coach übernimmt den Status aus `status.json` (bei
+Bedarf korrigiert nach Rückmeldung) beim Archivieren in
+`wochen/<JJJJ-Www>.json` und berechnet `index.json`.
 
 ---
 
