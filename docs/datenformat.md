@@ -84,7 +84,7 @@ Jeder Athletenordner muss hier stehen und umgekehrt.
 |---|---|---|---|
 | Schlüssel | ID | ja | Präfix nach Kategorie empfohlen (`mob-`, `faszien-`, `core-`, `kraft-`, `plyo-`) |
 | `name` | Text | ja | Anzeigename der Übung |
-| `kategorie` | `mobility` `faszien` `core` `kraft` `plyometrie` `lauf-abc` `aufwaermen` | ja | |
+| `kategorie` | `mobility` `faszien` `core` `kraft` `plyometrie` `lauf-abc` `aufwaermen` | ja | andere → Warnung, siehe [Feste Listen](#feste-listen-und-neue-einträge) |
 | `sportarten` | Liste Text | ja | `alle` oder z. B. `ski`, `laufen` |
 | `equipment` | Liste Text | ja | leer = nur Körpergewicht; z. B. `matte`, `blackroll`, `band`, `treppe`, `wand`, `stuhl` |
 | `zielmuskeln` | Liste Text | nein | |
@@ -106,12 +106,12 @@ Gleiche Struktur in `aktuell.json` → `wochen[]` und in `wochen/<JJJJ-Www>.json
 | `nr` | Zahl ≥ 1 | ja | Wochennummer im Block |
 | `start`, `ende` | Datum | ja | innerhalb der ISO-Woche, start ≤ ende (Kurzwochen erlaubt) |
 | `phase` | Text | ja | Name der Phase aus `block.phasen` |
-| `typ` | `eingewoehnung` `aufbau` `entlastung` `taper` `wettkampf` `pause` | ja | |
+| `typ` | `eingewoehnung` `grundlage` `aufbau` `entlastung` `peak` `taper` `wettkampf` `pause` | ja | Phasentyp; andere → Warnung |
 | `fokus` | Text | ja | Ein Satz: worum geht es diese Woche |
 | `notiz_coach` | Text | nein | Hinweis an die Person (kein Feedback-Zitat) |
 | `einheiten` | Liste Einheit | ja | mind. 1 mit `pflicht: true` (außer `typ` `pause`) |
 | `mobility` | Objekt | ja | siehe unten |
-| `ernaehrung_hinweise` | Liste `{tag, text}` | nein | `tag` Datum oder null (ganze Woche) |
+| `ernaehrung_hinweise` | Liste `{tag, text}` | nein | `tag` Datum – **nie null**; siehe [Ernährungshinweise](#ernährungshinweise) |
 
 Archivdatei zusätzlich: `format_version`, `athlet`.
 
@@ -121,7 +121,7 @@ Archivdatei zusätzlich: `format_version`, `athlet`.
 |---|---|---|---|
 | `id` | ID | ja | eindeutig in der Woche, z. B. `e1` |
 | `pflicht` | bool | ja | |
-| `sportart` | Text | ja | bekannt: `kraft` `laufen` `rad` `schwimmen` `koppel` `mobility` `core` `ski` `wandern` `sonstiges` (anderes → Warnung) |
+| `sportart` | Text | ja | bekannt: `kraft` `laufen` `rad` `schwimmen` `koppel` `mobility` `core` `ski` `wandern` `sonstiges` (anderes → Warnung, siehe [Feste Listen](#feste-listen-und-neue-einträge)) |
 | `titel` | Text | ja | kurz, z. B. „Kraft A – Beine exzentrisch“ |
 | `tag_vorschlag` | Datum | ja | geplanter Tag innerhalb der Woche – **nie null**, auch bei optionalen Einheiten |
 | `dauer_min` | Zahl | ja | Gesamtdauer |
@@ -191,6 +191,25 @@ Prüfskript als Warnung:
 - mehr als **3 Trainingstage am Stück** (Mobility zählt nicht)
 
 Bewusste Abweichungen sind erlaubt und werden in `notiz_coach` begründet.
+
+### Ernährungshinweise
+
+- Jeder Hinweis hat einen `tag` (Datum innerhalb der Woche, **nie null**);
+  die Webseite zeigt ihn direkt unter den Einheiten dieses Tages.
+- Der Hinweis bezieht sich auf eine Einheit an diesem Tag (sonst Warnung) und
+  sagt etwas Konkretes, nicht Selbstverständliches – z. B. Kohlenhydrate vor
+  und während langer Einheiten. Keine allgemeinen Hinweise wie „nach Kraft
+  proteinreich essen“.
+
+### Feste Listen und neue Einträge
+
+Übungskategorien (`kategorie`), Sportarten (`sportart`) und Phasentypen
+(`typ`) sind feste Listen, weil die Webseite jedem Eintrag eine Farbe
+zuordnet. Ein Wert außerhalb der Liste erzeugt eine **Warnung** und darf
+erst nach Genehmigung durch den Projektinhaber verwendet werden. Mit der
+Genehmigung wird die **Farbe festgelegt** und der Wert in Prüfskript,
+Datenformat und Farbverzeichnis der Webseite ergänzt. Ohne Farbe zeigt die
+Webseite den Eintrag grau.
 
 ---
 
