@@ -9,7 +9,7 @@
   --rand-oben: env(safe-area-inset-top, 0px);
   /* Abstand oben: unter der Statusleiste (meist 0 gemeldet) mit etwas Luft; bei Geräten, die
      doch einen Rand melden (z. B. Querformat, ältere iOS-Versionen), mindestens dieser Rand */
-  --abstand-oben: max(var(--rand-oben), 12px);
+  --abstand-oben: max(var(--rand-oben), 20px);
   --rand-unten: env(safe-area-inset-bottom, 0px);
   /* Unter der Tab-Leiste reicht weniger als der volle Home-Balken-Bereich (Leiste wirkt sonst zu hoch) */
   --rand-unten-tabs: max(calc(var(--rand-unten) - 12px), 6px);
@@ -19,6 +19,16 @@
 [hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; background: var(--farbe-grund); }
 
+/* Oberkante: undurchsichtige, bildschirmbreite, haftende Fläche in Hintergrundfarbe.
+   iOS 26/27 legt über Web-Apps oben einen Unschärfe-Verlauf („scroll edge effect“), wenn es
+   am oberen Rand keine einfarbige Fläche findet. Diese Fläche liefert sie – ohne Transparenz
+   und ohne Weichzeichner, sonst greift der Effekt wieder. Sie bildet zugleich den Abstand
+   zwischen Statusleiste und Inhalt. */
+.oberkante {
+  position: sticky; top: 0; z-index: 40; display: block;
+  width: 100%; height: var(--abstand-oben);
+  background: var(--farbe-grund);
+}
 body {
   margin: 0;
   background: var(--farbe-grund); /* auch Farbe der iOS-Statusleiste */
@@ -42,11 +52,10 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 
 /* ---------- Kopfleiste ---------- */
 .topbar {
-  position: sticky; top: 0; z-index: 10;
+  position: sticky; top: var(--abstand-oben); z-index: 10;
   display: flex; justify-content: space-between; align-items: center; gap: 8px;
-  margin: 0 -16px; padding: var(--abstand-oben) 16px 8px;
-  background: color-mix(in srgb, var(--farbe-grund) 85%, transparent);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  margin: 0 -16px; padding: 0 16px 8px;
+  background: var(--farbe-grund);
 }
 .knopf {
   display: inline-flex; align-items: center; gap: 6px;
@@ -486,7 +495,7 @@ a.tag-label { color: inherit; }
 .app { position: relative; }
 
 /* ---------- Zugang (Entwurf) ---------- */
-.zugang { padding: calc(28px + var(--abstand-oben)) 4px 20px; }
+.zugang { padding: 28px 4px 20px; }
 .zugang h1 { font-size: 30px; font-weight: 800; margin: 18px 0 8px; }
 .zugang > .leise { margin: 0 0 22px; }
 .zugang .ablauf { margin: 8px 0 20px; }
@@ -519,7 +528,7 @@ a.tag-label { color: inherit; }
 .text-knopf { margin-top: 12px; font-size: 13px; font-weight: 400; color: var(--farbe-text-leise); text-decoration: underline; }
 
 /* Ohne Kopfleiste (eine Person): Inhalt beginnt unter der Notch */
-.topbar[hidden] ~ #inhalt { padding-top: var(--abstand-oben); }
+.topbar[hidden] ~ #inhalt { padding-top: 0; }
 .hinweis.warnung { border-left-color: var(--farbe-warnung); margin-top: 6px; }
 .hinweis.warnung a { display: block; margin-top: 6px; font-weight: 700; color: var(--farbe-akzent); }
 

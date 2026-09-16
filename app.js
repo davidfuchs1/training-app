@@ -963,6 +963,7 @@ function messwerteZeigen() {
     'clientHeight': document.documentElement.clientHeight,
     'Rand oben (env)': cs.paddingTop,
     'Rand unten (env)': cs.paddingBottom,
+    'Oberkante (Fläche)': (() => { const r = document.querySelector('.oberkante').getBoundingClientRect(); return `${Math.round(r.top)} bis ${Math.round(r.bottom)}`; })(),
     'Datum/Überschrift oben bei': (() => { const e = document.querySelector('#inhalt .ueber, #inhalt h1'); return e ? Math.round(e.getBoundingClientRect().top) : '–'; })(),
     'Tab-Leiste oben/unten': `${Math.round(tabsRect.top)} / ${Math.round(tabsRect.bottom)}`,
     'Inhalt beginnt bei': Math.round(inhalt.getBoundingClientRect().top + window.scrollY),
