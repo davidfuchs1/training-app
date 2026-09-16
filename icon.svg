@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 36 36" width="512" height="512">
-  <!-- App-Symbol = Symbol des Tabs „Block“ (gleicher Pfad und Strich wie in index.html),
-       mittig mit Rand; iOS rundet die Ecken selbst -->
-  <rect x="-6" y="-6" width="36" height="36" fill="#0b0d10"/>
-  <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="#f2f4f7"
-        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>

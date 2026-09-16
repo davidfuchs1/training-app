@@ -5,7 +5,7 @@
      schlechtem Empfang startet die App trotzdem sofort aus dem Cache.
    - Übungsbibliothek und Demo-Daten: erst Netz, Cache nur als Rückfall.
    - Pläne kommen über api.github.com und laufen nie durch den Service Worker. */
-const VERSION = 'v15';
+const VERSION = 'v16';
 const CACHE = `training-${VERSION}`;
 
 const OBERFLAECHE = [
@@ -16,10 +16,7 @@ const OBERFLAECHE = [
   'stil.css',
   'farben.css',
   'manifest.webmanifest',
-  'icon.svg',
-  'icon-180.png',
-  'icon-192.png',
-  'icon-512.png',
+  'icon.png',
 ];
 
 self.addEventListener('install', (ev) => {
