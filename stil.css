@@ -531,3 +531,7 @@ a.tag-label { color: inherit; }
 .topbar[hidden] ~ #inhalt { padding-top: calc(var(--rand-oben) + 4px); }
 .hinweis.warnung { border-left-color: var(--farbe-warnung); margin-top: 6px; }
 .hinweis.warnung a { display: block; margin-top: 6px; font-weight: 700; color: var(--farbe-akzent); }
+
+/* VORÜBERGEHEND – Fehlersuche Statusleiste: pink = eigene Fläche, türkis = gemeldeter Rand */
+.statusleiste { background: #ff2d95 !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+.statusleiste::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; background: #00e5ff; }
