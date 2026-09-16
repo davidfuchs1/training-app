@@ -9,9 +9,11 @@
   <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#0b0d10">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <!-- Keine durchsichtige Statusleiste: Ab iOS 26 legt das System sonst einen Unschärfe-Verlauf
-       („scroll edge effect“) über den oberen Inhalt. Ohne die Angabe liegt die App unter der
-       Statusleiste; deren Farbe übernimmt iOS vom Seitenhintergrund. -->
+  <!-- Undurchsichtige Statusleiste („default“): Bei „black-translucent“ legt iOS ab Version 26
+       einen Unschärfe-Verlauf („scroll edge effect“) über den oberen Inhalt. So liegt die App
+       unterhalb der Statusleiste. iOS liest die Angabe nur beim Hinzufügen zum Home-Bildschirm:
+       nach einer Änderung App löschen und neu hinzufügen. -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Training">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icon-180.png">
