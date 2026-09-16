@@ -3,18 +3,14 @@
 
 :root {
   --radius: 18px;
-  /* Tab-Leiste wie iOS: 49 pt Bedienfläche, darunter der Bereich des Home-Balkens */
-  --tabs-hoehe: 50px;
   /* Sichere Ränder (Notch/Dynamic Island, Home-Balken) – vom Gerät geliefert, je iPhone verschieden */
   --rand-oben: env(safe-area-inset-top, 0px);
   /* Abstand oben: unter der Statusleiste (meist 0 gemeldet) mit etwas Luft; bei Geräten, die
      doch einen Rand melden (z. B. Querformat, ältere iOS-Versionen), mindestens dieser Rand */
   --abstand-oben: max(var(--rand-oben), 8px);
   --rand-unten: env(safe-area-inset-bottom, 0px);
-  /* Unter der Tab-Leiste reicht weniger als der volle Home-Balken-Bereich (Leiste wirkt sonst zu hoch) */
-  --rand-unten-tabs: max(calc(var(--rand-unten) - 12px), 6px);
-  /* Platz, den die Tab-Leiste unten belegt (Inhalt, Meldungen) – je Variante gesetzt */
-  --tabs-platz: calc(var(--tabs-hoehe) + var(--rand-unten-tabs));
+  /* Platz, den die Tab-Leiste (Kapsel) unten belegt: Höhe plus Abstand zum unteren Rand */
+  --tabs-platz: calc(62px + max(calc(var(--rand-unten) - 8px), 12px));
 }
 
 * { box-sizing: border-box; }
@@ -31,12 +27,15 @@ html { -webkit-text-size-adjust: 100%; background: var(--farbe-grund); }
   width: 100%; height: var(--abstand-oben);
   background: var(--farbe-grund);
 }
-/* Weiche Kante: darunter blendet Inhalt beim Hochscrollen sanft aus (Verlauf auf einem
-   Kind-Element; die haftende Fläche selbst bleibt einfarbig, damit iOS nicht weichzeichnet) */
+/* Weiche Kante: Sobald gescrollt ist (app.js setzt body.gescrollt), blendet Inhalt unter der
+   Fläche sanft aus. Ganz oben ist der Verlauf unsichtbar, damit er nichts überdeckt. Er hängt
+   an einem Kind-Element; die haftende Fläche selbst bleibt einfarbig (sonst iOS-Unschärfe). */
 .oberkante::after {
   content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 16px; pointer-events: none;
   background: linear-gradient(to bottom, var(--farbe-grund), color-mix(in srgb, var(--farbe-grund) 0%, transparent));
+  opacity: 0; transition: opacity .15s;
 }
+body.gescrollt .oberkante::after { opacity: 1; }
 body {
   margin: 0;
   background: var(--farbe-grund); /* auch Farbe der iOS-Statusleiste */
@@ -383,48 +382,28 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 .zonen td { padding: 7px 4px; border-top: 1px solid var(--farbe-linie); white-space: nowrap; }
 
 /* ---------- Tab-Leiste ---------- */
+/* Tab-Leiste als schwebende Kapsel (iOS 26/27): Abstand zu Seiten, Bildschirmecken und
+   Home-Balken; Symbole mittig, aktiver Tab hinterlegt */
 .tabs {
-  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); z-index: 20;
-  width: min(100%, 440px); height: var(--tabs-platz);
+  position: fixed; left: 50%; transform: translateX(-50%); z-index: 20;
+  bottom: max(calc(var(--rand-unten) - 8px), 12px);
+  width: min(calc(100% - 42px), 400px); height: 62px; padding: 0 6px;
   display: grid; grid-template-columns: repeat(4, 1fr);
   background: color-mix(in srgb, var(--farbe-flaeche) 88%, transparent);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid var(--farbe-linie);
+  border: 1px solid var(--farbe-linie); border-radius: 31px;
 }
 .tabs a {
+  position: relative;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
   font-size: 10px; font-weight: 600; color: var(--farbe-text-leise);
 }
 .tabs svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .tabs a.aktiv { color: var(--farbe-akzent); }
-
-/* Variante 1 „Kapsel“ (iOS 26/27): schwebende, abgerundete Leiste mit Abstand zu Rand und
-   Bildschirmecken; Symbole mittig in der Kapsel */
-.tabs-kapsel { --tabs-platz: calc(62px + max(var(--rand-unten), 12px)); }
-.tabs-kapsel .tabs {
-  bottom: max(calc(var(--rand-unten) - 8px), 12px);
-  width: min(calc(100% - 42px), 400px); height: 62px; padding: 0 6px;
-  border: 1px solid var(--farbe-linie); border-radius: 31px;
-}
-.tabs-kapsel .tabs a.aktiv { position: relative; }
-.tabs-kapsel .tabs a.aktiv::before {
+.tabs a.aktiv::before {
   content: ""; position: absolute; inset: 6px 2px; z-index: -1; border-radius: 25px;
   background: var(--farbe-flaeche-2);
 }
-
-/* Variante 2 „Klassisch“ (Apple-Maße): volle Breite, Symbole mittig in 49 px Bedienfläche,
-   darunter der ganze Home-Balken-Bereich; seitlicher Innenabstand hält Abstand zu den Ecken */
-.tabs-klassisch { --tabs-platz: calc(49px + var(--rand-unten)); }
-.tabs-klassisch .tabs { grid-template-rows: 49px; padding: 0 18px var(--rand-unten); }
-
-/* Variante 3 „Kompakt“: nur Symbole, etwas größer, mittig in der flachen Leiste;
-   aktiver Tab mit kleiner Markierung darunter */
-.tabs-kompakt { --tabs-platz: calc(44px + var(--rand-unten-tabs)); }
-.tabs-kompakt .tabs { grid-template-rows: 44px; padding: 0 24px var(--rand-unten-tabs); }
-.tabs-kompakt .tabs a { font-size: 0; gap: 4px; }
-.tabs-kompakt .tabs svg { width: 26px; height: 26px; }
-.tabs-kompakt .tabs a::after { content: ""; width: 4px; height: 4px; border-radius: 2px; background: transparent; }
-.tabs-kompakt .tabs a.aktiv::after { background: var(--farbe-akzent); }
 
 /* ---------- Blatt (Übungsdetails) ---------- */
 .sheet-hintergrund {

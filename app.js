@@ -28,13 +28,9 @@ const imHomeBildschirm = () => window.navigator.standalone === true
 const istIOS = () => /iPad|iPhone|iPod/.test(navigator.userAgent)
   || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-// Tab-Leisten-Variante (vorübergehend zum Vergleichen auf dem Gerät, gewählt in der Messanzeige)
-const TAB_VARIANTEN = { kapsel: 'Kapsel', klassisch: 'Klassisch', kompakt: 'Kompakt' };
-function tabVarianteSetzen(name) {
-  for (const v of Object.keys(TAB_VARIANTEN)) document.body.classList.toggle(`tabs-${v}`, v === name);
-  try { if (name) localStorage.setItem('tab-variante', name); else localStorage.removeItem('tab-variante'); } catch { /* egal */ }
-}
-try { tabVarianteSetzen(localStorage.getItem('tab-variante')); } catch { /* egal */ }
+// Weiche Kante oben nur, wenn nicht ganz oben (siehe .oberkante::after in stil.css)
+const scrollZustand = () => document.body.classList.toggle('gescrollt', window.scrollY > 2);
+window.addEventListener('scroll', scrollZustand, { passive: true });
 
 // ---------- Start ----------
 
@@ -979,11 +975,7 @@ function messwerteZeigen() {
     'iOS': (navigator.userAgent.match(/OS (\d+[_\d]*)/) || [])[1] || '–',
   };
   sonde.remove();
-  const aktiv = [...document.body.classList].find((k) => k.startsWith('tabs-')) || '';
-  const wahl = [['', 'Aktuell'], ...Object.entries(TAB_VARIANTEN)].map(([k, t]) =>
-    `<button class="filter ${aktiv === (k ? `tabs-${k}` : '') ? 'aktiv' : ''}" data-aktion="tab-variante" data-name="${k}">${t}</button>`).join('');
-  blattOeffnen(`<h2>Tab-Leiste</h2><div class="filterleiste">${wahl}</div>
-    <h2>Messwerte</h2><p class="leise">Bitte als Screenshot an den Coach.</p>
+  blattOeffnen(`<h2>Messwerte</h2><p class="leise">Bitte als Screenshot an den Coach.</p>
     <div class="karte liste">${Object.entries(werte).map(([k, v]) =>
       `<div class="uebung-zeile"><span class="zeile-text"><b>${esc(k)}</b><small>${esc(String(v))}</small></span></div>`).join('')}</div>`);
 }
@@ -1000,7 +992,6 @@ document.addEventListener('click', (ev) => {
   else if (aktion === 'status') statusSetzen(Number(el.dataset.nr), el.dataset.e, el.dataset.wert);
   else if (aktion === 'zugang-formular') zugangZeigen('einrichten');
   else if (aktion === 'messen') messwerteZeigen();
-  else if (aktion === 'tab-variante') { tabVarianteSetzen(el.dataset.name); messwerteZeigen(); }
   else if (aktion === 'abmelden') {
     if (!confirm('Schlüssel von diesem Gerät entfernen? Zum Ansehen des Plans brauchst du ihn dann erneut.')) return;
     D.abmelden();
