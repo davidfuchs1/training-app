@@ -866,13 +866,13 @@ async function planWechseln(id) {
 function zugangDetails() {
   if (daten.demo) {
     return `<section class="zugang-fuss">
-      <p class="ueber" data-aktion="messen">Zugang</p>
+      <p class="ueber">Zugang</p>
       <dl><dt>Demo</dt><dd>Testdaten, Meldungen bleiben auf diesem Gerät</dd></dl>
       <a class="text-knopf" href="./">Eigenen Plan einrichten</a>
     </section>`;
   }
   return `<section class="zugang-fuss">
-    <p class="ueber" data-aktion="messen">Zugang</p>
+    <p class="ueber">Zugang</p>
     <dl>
       <dt>Plan vom Coach</dt><dd>${D.fmtZeitpunkt(daten.aktuell.aktualisiert)}</dd>
       <dt>Zuletzt geladen</dt><dd>${D.fmtUhrzeit(daten.geladen)} Uhr${daten.ausCache ? ' · ohne Verbindung' : ''}</dd>
@@ -952,34 +952,6 @@ inhalt.addEventListener('touchend', (ev) => {
   if (ziel) location.hash = ziel.getAttribute('href');
 }, { passive: true });
 
-// Vorübergehende Messanzeige (Tipp auf „ZUGANG“ im Tab Block): Werte, die das Gerät für Ränder meldet
-function messwerteZeigen() {
-  const sonde = document.createElement('div');
-  sonde.style.cssText = 'position:fixed;visibility:hidden;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)';
-  document.body.append(sonde);
-  const cs = getComputedStyle(sonde);
-  const tabsRect = tabs.getBoundingClientRect();
-  const werte = {
-    'Modus': imHomeBildschirm() ? 'Home-Bildschirm-App' : 'Browser',
-    'screen (B×H)': `${screen.width} × ${screen.height}`,
-    'innerHeight': window.innerHeight,
-    'visualViewport': window.visualViewport ? Math.round(window.visualViewport.height) : '–',
-    'clientHeight': document.documentElement.clientHeight,
-    'Rand oben (env)': cs.paddingTop,
-    'Rand unten (env)': cs.paddingBottom,
-    'Oberkante (Fläche)': (() => { const r = document.querySelector('.oberkante').getBoundingClientRect(); return `${Math.round(r.top)} bis ${Math.round(r.bottom)}`; })(),
-    'Datum/Überschrift oben bei': (() => { const e = document.querySelector('#inhalt .ueber, #inhalt h1'); return e ? Math.round(e.getBoundingClientRect().top) : '–'; })(),
-    'Tab-Leiste oben/unten': `${Math.round(tabsRect.top)} / ${Math.round(tabsRect.bottom)}`,
-    'Inhalt beginnt bei': Math.round(inhalt.getBoundingClientRect().top + window.scrollY),
-    'Pixeldichte': window.devicePixelRatio,
-    'iOS': (navigator.userAgent.match(/OS (\d+[_\d]*)/) || [])[1] || '–',
-  };
-  sonde.remove();
-  blattOeffnen(`<h2>Messwerte</h2><p class="leise">Bitte als Screenshot an den Coach.</p>
-    <div class="karte liste">${Object.entries(werte).map(([k, v]) =>
-      `<div class="uebung-zeile"><span class="zeile-text"><b>${esc(k)}</b><small>${esc(String(v))}</small></span></div>`).join('')}</div>`);
-}
-
 // ---------- Ereignisse ----------
 
 document.addEventListener('click', (ev) => {
@@ -991,7 +963,6 @@ document.addEventListener('click', (ev) => {
   else if (aktion === 'plan-wahl') planWechseln(el.dataset.id);
   else if (aktion === 'status') statusSetzen(Number(el.dataset.nr), el.dataset.e, el.dataset.wert);
   else if (aktion === 'zugang-formular') zugangZeigen('einrichten');
-  else if (aktion === 'messen') messwerteZeigen();
   else if (aktion === 'abmelden') {
     if (!confirm('Schlüssel von diesem Gerät entfernen? Zum Ansehen des Plans brauchst du ihn dann erneut.')) return;
     D.abmelden();

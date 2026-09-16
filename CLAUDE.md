@@ -73,9 +73,15 @@ GitHub-Contributions, Ernährungshinweis pro Tag. Später: Push-Benachrichtigung
 - **Finale App liegt im Wurzelverzeichnis** (PWA, Zugang, Status melden,
   Herunterziehen zum Aktualisieren), Design aus Entwurf A.
 - Coach-Skill 2.0.0: Abläufe Zugang, Wochen-Check, Onboarding, Handbetrieb.
-- **Offen:** GitHub Pages auf `main` umstellen (aktuell Branch `entwuerfe`),
-  `plan-david` anlegen und Tokens erstellen (vor Planstart 2026-10-07),
-  iPhone-Test mit `plan-test`, danach `entwuerfe/spike/` entfernen.
+- **GitHub Pages läuft auf `main`:** https://davidfuchs1.github.io/training-app/
+  – auf dem iPhone (iOS 27) getestet: Einrichtung, Status melden, Symbol.
+- **iOS-Erkenntnisse (nicht zurückbauen):** Statusleiste `default` statt
+  `black-translucent` (sonst Liquid-Glass-Unschärfe über dem Inhalt; Änderung
+  wirkt erst nach Neuinstallation); oben eine deckende, haftende `.oberkante`
+  (ohne Transparenz/Weichzeichner), Verlauf darunter nur beim Scrollen;
+  Tab-Leiste als schwebende Kapsel; keine `position: fixed; top: 0`-Flächen.
+- **Offen:** `plan-david` anlegen und Tokens erstellen (vor Planstart 2026-10-07);
+  Coach-Token vor Aufnahme von `plan-david` neu erzeugen.
 - Später: Tablet-Layout (Media Queries), Push-Benachrichtigungen.
 
 ## Arbeitsweise
