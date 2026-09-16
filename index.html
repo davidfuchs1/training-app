@@ -9,7 +9,9 @@
   <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#0b0d10">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Keine durchsichtige Statusleiste: Ab iOS 26 legt das System sonst einen Unschärfe-Verlauf
+       („scroll edge effect“) über den oberen Inhalt. Ohne die Angabe liegt die App unter der
+       Statusleiste; deren Farbe übernimmt iOS vom Seitenhintergrund. -->
   <meta name="apple-mobile-web-app-title" content="Training">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icon-180.png">
@@ -19,7 +21,6 @@
   <title>Trainingsplan</title>
 </head>
 <body>
-  <div class="statusleiste" aria-hidden="true"></div>
   <div class="app">
     <div class="ziehen" id="ziehen" hidden></div>
     <header class="topbar" id="topbar" hidden></header>

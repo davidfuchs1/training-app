@@ -7,6 +7,9 @@
   --tabs-hoehe: 50px;
   /* Sichere Ränder (Notch/Dynamic Island, Home-Balken) – vom Gerät geliefert, je iPhone verschieden */
   --rand-oben: env(safe-area-inset-top, 0px);
+  /* Abstand oben: unter der Statusleiste (meist 0 gemeldet) mit etwas Luft; bei Geräten, die
+     doch einen Rand melden (z. B. Querformat, ältere iOS-Versionen), mindestens dieser Rand */
+  --abstand-oben: max(var(--rand-oben), 12px);
   --rand-unten: env(safe-area-inset-bottom, 0px);
   /* Unter der Tab-Leiste reicht weniger als der volle Home-Balken-Bereich (Leiste wirkt sonst zu hoch) */
   --rand-unten-tabs: max(calc(var(--rand-unten) - 12px), 6px);
@@ -16,21 +19,9 @@
 [hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; background: var(--farbe-grund); }
 
-/* Hinter der Statusleiste (Uhr, Akku): Fläche, damit gescrollter Inhalt nicht darunter
-   durchscheint. Bewusst „sticky“ im normalen Seitenfluss statt „fixed“: Feste Elemente
-   rechnet iOS in der Home-Bildschirm-App je nach Version ab der Unterkante der
-   Statusleiste. Die Höhe liefert jedes Gerät selbst (env) – kein Messen, kein Modellwissen.
-   Die negative Außenkante sorgt dafür, dass die Fläche keinen Platz belegt. */
-.statusleiste {
-  position: sticky; top: 0; z-index: 45; display: block;
-  height: var(--rand-oben); margin-bottom: calc(-1 * var(--rand-oben));
-  pointer-events: none;
-  background: color-mix(in srgb, var(--farbe-grund) 92%, transparent);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-}
 body {
   margin: 0;
-  background: var(--farbe-grund-aussen);
+  background: var(--farbe-grund); /* auch Farbe der iOS-Statusleiste */
   color: var(--farbe-text);
   font: 15px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
   font-variant-numeric: tabular-nums;
@@ -53,7 +44,7 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 .topbar {
   position: sticky; top: 0; z-index: 10;
   display: flex; justify-content: space-between; align-items: center; gap: 8px;
-  margin: 0 -16px; padding: calc(6px + var(--rand-oben)) 16px 8px;
+  margin: 0 -16px; padding: var(--abstand-oben) 16px 8px;
   background: color-mix(in srgb, var(--farbe-grund) 85%, transparent);
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
 }
@@ -488,14 +479,14 @@ a.tag-label { color: inherit; }
   padding: 8px 14px; border-radius: 99px; white-space: nowrap;
 }
 .ziehen {
-  position: absolute; left: 0; right: 0; top: calc(var(--rand-oben) + 4px);
+  position: absolute; left: 0; right: 0; top: 4px;
   text-align: center; font-size: 13px; font-weight: 600; color: var(--farbe-text-leise);
   transition: transform .1s linear; pointer-events: none;
 }
 .app { position: relative; }
 
 /* ---------- Zugang (Entwurf) ---------- */
-.zugang { padding: calc(40px + var(--rand-oben)) 4px 20px; }
+.zugang { padding: calc(28px + var(--abstand-oben)) 4px 20px; }
 .zugang h1 { font-size: 30px; font-weight: 800; margin: 18px 0 8px; }
 .zugang > .leise { margin: 0 0 22px; }
 .zugang .ablauf { margin: 8px 0 20px; }
@@ -528,10 +519,7 @@ a.tag-label { color: inherit; }
 .text-knopf { margin-top: 12px; font-size: 13px; font-weight: 400; color: var(--farbe-text-leise); text-decoration: underline; }
 
 /* Ohne Kopfleiste (eine Person): Inhalt beginnt unter der Notch */
-.topbar[hidden] ~ #inhalt { padding-top: calc(var(--rand-oben) + 4px); }
+.topbar[hidden] ~ #inhalt { padding-top: var(--abstand-oben); }
 .hinweis.warnung { border-left-color: var(--farbe-warnung); margin-top: 6px; }
 .hinweis.warnung a { display: block; margin-top: 6px; font-weight: 700; color: var(--farbe-akzent); }
 
-/* VORÜBERGEHEND – Fehlersuche Statusleiste: pink = eigene Fläche, türkis = gemeldeter Rand */
-.statusleiste { background: #ff2d95 !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
-.statusleiste::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; background: #00e5ff; }
