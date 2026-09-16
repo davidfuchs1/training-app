@@ -1,0 +1,23 @@
+body { margin: 0; padding: max(20px, env(safe-area-inset-top)) 16px 40px; background: #0b0d10; color: #f2f4f7;
+  font: 16px/1.5 -apple-system, BlinkMacSystemFont, sans-serif; }
+main { max-width: 560px; margin: 0 auto; }
+h1 { font-size: 24px; margin: 8px 0; }
+h2 { font-size: 17px; margin: 0 0 10px; }
+code { background: #1c2127; padding: 1px 5px; border-radius: 4px; font-size: 14px; word-break: break-all; }
+.leise { color: #9aa4b1; }
+.marke { display: inline-block; background: #1c2127; padding: 4px 10px; border-radius: 99px; font-size: 14px; }
+.karte { background: #14181d; border-radius: 16px; padding: 16px; margin: 16px 0; }
+label { display: block; margin-bottom: 6px; }
+input { width: 100%; box-sizing: border-box; padding: 12px; border-radius: 10px; border: 1px solid #2a313a;
+  background: #0b0d10; color: inherit; font-size: 16px; margin-bottom: 10px; }
+.unsichtbar { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+button { background: #f2f4f7; color: #0b0d10; border: 0; border-radius: 10px; padding: 12px 16px; font-size: 16px; font-weight: 600; }
+button:disabled { opacity: .4; }
+button.zweit { background: #2a313a; color: #f2f4f7; }
+ol { padding-left: 0; list-style: none; margin: 14px 0 0; }
+li { border-top: 1px solid #222931; padding: 10px 0; }
+li b { display: block; }
+li small { display: block; color: #9aa4b1; white-space: pre-wrap; word-break: break-word; }
+.ok b::before { content: "✓ "; color: #5fd08b; }
+.fehler b::before { content: "✗ "; color: #ff6b6b; }
+.info b::before { content: "ℹ "; color: #8fb8ff; }

@@ -1,0 +1,130 @@
+/* Farbverzeichnis – die einzige Stelle, an der Farbwerte stehen.
+
+   Ebene 1 „Palette“: rohe Farbwerte, benannt nach Farbton.
+   Ebene 2 „Rollen“:  Bedeutungen, die die Oberfläche verwendet (stil.css
+                      nutzt ausschließlich diese).
+
+   Farbe tauschen: Wert in der Palette ändern (wirkt überall, wo der Ton
+   vorkommt) oder eine Rolle auf einen anderen Palettenton zeigen lassen
+   (wirkt nur für diese Bedeutung).
+
+   Neue Übungskategorie, Sportart oder Phase: nur nach Genehmigung; dabei
+   hier eine Farbe festlegen (siehe docs/datenformat.md → Feste Listen).
+   Ohne eigene Rolle erscheint der Eintrag grau (--farbe-standard).
+
+   Stand 2026-09-15: dunkler Modus festgelegt; Akzent noch offen (vorläufig
+   neutral hell). */
+
+:root {
+  /* ---------- Ebene 1: Palette ---------- */
+
+  /* Grautöne der Oberfläche */
+  --grau-950: #050607;
+  --grau-900: #0b0d10;
+  --grau-850: #16191e;
+  --grau-800: #1f232a;
+  --grau-750: #2a2f37;
+  --grau-700: #3a404a;
+  --grau-400: #8d96a3;
+  --grau-50: #f2f4f7;
+  --weiss: #ffffff;
+
+  /* Zonen */
+  --blaugrau: #6f8ba5;
+  --gruen: #36d08a;
+  --gelb: #f3c443;
+  --orange: #ff8a3d;
+  --rot: #ff4d61;
+
+  /* Sportarten und Übungskategorien */
+  --violett: #b28cff;
+  --violett-hell: #d8c6ff;
+  --violett-dunkel: #8b5cf6;
+  --zitronengelb: #ffea76;
+  --kornblau: #6395ee;
+  --rosa: #fd95c1;
+  --altrosa: #c17d9c;
+  --eisweiss: #f0f7fd;
+  --mintgruen: #6bd28d;
+  --mintgruen-hell: #a3e4ba;
+
+  /* Phasen */
+  --phase-hellgruen: #c2e4bd;
+  --phase-hellblau: #8fb8de;
+  --phase-blau: #4074b6;
+  --phase-tuerkis: #6dd9ce;
+  --phase-hellrot: #ff5353;
+  --phase-flieder: #cfbbfa;
+  --phase-karmin: #cf0d2f;
+  --phase-grau: #96a2af;
+
+  /* ---------- Ebene 2: Rollen ---------- */
+
+  /* Flächen und Text */
+  --farbe-grund-aussen: var(--grau-950);   /* neben der App (breiter Bildschirm) */
+  --farbe-grund: var(--grau-900);
+  --farbe-flaeche: var(--grau-850);        /* Karten */
+  --farbe-flaeche-2: var(--grau-800);      /* Elemente in Karten */
+  --farbe-linie: var(--grau-750);
+  --farbe-neutral: var(--grau-700);        /* Abschnitt ohne Zone */
+  --farbe-standard: var(--grau-400);       /* Eintrag ohne eigene Farbe */
+  --farbe-text: var(--grau-50);
+  --farbe-text-leise: var(--grau-400);
+  --farbe-text-auf-farbe: var(--grau-900); /* Schrift auf hellen farbigen Flächen */
+  --farbe-abdunkeln: rgb(0 0 0 / 0.6);     /* hinter dem Übungsblatt */
+
+  /* Akzent: antippbar, aktiv, hervorgehoben – NOCH OFFEN, vorläufig neutral */
+  --farbe-akzent: var(--grau-50);
+  --farbe-text-auf-akzent: var(--grau-900);
+
+  /* Trainingszonen (kühl → heiß) */
+  --farbe-zone-1: var(--blaugrau);
+  --farbe-zone-2: var(--gruen);
+  --farbe-zone-3: var(--gelb);
+  --farbe-zone-4: var(--orange);
+  --farbe-zone-5: var(--rot);
+
+  /* Sportarten */
+  --farbe-sport-kraft: var(--violett);
+  --farbe-sport-rad: var(--zitronengelb);
+  --farbe-sport-schwimmen: var(--kornblau);
+  --farbe-sport-laufen: var(--rosa);
+  --farbe-sport-wandern: var(--altrosa);
+  --farbe-sport-ski: var(--eisweiss);
+  --farbe-sport-mobility: var(--mintgruen);
+  --farbe-sport-koppel: var(--farbe-standard);
+  --farbe-sport-sonstiges: var(--farbe-standard);
+
+  /* Übungskategorien */
+  --farbe-kategorie-mobility: var(--mintgruen);
+  --farbe-kategorie-faszien: var(--mintgruen-hell);
+  --farbe-kategorie-kraft: var(--violett);
+  --farbe-kategorie-core: var(--violett-hell);
+  --farbe-kategorie-plyometrie: var(--violett-dunkel);
+  --farbe-kategorie-lauf-abc: var(--farbe-sport-laufen);
+  --farbe-kategorie-aufwaermen: var(--farbe-standard);
+
+  /* Phasen: Fläche und passende Schrift (schwarz oder weiß, keine Aufhellung) */
+  --farbe-phase-eingewoehnung: var(--phase-hellgruen);
+  --farbe-phase-eingewoehnung-text: var(--grau-900);
+  --farbe-phase-grundlage: var(--phase-hellblau);
+  --farbe-phase-grundlage-text: var(--grau-900);
+  --farbe-phase-aufbau: var(--phase-blau);
+  --farbe-phase-aufbau-text: var(--weiss);
+  --farbe-phase-entlastung: var(--phase-tuerkis);
+  --farbe-phase-entlastung-text: var(--grau-900);
+  --farbe-phase-peak: var(--phase-hellrot);
+  --farbe-phase-peak-text: var(--grau-900);
+  --farbe-phase-taper: var(--phase-flieder);
+  --farbe-phase-taper-text: var(--grau-900);
+  --farbe-phase-wettkampf: var(--phase-karmin);
+  --farbe-phase-wettkampf-text: var(--weiss);
+  --farbe-phase-pause: var(--phase-grau);
+  --farbe-phase-pause-text: var(--grau-900);
+
+  /* Hinweise und Zustände */
+  --farbe-hinweis-coach: var(--farbe-akzent);
+  --farbe-fehler: var(--rot);
+  --farbe-ausgelassen: var(--grau-700);
+  --farbe-warnung: var(--gelb);             /* Kein Zugriff, wartet auf Verbindung */
+}

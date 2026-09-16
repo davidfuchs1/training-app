@@ -1,3 +1,6 @@
 .DS_Store
 __pycache__/
 *.pyc
+
+# Lokale Claude-Code-Einstellungen (z. B. Vorschau-Server), nicht veröffentlichen
+.claude/
