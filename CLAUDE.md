@@ -23,7 +23,7 @@ liegen in `training-daten` (lokal `../training-daten`).
 | `plaene/athleten.json`, `plaene/demo/` | Testdaten zum Entwickeln (inkl. `status.json`) |
 | `docs/datenformat.md` | **verbindliches Datenformat** – vor Arbeit an Daten oder Anzeige lesen |
 | `tools/pruefen.py` | Prüfskript; Original im Coach-Skill, beide synchron halten |
-| `entwuerfe/` | Design-Entwurf A mit simulierten Zuständen (`?sim=…`) |
+| `entwuerfe/` | Archiv: Design-Entwurf A mit simulierten Zuständen (`?sim=…`); maßgeblich ist die App im Wurzelverzeichnis |
 | `.github/workflows/auto-merge-claude.yml` | übernimmt `claude/**`-Branches nach `main`, wenn nur `plaene/**` geändert und Prüfung ok |
 
 Plan-Repos (privat, aus der Vorlage `plan-vorlage`): `athlet.json`,
@@ -80,8 +80,10 @@ GitHub-Contributions, Ernährungshinweis pro Tag. Später: Push-Benachrichtigung
   wirkt erst nach Neuinstallation); oben eine deckende, haftende `.oberkante`
   (ohne Transparenz/Weichzeichner), Verlauf darunter nur beim Scrollen;
   Tab-Leiste als schwebende Kapsel; keine `position: fixed; top: 0`-Flächen.
-- **Offen:** `plan-david` anlegen und Tokens erstellen (vor Planstart 2026-10-07);
-  Coach-Token vor Aufnahme von `plan-david` neu erzeugen.
+- Übungsbibliothek: 78 Übungen (inkl. Studio-Alternativen, Aufwärmen, Lauf-ABC).
+- `plan-david` angelegt (Skiblock 2026, Woche 1–2 ausgearbeitet).
+- **Offen:** Coach-Token neu erzeugen und um `plan-david` erweitern; eigener
+  iPhone-Token nur für `plan-david` (Projektinhaber, vor 2026-10-07).
 - Später: Tablet-Layout (Media Queries), Push-Benachrichtigungen.
 
 ## Arbeitsweise

@@ -63,7 +63,7 @@ python3 tools/pruefen.py --plan ../plan-<id> --uebungen plaene/uebungen.json  # 
 
 | Feld | Typ | Pflicht | Bedeutung |
 |---|---|---|---|
-| `id` | ID | ja | = Ordnername = Adresse `/plan/<id>` |
+| `id` | ID | ja | = Ordnername unter `plaene/` |
 | `anzeigename` | Text | ja | Spitzname, kein echter Name |
 | `sportarten` | Liste Text | ja | für Filter/Anzeige |
 | `testdaten` | bool | nein (false) | Testathlet, nicht coachen |
@@ -115,11 +115,11 @@ entsprechen. Repo-Name: `plan-<id>`.
 
 | Feld | Typ | Pflicht | Bedeutung |
 |---|---|---|---|
-| Schlüssel | ID | ja | Präfix nach Kategorie empfohlen (`mob-`, `faszien-`, `core-`, `kraft-`, `plyo-`) |
+| Schlüssel | ID | ja | Präfix nach Kategorie empfohlen (`mob-`, `faszien-`, `core-`, `kraft-`, `plyo-`, `aufw-`, `abc-`) |
 | `name` | Text | ja | Anzeigename der Übung |
 | `kategorie` | `mobility` `faszien` `core` `kraft` `plyometrie` `lauf-abc` `aufwaermen` | ja | andere → Warnung, siehe [Feste Listen](#feste-listen-und-neue-einträge) |
 | `sportarten` | Liste Text | ja | `alle` oder z. B. `ski`, `laufen` |
-| `equipment` | Liste Text | ja | leer = nur Körpergewicht; z. B. `matte`, `blackroll`, `band`, `treppe`, `wand`, `stuhl` |
+| `equipment` | Liste Text | ja | leer = nur Körpergewicht; z. B. `matte`, `blackroll`, `band`, `treppe`, `wand`, `stuhl`, `handtuch`; `studio` = nur im Fitnessstudio (nie für Pflichteinheiten, wenn das Profil kein sicheres Studio nennt) |
 | `zielmuskeln` | Liste Text | nein | |
 | `ablauf` | Liste Text, ≥ 2 | ja | Bewegungsablauf Schritt für Schritt |
 | `hinweise` | Liste Text | nein | Atmung, Fokus, Tempo |
