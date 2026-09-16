@@ -203,6 +203,120 @@
       "leichter": null,
       "schwerer": null
     },
+    "mob-tiefe-hocke": {
+      "name": "Tiefe Hocke halten",
+      "kategorie": "mobility",
+      "sportarten": ["alle", "ski"],
+      "equipment": [],
+      "zielmuskeln": ["Sprunggelenk", "Hüfte", "Adduktoren", "unterer Rücken"],
+      "ablauf": [
+        "Etwas breiter als hüftbreit stellen, Fußspitzen leicht nach außen.",
+        "Langsam so tief wie möglich in die Hocke sinken, Fersen bleiben am Boden.",
+        "Ellbogen innen an die Knie legen und die Knie sanft nach außen drücken.",
+        "Brust aufrichten, ruhig atmen und das Gewicht leicht von links nach rechts verlagern.",
+        "Mit den Händen am Boden abstützen und langsam aufstehen."
+      ],
+      "hinweise": ["Fersen heben ab? Kleines Buch unter die Fersen legen oder an einem Türrahmen festhalten.", "Im Hotelzimmer machbar."],
+      "fehler": ["Fersen heben ab", "Rücken rundet stark", "Knie fallen nach innen"],
+      "standard": {"dauer_s": 60},
+      "leichter": null,
+      "schwerer": null
+    },
+    "mob-thread-the-needle": {
+      "name": "Thread the Needle (Brustwirbelsäule)",
+      "kategorie": "mobility",
+      "sportarten": ["alle", "rad", "ski"],
+      "equipment": ["matte"],
+      "zielmuskeln": ["Brustwirbelsäule", "hintere Schulter"],
+      "ablauf": [
+        "Vierfüßlerstand: Hände unter den Schultern, Knie unter der Hüfte.",
+        "Rechten Arm mit der Handfläche nach oben unter dem Körper nach links durchschieben.",
+        "Rechte Schulter und Schläfe sinken Richtung Matte, Hüfte bleibt über den Knien.",
+        "Kurz halten, dann den rechten Arm in einem Bogen zur Decke öffnen und dem Blick folgen.",
+        "Wiederholungen, dann Seite wechseln."
+      ],
+      "hinweise": ["Bewegung kommt aus dem oberen Rücken, nicht aus der Lendenwirbelsäule."],
+      "fehler": ["Hüfte schiebt zur Seite", "Bewegung nur aus der Schulter"],
+      "standard": {"wdh": 8, "seitig": true},
+      "leichter": null,
+      "schwerer": null
+    },
+    "mob-wandengel": {
+      "name": "Wandengel (Wall Angels)",
+      "kategorie": "mobility",
+      "sportarten": ["alle", "rad"],
+      "equipment": ["wand"],
+      "zielmuskeln": ["Brustwirbelsäule", "Schulterblattmuskulatur", "Brust"],
+      "ablauf": [
+        "Mit dem Rücken an eine Wand stellen, Füße eine Fußlänge vor der Wand, Knie leicht gebeugt.",
+        "Gesäß, oberer Rücken und Hinterkopf berühren die Wand, Rippen leicht nach unten ziehen.",
+        "Arme wie ein „U“ an die Wand legen: Oberarme auf Schulterhöhe, Ellbogen 90° gebeugt.",
+        "Arme langsam an der Wand nach oben schieben, soweit Handrücken und Ellbogen Kontakt halten.",
+        "Langsam zurück in die Ausgangsposition."
+      ],
+      "hinweise": ["Gut nach langen Radeinheiten oder Schreibtischtagen."],
+      "fehler": ["Hohlkreuz, Rippen heben sich", "Ellbogen verlieren den Wandkontakt"],
+      "standard": {"saetze": 2, "wdh": 10},
+      "leichter": null,
+      "schwerer": null
+    },
+    "mob-brust-tuerrahmen": {
+      "name": "Brustdehnung im Türrahmen",
+      "kategorie": "mobility",
+      "sportarten": ["alle", "rad"],
+      "equipment": ["wand"],
+      "zielmuskeln": ["Brust", "vordere Schulter"],
+      "ablauf": [
+        "In einen Türrahmen stellen, rechten Unterarm senkrecht an den Rahmen legen, Ellbogen auf Schulterhöhe.",
+        "Mit dem rechten Fuß einen kleinen Schritt nach vorne machen.",
+        "Oberkörper langsam nach vorne und leicht nach links drehen, bis vorne in der Brust eine Dehnung entsteht.",
+        "Schulter bleibt unten und weg vom Ohr; ruhig atmen und halten.",
+        "Seite wechseln."
+      ],
+      "hinweise": ["Ellbogen höher oder tiefer setzen, um unterschiedliche Bereiche zu dehnen."],
+      "fehler": ["Schulter zieht nach vorne-oben", "Hohlkreuz"],
+      "standard": {"dauer_s": 45, "seitig": true},
+      "leichter": null,
+      "schwerer": null
+    },
+    "mob-hueftkreise-vierfuessler": {
+      "name": "Hüftkreise im Vierfüßlerstand",
+      "kategorie": "mobility",
+      "sportarten": ["alle", "ski", "laufen"],
+      "equipment": ["matte"],
+      "zielmuskeln": ["Hüftgelenk", "Gesäß", "Hüftrotatoren"],
+      "ablauf": [
+        "Vierfüßlerstand, Rücken neutral, Bauch leicht angespannt.",
+        "Rechtes Knie zur Brust ziehen, ohne dass sich der Rücken rundet.",
+        "Knie seitlich nach außen öffnen, als würde man über einen Zaun steigen.",
+        "Bein nach hinten führen und langsam zurück in die Ausgangsposition bringen – ein großer, langsamer Kreis.",
+        "Wiederholungen vorwärts, dann rückwärts; Seite wechseln."
+      ],
+      "hinweise": ["Becken bleibt ruhig; nur das Hüftgelenk bewegt sich."],
+      "fehler": ["Oberkörper kippt zur Seite", "zu schnelle Bewegung"],
+      "standard": {"wdh": 5, "seitig": true},
+      "leichter": null,
+      "schwerer": null
+    },
+    "mob-kinderstellung-seitlich": {
+      "name": "Kinderstellung mit Seitneigung",
+      "kategorie": "mobility",
+      "sportarten": ["alle"],
+      "equipment": ["matte"],
+      "zielmuskeln": ["Latissimus", "seitlicher Rumpf", "unterer Rücken"],
+      "ablauf": [
+        "Auf die Fersen setzen, Knie etwas geöffnet, Oberkörper nach vorne ablegen.",
+        "Arme lang nach vorne strecken, Stirn auf der Matte.",
+        "Beide Hände nach rechts wandern lassen, bis links am Rumpf eine Dehnung entsteht.",
+        "Tief in die linke Flanke atmen und halten.",
+        "Zur Mitte zurück und zur anderen Seite."
+      ],
+      "hinweise": ["Ruhige Abschlussübung, gut am Abend."],
+      "fehler": ["Gesäß hebt von den Fersen ab"],
+      "standard": {"dauer_s": 45, "seitig": true},
+      "leichter": null,
+      "schwerer": null
+    },
     "faszien-oberschenkel-vorne": {
       "name": "Blackroll vorderer Oberschenkel",
       "kategorie": "faszien",
@@ -254,6 +368,61 @@
       ],
       "fehler": ["Achillessehne und Kniekehle direkt rollen"],
       "standard": {"dauer_s": 60, "seitig": true},
+      "leichter": null,
+      "schwerer": null
+    },
+    "faszien-adduktoren": {
+      "name": "Blackroll Adduktoren",
+      "kategorie": "faszien",
+      "sportarten": ["alle", "ski"],
+      "equipment": ["blackroll", "matte"],
+      "zielmuskeln": ["Adduktoren (Oberschenkelinnenseite)"],
+      "ablauf": [
+        "Bauchlage auf den Unterarmen, rechtes Bein seitlich angewinkelt.",
+        "Rolle unter die Innenseite des rechten Oberschenkels knapp über dem Knie legen.",
+        "Langsam Richtung Leiste rollen, Druck über die Unterarme dosieren.",
+        "An festen Stellen kurz verweilen und ruhig atmen.",
+        "Seite wechseln."
+      ],
+      "fehler": ["Direkt auf der Leiste oder dem Knie rollen", "zu schnell rollen"],
+      "standard": {"dauer_s": 60, "seitig": true},
+      "leichter": null,
+      "schwerer": null
+    },
+    "faszien-hamstrings": {
+      "name": "Blackroll Oberschenkelrückseite",
+      "kategorie": "faszien",
+      "sportarten": ["alle", "laufen", "rad"],
+      "equipment": ["blackroll", "matte"],
+      "zielmuskeln": ["hintere Oberschenkelmuskulatur"],
+      "ablauf": [
+        "Sitzen, Rolle unter den rechten Oberschenkel knapp über der Kniekehle legen, Hände hinter dem Körper.",
+        "Linkes Bein angestellt oder für mehr Druck über das rechte legen.",
+        "Gesäß anheben und langsam bis unter den Sitzbeinhöcker rollen.",
+        "Bein dabei leicht nach innen und außen drehen.",
+        "Seite wechseln."
+      ],
+      "fehler": ["Kniekehle direkt rollen"],
+      "standard": {"dauer_s": 60, "seitig": true},
+      "leichter": null,
+      "schwerer": null
+    },
+    "faszien-bws": {
+      "name": "Blackroll Brustwirbelsäule",
+      "kategorie": "faszien",
+      "sportarten": ["alle", "rad"],
+      "equipment": ["blackroll", "matte"],
+      "zielmuskeln": ["oberer Rücken", "Brustwirbelsäule"],
+      "ablauf": [
+        "Rolle quer unter den oberen Rücken auf Höhe der Schulterblätter legen, Füße aufgestellt.",
+        "Hände hinter dem Kopf verschränken, Ellbogen zusammen, Kinn leicht zur Brust.",
+        "Gesäß anheben und langsam bis zur unteren Spitze der Schulterblätter rollen.",
+        "Gesäß ablegen und den oberen Rücken über der Rolle sanft nach hinten sinken lassen.",
+        "Rolle ein Stück weiter setzen und wiederholen."
+      ],
+      "hinweise": ["Nicht den unteren Rücken (Lendenwirbelsäule) rollen."],
+      "fehler": ["Bis in den unteren Rücken rollen", "Kopf ohne Unterstützung hängen lassen"],
+      "standard": {"dauer_s": 60},
       "leichter": null,
       "schwerer": null
     },
@@ -437,6 +606,97 @@
       "standard": {"saetze": 3, "wdh": 10, "seitig": true},
       "leichter": null,
       "schwerer": null
+    },
+    "core-seitstuetz-rotation": {
+      "name": "Seitstütz mit Rotation",
+      "kategorie": "core",
+      "sportarten": ["alle", "ski"],
+      "equipment": ["matte"],
+      "zielmuskeln": ["schräge Bauchmuskulatur", "Schulterstabilität", "Anti-Seitneigung"],
+      "ablauf": [
+        "Seitstütz rechts auf dem Unterarm, Körper in einer Linie, Hüfte hoch.",
+        "Linken Arm zur Decke strecken.",
+        "Linken Arm langsam unter dem Körper durchfädeln, Oberkörper dreht mit, Hüfte bleibt oben.",
+        "Kontrolliert zurück öffnen, bis der Arm wieder zur Decke zeigt.",
+        "Wiederholungen, dann Seite wechseln."
+      ],
+      "fehler": ["Hüfte sinkt ab", "Bewegung mit Schwung"],
+      "standard": {"saetze": 2, "wdh": 8, "seitig": true},
+      "leichter": "core-seitstuetz",
+      "schwerer": null
+    },
+    "core-baerenstand": {
+      "name": "Bärenstand halten",
+      "kategorie": "core",
+      "sportarten": ["alle", "ski"],
+      "equipment": ["matte"],
+      "zielmuskeln": ["tiefe Bauchmuskulatur", "Schultern", "Hüftbeuger"],
+      "ablauf": [
+        "Vierfüßlerstand, Hände unter den Schultern, Knie unter der Hüfte, Zehen aufgestellt.",
+        "Bauch anspannen und die Knie 2–3 cm vom Boden abheben.",
+        "Rücken bleibt gerade wie ein Tisch, ruhig weiteratmen.",
+        "Halten, dann Knie kontrolliert ablegen.",
+        "Schwerer: im Bärenstand abwechselnd eine Hand kurz anheben."
+      ],
+      "hinweise": ["Im Hotelzimmer machbar."],
+      "fehler": ["Gesäß schiebt nach oben", "Luft anhalten"],
+      "standard": {"saetze": 3, "dauer_s": 30},
+      "leichter": null,
+      "schwerer": null
+    },
+    "core-superman": {
+      "name": "Superman (Rückenstrecker)",
+      "kategorie": "core",
+      "sportarten": ["alle", "rad", "laufen"],
+      "equipment": ["matte"],
+      "zielmuskeln": ["Rückenstrecker", "Gesäß", "hintere Schulter"],
+      "ablauf": [
+        "Bauchlage, Arme lang nach vorne, Stirn schwebt knapp über der Matte, Blick nach unten.",
+        "Gesäß anspannen und gleichzeitig Arme und Beine wenige Zentimeter anheben.",
+        "2–3 Sekunden halten, lang machen statt hoch heben.",
+        "Kontrolliert ablegen.",
+        "Leichter: abwechselnd nur rechter Arm und linkes Bein."
+      ],
+      "fehler": ["Kopf in den Nacken", "zu hoch anheben mit starkem Hohlkreuz"],
+      "standard": {"saetze": 2, "wdh": 10},
+      "leichter": null,
+      "schwerer": null
+    },
+    "core-reverse-crunch": {
+      "name": "Reverse Crunch",
+      "kategorie": "core",
+      "sportarten": ["alle"],
+      "equipment": ["matte"],
+      "zielmuskeln": ["unterer Bauch", "Anti-Extension"],
+      "ablauf": [
+        "Rückenlage, Arme neben dem Körper, Beine im 90°-Winkel angehoben.",
+        "Bauch anspannen und das Becken langsam einrollen, Knie wandern Richtung Brust.",
+        "Kurz halten, ohne Schwung.",
+        "Becken Wirbel für Wirbel langsam ablegen, Beine bleiben angehoben.",
+        "Wiederholen."
+      ],
+      "fehler": ["Schwung aus den Beinen", "Nacken angespannt"],
+      "standard": {"saetze": 2, "wdh": 12},
+      "leichter": null,
+      "schwerer": "core-hollow-hold"
+    },
+    "core-bruecke-marschieren": {
+      "name": "Brücke mit Marschieren",
+      "kategorie": "core",
+      "sportarten": ["alle", "laufen", "ski"],
+      "equipment": ["matte"],
+      "zielmuskeln": ["Gesäß", "Beckenstabilität", "tiefe Bauchmuskulatur"],
+      "ablauf": [
+        "Rückenlage, Füße hüftbreit aufgestellt, Arme neben dem Körper.",
+        "Gesäß anspannen und die Hüfte anheben, bis Knie, Hüfte und Schultern eine Linie bilden.",
+        "Rechten Fuß wenige Zentimeter anheben, ohne dass das Becken absinkt oder kippt.",
+        "Fuß absetzen, linken Fuß anheben – langsam im Wechsel.",
+        "Nach den Wiederholungen Becken ablegen."
+      ],
+      "fehler": ["Becken kippt zur Seite", "Hohlkreuz"],
+      "standard": {"saetze": 2, "wdh": 10, "seitig": true},
+      "leichter": "kraft-glute-bridge",
+      "schwerer": "kraft-glute-bridge-einbeinig"
     },
     "kraft-glute-bridge": {
       "name": "Beckenheben (Glute Bridge)",
@@ -712,7 +972,7 @@
       "fehler": ["Becken sackt früh ab", "zu schnelles Gleiten"],
       "standard": {"saetze": 3, "wdh": 8, "tempo": "4-0-1"},
       "leichter": "kraft-glute-bridge",
-      "schwerer": null
+      "schwerer": "kraft-nordic-curl"
     },
     "kraft-wadenheben-exzentrisch": {
       "name": "Wadenheben einbeinig exzentrisch",
@@ -729,6 +989,252 @@
       ],
       "fehler": ["Wippen", "Knie beugt stark"],
       "standard": {"saetze": 3, "wdh": 12, "tempo": "4-0-1", "seitig": true},
+      "leichter": null,
+      "schwerer": null
+    },
+    "kraft-nordic-curl": {
+      "name": "Nordic Curl (exzentrisch)",
+      "kategorie": "kraft",
+      "sportarten": ["alle", "laufen", "ski"],
+      "equipment": ["matte"],
+      "zielmuskeln": ["hintere Oberschenkelmuskulatur", "exzentrische Kraft", "Kniestabilität"],
+      "ablauf": [
+        "Kniestand auf der gefalteten Matte, Fersen unter einem Sofa, schweren Möbelstück oder von einer Person fixiert.",
+        "Körper von Knie bis Kopf gerade, Gesäß und Bauch angespannt, Hände vor der Brust.",
+        "Oberkörper so langsam wie möglich nach vorne ablassen – bremsen mit der Oberschenkelrückseite.",
+        "Wenn es nicht mehr zu halten ist, mit den Händen auffangen (Liegestütz-Position).",
+        "Mit den Händen abdrücken und zurück in den Kniestand."
+      ],
+      "hinweise": ["Nur die Absenkphase zählt. Anfangs wenige Wiederholungen – deutlicher Muskelkater möglich.", "Schützt die Knie bei Bremsbelastungen."],
+      "fehler": ["Hüfte knickt ein", "Fallenlassen statt Bremsen"],
+      "standard": {"saetze": 3, "wdh": 5, "tempo": "5-0-0"},
+      "leichter": "kraft-beinbeuger-handtuch",
+      "schwerer": null
+    },
+    "kraft-hip-thrust-sofa": {
+      "name": "Hip Thrust am Sofa",
+      "kategorie": "kraft",
+      "sportarten": ["alle", "ski", "laufen"],
+      "equipment": ["stuhl"],
+      "zielmuskeln": ["Gesäß", "hintere Oberschenkelmuskulatur"],
+      "ablauf": [
+        "Mit dem oberen Rücken (unter den Schulterblättern) an Sofa- oder stabile Stuhlkante lehnen, Füße hüftbreit aufgestellt.",
+        "Kinn leicht zur Brust, Bauch fest.",
+        "Hüfte kraftvoll nach oben drücken, bis Knie, Hüfte und Schultern waagerecht sind.",
+        "Oben 2 Sekunden das Gesäß fest anspannen.",
+        "Langsam absenken, ohne das Gesäß abzulegen."
+      ],
+      "hinweise": ["Schwerer: einbeinig oder mit Rucksack auf der Hüfte (erst in späten Aufbauwochen)."],
+      "fehler": ["Hohlkreuz oben statt Beckenstreckung", "Knie fallen nach innen"],
+      "standard": {"saetze": 3, "wdh": 12},
+      "leichter": "kraft-glute-bridge",
+      "schwerer": null
+    },
+    "kraft-curtsy-lunge": {
+      "name": "Knicks-Ausfallschritt (Curtsy Lunge)",
+      "kategorie": "kraft",
+      "sportarten": ["ski"],
+      "equipment": [],
+      "zielmuskeln": ["Gesäß (seitlich)", "vorderer Oberschenkel", "Adduktoren"],
+      "ablauf": [
+        "Hüftbreit stehen, Hände vor der Brust.",
+        "Mit dem rechten Bein diagonal hinter das linke Bein treten, wie bei einem Knicks.",
+        "Beide Knie beugen, bis das hintere Knie knapp über dem Boden ist; vorderes Knie zeigt über den Fuß.",
+        "Über das vordere Bein kraftvoll zurück in den Stand drücken.",
+        "Wiederholungen, dann Seite wechseln."
+      ],
+      "hinweise": ["Im Hotelzimmer machbar. Trainiert die Kontrolle bei seitlichen Kräften wie im Schwung."],
+      "fehler": ["Vorderes Knie fällt nach innen", "Oberkörper dreht stark mit"],
+      "standard": {"saetze": 3, "wdh": 10, "seitig": true},
+      "leichter": "kraft-ausfallschritt-rueckwaerts",
+      "schwerer": null
+    },
+    "kraft-wadenheben-knie-gebeugt": {
+      "name": "Wadenheben mit gebeugtem Knie (Soleus)",
+      "kategorie": "kraft",
+      "sportarten": ["ski", "laufen"],
+      "equipment": ["wand"],
+      "zielmuskeln": ["tiefer Wadenmuskel (Soleus)", "Achillessehne"],
+      "ablauf": [
+        "Mit den Händen an einer Wand abstützen, Knie etwa 30–45° gebeugt wie in leichter Skihocke.",
+        "Kniewinkel über die ganze Übung beibehalten.",
+        "Fersen langsam so hoch wie möglich anheben, oben 1 Sekunde halten.",
+        "In 3 Sekunden absenken.",
+        "Schwerer: einbeinig ausführen."
+      ],
+      "hinweise": ["Der Soleus arbeitet bei gebeugtem Knie – genau die Position im Skischuh."],
+      "fehler": ["Knie streckt sich beim Hochdrücken", "wippen statt kontrolliert bewegen"],
+      "standard": {"saetze": 3, "wdh": 15, "tempo": "3-0-1"},
+      "leichter": null,
+      "schwerer": "kraft-wadenheben-exzentrisch"
+    },
+    "kraft-tibialis-heben": {
+      "name": "Fußheben an der Wand (Schienbein)",
+      "kategorie": "kraft",
+      "sportarten": ["ski", "laufen"],
+      "equipment": ["wand"],
+      "zielmuskeln": ["Schienbeinmuskel (Tibialis anterior)", "Fußheber"],
+      "ablauf": [
+        "Mit Gesäß und Rücken an eine Wand lehnen, Füße etwa 30–40 cm vor der Wand, Beine gestreckt.",
+        "Fersen bleiben am Boden, Fußspitzen so weit wie möglich zum Schienbein ziehen.",
+        "Oben kurz halten.",
+        "Fußspitzen langsam absenken, ohne sie abzulegen.",
+        "Schwerer: Füße weiter von der Wand weg stellen."
+      ],
+      "hinweise": ["Beugt Schienbeinschmerzen vor und hilft bei der Vorlage im Skischuh. Im Hotelzimmer machbar."],
+      "fehler": ["Gesäß löst sich von der Wand", "abruptes Fallenlassen der Fußspitzen"],
+      "standard": {"saetze": 3, "wdh": 20},
+      "leichter": null,
+      "schwerer": null
+    },
+    "kraft-seitliches-beinheben": {
+      "name": "Seitliches Beinheben liegend",
+      "kategorie": "kraft",
+      "sportarten": ["alle", "laufen", "ski"],
+      "equipment": ["matte"],
+      "zielmuskeln": ["mittlerer Gesäßmuskel (Abduktoren)", "Beckenstabilität"],
+      "ablauf": [
+        "Seitlage rechts, Körper in einer Linie, unteres Bein leicht gebeugt, Kopf auf dem Arm.",
+        "Oberes Bein gestreckt, Fußspitze zeigt nach vorne (nicht zur Decke).",
+        "Oberes Bein langsam etwa 30–40 cm anheben, Ferse führt leicht nach hinten.",
+        "Oben kurz halten, in 2 Sekunden absenken.",
+        "Wiederholungen, dann Seite wechseln."
+      ],
+      "hinweise": ["Schwerer: Miniband um die Knöchel."],
+      "fehler": ["Becken kippt nach hinten", "Fußspitze dreht zur Decke"],
+      "standard": {"saetze": 2, "wdh": 15, "seitig": true},
+      "leichter": null,
+      "schwerer": "kraft-band-seitwaertsgehen"
+    },
+    "kraft-clamshell-band": {
+      "name": "Clamshell mit Band",
+      "kategorie": "kraft",
+      "sportarten": ["alle", "laufen", "ski"],
+      "equipment": ["matte", "band"],
+      "zielmuskeln": ["Hüftaußenrotatoren", "mittlerer Gesäßmuskel"],
+      "ablauf": [
+        "Band knapp über den Knien, Seitlage rechts, Hüfte und Knie etwa 45° gebeugt, Füße übereinander.",
+        "Becken leicht nach vorne kippen und stabil halten.",
+        "Füße bleiben zusammen, oberes Knie gegen das Band langsam öffnen.",
+        "Oben 1 Sekunde halten.",
+        "Kontrolliert schließen; Wiederholungen, dann Seite wechseln."
+      ],
+      "fehler": ["Becken rollt nach hinten mit", "zu schnelles Schließen"],
+      "standard": {"saetze": 2, "wdh": 15, "seitig": true},
+      "leichter": null,
+      "schwerer": "kraft-band-seitwaertsgehen"
+    },
+    "kraft-adduktoren-seitlage": {
+      "name": "Adduktoren-Heben in Seitlage",
+      "kategorie": "kraft",
+      "sportarten": ["ski", "laufen"],
+      "equipment": ["matte"],
+      "zielmuskeln": ["Adduktoren (Oberschenkelinnenseite)"],
+      "ablauf": [
+        "Seitlage rechts, Kopf auf dem rechten Arm.",
+        "Linkes Bein vor dem Körper aufstellen, rechtes Bein gestreckt am Boden.",
+        "Rechtes Bein langsam so hoch wie möglich anheben, Fußspitze zeigt nach vorne.",
+        "Oben 1 Sekunde halten, in 2 Sekunden absenken, ohne abzulegen.",
+        "Wiederholungen, dann Seite wechseln."
+      ],
+      "hinweise": ["Vorstufe zum Copenhagen-Stütz."],
+      "fehler": ["Oberkörper rollt nach hinten", "Schwung"],
+      "standard": {"saetze": 2, "wdh": 15, "seitig": true},
+      "leichter": null,
+      "schwerer": "core-copenhagen-kurz"
+    },
+    "kraft-liegestuetz": {
+      "name": "Liegestütz",
+      "kategorie": "kraft",
+      "sportarten": ["alle", "ski", "triathlon"],
+      "equipment": [],
+      "zielmuskeln": ["Brust", "Trizeps", "Schultern", "Rumpfspannung"],
+      "ablauf": [
+        "Hände etwas breiter als schulterbreit, Körper von Kopf bis Ferse in einer Linie.",
+        "Bauch und Gesäß anspannen.",
+        "Ellbogen etwa 45° zum Körper beugen und die Brust bis knapp über den Boden absenken.",
+        "Kraftvoll hochdrücken, Körper bleibt gerade.",
+        "Leichter: Hände erhöht (Stuhl, Sofa) oder auf den Knien."
+      ],
+      "hinweise": ["Für den Stockeinsatz und das Aufstehen nach Stürzen. Im Hotelzimmer machbar."],
+      "fehler": ["Hüfte hängt durch", "Ellbogen weit seitlich abgespreizt"],
+      "standard": {"saetze": 3, "wdh": 10},
+      "leichter": null,
+      "schwerer": null
+    },
+    "kraft-rudern-band": {
+      "name": "Rudern mit Band",
+      "kategorie": "kraft",
+      "sportarten": ["alle", "rad", "triathlon"],
+      "equipment": ["band"],
+      "zielmuskeln": ["oberer Rücken", "Schulterblattmuskulatur", "hintere Schulter"],
+      "ablauf": [
+        "Band auf Brusthöhe befestigen (Türrahmen, Geländer), Enden in beiden Händen.",
+        "Schritt zurück, bis das Band gespannt ist; leicht gebeugte Knie, Brust aufrecht.",
+        "Schulterblätter nach hinten-unten ziehen und die Ellbogen eng am Körper nach hinten führen.",
+        "Hinten 1 Sekunde halten.",
+        "Langsam nach vorne zurückgeben."
+      ],
+      "hinweise": ["Gegengewicht zu Rad- und Schreibtischhaltung."],
+      "fehler": ["Schultern ziehen hoch", "Oberkörper lehnt sich nach hinten"],
+      "standard": {"saetze": 3, "wdh": 12},
+      "leichter": null,
+      "schwerer": null
+    },
+    "kraft-beinpresse": {
+      "name": "Beinpresse (Studio)",
+      "kategorie": "kraft",
+      "sportarten": ["ski", "laufen"],
+      "equipment": ["studio"],
+      "zielmuskeln": ["vorderer Oberschenkel", "Gesäß", "exzentrische Kraft"],
+      "ablauf": [
+        "Sitz so einstellen, dass die Knie in der unteren Position etwa 90° gebeugt sind.",
+        "Füße hüftbreit mittig auf die Platte, Rücken und Gesäß fest am Polster.",
+        "Gewicht entsichern und in 3–4 Sekunden kontrolliert bis etwa 90° Kniebeugung ablassen.",
+        "Gleichmäßig über die ganze Fußsohle hochdrücken, Knie oben nicht ganz durchstrecken.",
+        "Nach dem letzten Satz Gewicht wieder sichern."
+      ],
+      "hinweise": ["Optionale Studio-Alternative zu Tempo-Kniebeuge und Bulgarian Split Squat. Einbeinig möglich."],
+      "fehler": ["Gesäß hebt vom Polster ab", "Knie fallen nach innen", "Knie oben durchgedrückt"],
+      "standard": {"saetze": 3, "wdh": 10, "tempo": "4-0-1"},
+      "leichter": null,
+      "schwerer": null
+    },
+    "kraft-hackenschmidt": {
+      "name": "Hackenschmidt-Kniebeuge (Studio)",
+      "kategorie": "kraft",
+      "sportarten": ["ski"],
+      "equipment": ["studio"],
+      "zielmuskeln": ["vorderer Oberschenkel", "Gesäß"],
+      "ablauf": [
+        "Rücken an das Polster, Schulterpolster auflegen, Füße hüftbreit leicht vor dem Körper.",
+        "Gewicht entsichern, Bauch fest.",
+        "In 3–4 Sekunden tief absenken, Knie zeigen über die Füße.",
+        "Kraftvoll nach oben drücken, Knie oben nicht ganz strecken.",
+        "Zum Schluss Gewicht sichern."
+      ],
+      "hinweise": ["Optionale Studio-Alternative. Unten 2 Sekunden halten = skinahe Haltearbeit."],
+      "fehler": ["Fersen heben ab", "Rücken löst sich vom Polster"],
+      "standard": {"saetze": 3, "wdh": 10, "tempo": "4-1-1"},
+      "leichter": null,
+      "schwerer": null
+    },
+    "kraft-beinbeuger-maschine": {
+      "name": "Beinbeuger an der Maschine (Studio)",
+      "kategorie": "kraft",
+      "sportarten": ["alle", "ski", "laufen"],
+      "equipment": ["studio"],
+      "zielmuskeln": ["hintere Oberschenkelmuskulatur"],
+      "ablauf": [
+        "Maschine so einstellen, dass das Kniegelenk auf Höhe der Drehachse liegt, Polster über den Fersen.",
+        "Hüfte fest auf Sitz oder Bank, Hände an den Griffen.",
+        "Beine gleichmäßig beugen, oben kurz halten.",
+        "In 3–4 Sekunden kontrolliert zurückgeben.",
+        "Einbeinig möglich, um Seitenunterschiede auszugleichen."
+      ],
+      "hinweise": ["Optionale Studio-Alternative zu Nordic Curl und Beinbeuger mit Handtuch."],
+      "fehler": ["Hüfte hebt ab", "Gewicht fällt zurück"],
+      "standard": {"saetze": 3, "wdh": 10, "tempo": "3-1-1"},
       "leichter": null,
       "schwerer": null
     },
@@ -785,6 +1291,155 @@
       "fehler": ["Landeknie fällt nach innen", "unkontrolliertes Weiterspringen ohne Stabilisierung"],
       "standard": {"saetze": 3, "wdh": 8, "seitig": true},
       "leichter": "plyo-seitliche-spruenge",
+      "schwerer": null
+    },
+    "plyo-schnelle-fuesse": {
+      "name": "Schnelle Füße auf der Stelle",
+      "kategorie": "plyometrie",
+      "sportarten": ["ski", "laufen"],
+      "equipment": [],
+      "zielmuskeln": ["Waden", "Fußgelenke", "Reaktivität"],
+      "ablauf": [
+        "Leichte Skihocke, Gewicht auf den Fußballen, Arme locker vor dem Körper.",
+        "So schnell wie möglich mit kleinen Schritten auf der Stelle trippeln.",
+        "Füße bleiben dicht am Boden, Oberkörper ruhig.",
+        "Nach der Belastungszeit locker ausschütteln.",
+        "Variante: auf Zuruf oder im Wechsel seitlich versetzen."
+      ],
+      "hinweise": ["Kurz und knackig, gut im Aufwärmen oder als Zimmer-Workout."],
+      "fehler": ["Hohe Knie, schwere Landungen", "Oberkörper wackelt"],
+      "standard": {"saetze": 4, "dauer_s": 15},
+      "leichter": null,
+      "schwerer": "plyo-seitliche-spruenge"
+    },
+    "plyo-ausfallschritt-wechselsprung": {
+      "name": "Wechselsprung im Ausfallschritt",
+      "kategorie": "plyometrie",
+      "sportarten": ["ski", "laufen"],
+      "equipment": [],
+      "zielmuskeln": ["vorderer Oberschenkel", "Gesäß", "Reaktivkraft"],
+      "ablauf": [
+        "Ausfallschritt: rechtes Bein vorne, beide Knie gebeugt, Oberkörper aufrecht.",
+        "Kraftvoll nach oben abspringen und in der Luft die Beine wechseln.",
+        "Weich im Ausfallschritt mit dem linken Bein vorne landen, Knie zeigt über den Fuß.",
+        "Landung kurz stabilisieren, dann nächster Sprung.",
+        "Nur so viele Wiederholungen, wie die Landung sauber bleibt."
+      ],
+      "hinweise": ["Erst ab der zweiten Aufbauphase einsetzen."],
+      "fehler": ["Knie knallt auf den Boden", "vorderes Knie fällt nach innen"],
+      "standard": {"saetze": 3, "wdh": 8, "seitig": true},
+      "leichter": "kraft-ausfallschritt-rueckwaerts",
+      "schwerer": null
+    },
+    "aufw-hampelmann": {
+      "name": "Hampelmann",
+      "kategorie": "aufwaermen",
+      "sportarten": ["alle"],
+      "equipment": [],
+      "zielmuskeln": ["Herz-Kreislauf", "Waden", "Schultern"],
+      "ablauf": [
+        "Aufrecht stehen, Füße zusammen, Arme neben dem Körper.",
+        "Beine seitlich grätschen und gleichzeitig die Arme seitlich über den Kopf führen.",
+        "Zurück in die Ausgangsposition springen.",
+        "Locker und gleichmäßig im Rhythmus weiter.",
+        "Leise Variante: seitlich ausschreiten statt springen."
+      ],
+      "hinweise": ["Einstieg für Kraft- und Zimmer-Workouts ohne Rolle."],
+      "fehler": ["Harte Landungen auf den Fersen"],
+      "standard": {"saetze": 2, "dauer_s": 45},
+      "leichter": null,
+      "schwerer": null
+    },
+    "aufw-beinpendel": {
+      "name": "Beinpendel vor-zurück und seitlich",
+      "kategorie": "aufwaermen",
+      "sportarten": ["alle", "laufen", "ski"],
+      "equipment": ["wand"],
+      "zielmuskeln": ["Hüftbeuger", "Oberschenkelrückseite", "Adduktoren", "Abduktoren"],
+      "ablauf": [
+        "Seitlich an eine Wand stellen, mit der rechten Hand abstützen.",
+        "Linkes Bein locker vor und zurück pendeln, Bewegungsumfang langsam vergrößern.",
+        "Oberkörper bleibt aufrecht, Standbein leicht gebeugt.",
+        "Mit dem Gesicht zur Wand drehen und das Bein seitlich vor dem Körper hin und her pendeln.",
+        "Seite wechseln."
+      ],
+      "fehler": ["Schwung aus dem Oberkörper", "Hohlkreuz beim Rückpendeln"],
+      "standard": {"wdh": 12, "seitig": true},
+      "leichter": null,
+      "schwerer": null
+    },
+    "aufw-inchworm": {
+      "name": "Inchworm (Raupe)",
+      "kategorie": "aufwaermen",
+      "sportarten": ["alle"],
+      "equipment": [],
+      "zielmuskeln": ["Oberschenkelrückseite", "Schultern", "Rumpf"],
+      "ablauf": [
+        "Aufrecht stehen, Beine gestreckt oder leicht gebeugt.",
+        "Oberkörper nach vorne beugen und die Hände vor den Füßen aufsetzen.",
+        "Mit den Händen nach vorne laufen, bis der Körper in der Liegestütz-Position ist.",
+        "Kurz halten, dann mit kleinen Schritten die Füße zu den Händen laufen.",
+        "Aufrichten und wiederholen."
+      ],
+      "hinweise": ["Im Hotelzimmer machbar."],
+      "fehler": ["Hüfte hängt in der Liegestütz-Position durch"],
+      "standard": {"wdh": 6},
+      "leichter": null,
+      "schwerer": null
+    },
+    "abc-skippings": {
+      "name": "Skippings",
+      "kategorie": "lauf-abc",
+      "sportarten": ["laufen"],
+      "equipment": [],
+      "zielmuskeln": ["Hüftbeuger", "Waden", "Laufkoordination"],
+      "ablauf": [
+        "Aufrecht stehen, leicht auf den Fußballen.",
+        "Mit schnellen, kurzen Schritten auf der Stelle oder langsam vorwärts laufen, Knie etwa auf Hüfthöhe.",
+        "Fuß setzt unter dem Körper auf dem Ballen auf.",
+        "Arme schwingen gegengleich mit.",
+        "Nach der Strecke locker zurückgehen."
+      ],
+      "hinweise": ["Nach 10 min lockerem Einlaufen, vor Steigerungen."],
+      "fehler": ["Oberkörper lehnt nach hinten", "Landung auf der Ferse"],
+      "standard": {"saetze": 3, "dauer_s": 15},
+      "leichter": null,
+      "schwerer": null
+    },
+    "abc-anfersen": {
+      "name": "Anfersen",
+      "kategorie": "lauf-abc",
+      "sportarten": ["laufen"],
+      "equipment": [],
+      "zielmuskeln": ["Oberschenkelrückseite", "Laufkoordination"],
+      "ablauf": [
+        "Aufrecht stehen, Blick nach vorne.",
+        "Langsam vorwärts laufen und die Fersen zügig Richtung Gesäß führen.",
+        "Knie zeigen dabei nach unten, nicht nach vorne.",
+        "Schneller Bodenkontakt auf dem Fußballen.",
+        "Nach der Strecke locker zurückgehen."
+      ],
+      "fehler": ["Hohlkreuz", "Knie schieben nach vorne"],
+      "standard": {"saetze": 3, "dauer_s": 15},
+      "leichter": null,
+      "schwerer": null
+    },
+    "abc-hopserlauf": {
+      "name": "Hopserlauf",
+      "kategorie": "lauf-abc",
+      "sportarten": ["laufen", "ski"],
+      "equipment": [],
+      "zielmuskeln": ["Waden", "Hüftstreckung", "Reaktivkraft"],
+      "ablauf": [
+        "Locker vorwärts laufen.",
+        "Mit dem rechten Bein abdrücken, dabei das linke Knie nach oben ziehen.",
+        "Auf dem rechten Bein kurz nachhüpfen und auf die andere Seite wechseln.",
+        "Arme schwingen kräftig gegengleich mit.",
+        "Erst flach und rhythmisch, dann mit mehr Höhe."
+      ],
+      "fehler": ["Schwere Landungen", "Oberkörper fällt nach vorne"],
+      "standard": {"saetze": 3, "dauer_s": 20},
+      "leichter": null,
       "schwerer": null
     }
   }
