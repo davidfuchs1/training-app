@@ -28,6 +28,24 @@ const imHomeBildschirm = () => window.navigator.standalone === true
 const istIOS = () => /iPad|iPhone|iPod/.test(navigator.userAgent)
   || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
+/* iOS-Fehler: Eine Home-Bildschirm-App mit durchsichtiger Statusleiste meldet
+   manchmal eine um die Statusleiste zu kleine Fensterhöhe; fest unten verankerte
+   Elemente (Tab-Leiste) sitzen dann zu hoch. Differenz messen und über
+   --ios-ausgleich in stil.css ausgleichen. Auf korrekt meldenden Geräten ist sie 0. */
+function iosAusgleichen() {
+  let wert = 0;
+  if (istIOS() && imHomeBildschirm()) {
+    const hochkant = window.innerHeight > window.innerWidth;
+    const hoehe = hochkant ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height);
+    const differenz = hoehe - window.innerHeight;
+    if (differenz > 0 && differenz < 80) wert = differenz;
+  }
+  document.documentElement.style.setProperty('--ios-ausgleich', `${wert}px`);
+}
+iosAusgleichen();
+window.addEventListener('resize', iosAusgleichen);
+window.addEventListener('orientationchange', () => setTimeout(iosAusgleichen, 300));
+
 // ---------- Start ----------
 
 async function start() {
@@ -1008,6 +1026,9 @@ window.addEventListener('hashchange', (ev) => {
 });
 
 if ('serviceWorker' in navigator) {
+  // Neue App-Version aktiv → einmal neu laden, damit nicht die alte Oberfläche stehen bleibt
+  const hatteVersion = !!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (hatteVersion) location.reload(); });
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => { /* ohne SW läuft die App auch */ }));
 }
 

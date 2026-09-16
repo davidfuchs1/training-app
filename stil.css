@@ -3,12 +3,27 @@
 
 :root {
   --radius: 18px;
-  --tabs-hoehe: 64px;
+  /* Tab-Leiste wie iOS: 49 pt Bedienfläche, darunter der Bereich des Home-Balkens */
+  --tabs-hoehe: 50px;
+  /* Sichere Ränder (Notch/Dynamic Island, Home-Balken) – vom Gerät geliefert, je iPhone verschieden */
+  --rand-oben: env(safe-area-inset-top, 0px);
+  --rand-unten: env(safe-area-inset-bottom, 0px);
+  /* iOS-Fehler: Home-Bildschirm-App mit durchsichtiger Statusleiste meldet eine zu
+     kleine Fensterhöhe. app.js misst die Differenz und setzt --ios-ausgleich. */
+  --ios-ausgleich: 0px;
 }
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; background: var(--farbe-grund); min-height: calc(100% + var(--ios-ausgleich)); }
+
+/* Hinter der Statusleiste (Uhr, Akku): Fläche, damit gescrollter Inhalt nicht darunter durchscheint */
+body::before {
+  content: ""; position: fixed; top: 0; left: 0; right: 0; z-index: 45;
+  height: var(--rand-oben); pointer-events: none;
+  background: color-mix(in srgb, var(--farbe-grund) 92%, transparent);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+}
 body {
   margin: 0;
   background: var(--farbe-grund-aussen);
@@ -27,14 +42,14 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
   min-height: 100dvh;
   margin: 0 auto;
   background: var(--farbe-grund);
-  padding: 0 16px calc(var(--tabs-hoehe) + 28px + env(safe-area-inset-bottom));
+  padding: 0 16px calc(var(--tabs-hoehe) + 28px + var(--rand-unten));
 }
 
 /* ---------- Kopfleiste ---------- */
 .topbar {
   position: sticky; top: 0; z-index: 10;
   display: flex; justify-content: space-between; align-items: center; gap: 8px;
-  margin: 0 -16px; padding: calc(10px + env(safe-area-inset-top)) 16px 10px;
+  margin: 0 -16px; padding: calc(6px + var(--rand-oben)) 16px 8px;
   background: color-mix(in srgb, var(--farbe-grund) 85%, transparent);
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
 }
@@ -170,6 +185,9 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 .p.klein.st-erledigt::after { content: none; }
 .ist-ausgelassen b, .ist-ausgelassen h1 { text-decoration: line-through; text-decoration-color: var(--farbe-text-leise); }
 .ist-ausgelassen { opacity: .6; }
+.karte.gross.ist-ausgelassen { opacity: 1; }
+.karte.gross.ist-ausgelassen > :not(.karte-fuss),
+.karte.gross.ist-ausgelassen .mehr { opacity: .6; }
 .status { font-weight: 700; color: var(--farbe-text); }
 
 /* ---------- Zeilen ---------- */
@@ -354,17 +372,17 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 
 /* ---------- Tab-Leiste ---------- */
 .tabs {
-  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); z-index: 20;
-  width: min(100%, 440px); height: calc(var(--tabs-hoehe) + env(safe-area-inset-bottom));
-  padding-bottom: env(safe-area-inset-bottom);
+  position: fixed; bottom: calc(-1 * var(--ios-ausgleich)); left: 50%; transform: translateX(-50%); z-index: 20;
+  width: min(100%, 440px); height: calc(var(--tabs-hoehe) + var(--rand-unten));
+  padding-bottom: var(--rand-unten);
   display: grid; grid-template-columns: repeat(4, 1fr);
   background: color-mix(in srgb, var(--farbe-flaeche) 88%, transparent);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border-top: 1px solid var(--farbe-linie);
 }
 .tabs a {
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
-  font-size: 11px; font-weight: 600; color: var(--farbe-text-leise);
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 2px;
+  padding-top: 6px; font-size: 10px; font-weight: 600; color: var(--farbe-text-leise);
 }
 .tabs svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .tabs a.aktiv { color: var(--farbe-akzent); }
@@ -378,7 +396,7 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 .sheet {
   position: relative; width: min(100%, 440px); max-height: 88dvh; overflow-y: auto;
   background: var(--farbe-flaeche); border-radius: 22px 22px 0 0;
-  padding: 10px 18px calc(28px + env(safe-area-inset-bottom));
+  padding: 10px 18px calc(28px + var(--rand-unten));
   transform: translateY(100%); transition: transform .25s ease-out;
 }
 .offen .sheet { transform: none; }
@@ -415,7 +433,7 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 
 .toast {
   position: fixed; left: 50%; transform: translateX(-50%); z-index: 40;
-  bottom: calc(var(--tabs-hoehe) + 16px + env(safe-area-inset-bottom));
+  bottom: calc(var(--tabs-hoehe) + 16px + var(--rand-unten));
   background: var(--farbe-text); color: var(--farbe-grund); font-weight: 600; font-size: 14px;
   padding: 10px 16px; border-radius: 99px; white-space: nowrap;
 }
@@ -443,6 +461,7 @@ a.tag-label { color: inherit; }
   font-size: 13.5px; font-weight: 700;
 }
 .status-marke .p { --gr: 15.5px; }
+.status-marke .p.st-ausgelassen { border-color: var(--sp); } /* Ring in Sportfarbe wie der Seitenbalken */
 
 .status-wahl { margin: 0 0 8px; }
 .st-knoepfe { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
@@ -460,19 +479,19 @@ a.tag-label { color: inherit; }
 .dreh-klein { display: inline-block; animation: drehen .7s linear infinite; }
 .wartet-chip {
   position: fixed; left: 50%; transform: translateX(-50%); z-index: 25;
-  bottom: calc(var(--tabs-hoehe) + 16px + env(safe-area-inset-bottom));
+  bottom: calc(var(--tabs-hoehe) + 16px + var(--rand-unten));
   background: var(--farbe-flaeche-2); color: var(--farbe-warnung); font-weight: 700; font-size: 13px;
   padding: 8px 14px; border-radius: 99px; white-space: nowrap;
 }
 .ziehen {
-  position: absolute; left: 0; right: 0; top: calc(env(safe-area-inset-top) + 4px);
+  position: absolute; left: 0; right: 0; top: calc(var(--rand-oben) + 4px);
   text-align: center; font-size: 13px; font-weight: 600; color: var(--farbe-text-leise);
   transition: transform .1s linear; pointer-events: none;
 }
 .app { position: relative; }
 
 /* ---------- Zugang (Entwurf) ---------- */
-.zugang { padding: calc(40px + env(safe-area-inset-top)) 4px 20px; }
+.zugang { padding: calc(40px + var(--rand-oben)) 4px 20px; }
 .zugang h1 { font-size: 30px; font-weight: 800; margin: 18px 0 8px; }
 .zugang > .leise { margin: 0 0 22px; }
 .zugang .ablauf { margin: 8px 0 20px; }
@@ -505,6 +524,6 @@ a.tag-label { color: inherit; }
 .text-knopf { margin-top: 12px; font-size: 13px; font-weight: 400; color: var(--farbe-text-leise); text-decoration: underline; }
 
 /* Ohne Kopfleiste (eine Person): Inhalt beginnt unter der Notch */
-.topbar[hidden] ~ #inhalt { padding-top: calc(env(safe-area-inset-top) + 10px); }
+.topbar[hidden] ~ #inhalt { padding-top: calc(var(--rand-oben) + 4px); }
 .hinweis.warnung { border-left-color: var(--farbe-warnung); margin-top: 6px; }
 .hinweis.warnung a { display: block; margin-top: 6px; font-weight: 700; color: var(--farbe-akzent); }
