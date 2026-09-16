@@ -28,23 +28,6 @@ const imHomeBildschirm = () => window.navigator.standalone === true
 const istIOS = () => /iPad|iPhone|iPod/.test(navigator.userAgent)
   || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-/* iOS-Eigenheit: In der Home-Bildschirm-App mit durchsichtiger Statusleiste ist
-   die Layout-Höhe (clientHeight) um die Statusleiste kleiner als das Fenster;
-   „position: fixed; top: 0“ landet dann unter der Statusleiste. Versatz messen
-   und über --ios-versatz-oben in stil.css ausgleichen. Sonst 0.
-   Gemessen 2026-09-16 (393 × 852): innerHeight 852, clientHeight 793 → 59 px. */
-function iosAusgleichen() {
-  let versatz = 0;
-  if (istIOS() && imHomeBildschirm()) {
-    const differenz = window.innerHeight - document.documentElement.clientHeight;
-    if (differenz > 0 && differenz < 100) versatz = differenz;
-  }
-  document.documentElement.style.setProperty('--ios-versatz-oben', `${versatz}px`);
-}
-iosAusgleichen();
-window.addEventListener('resize', iosAusgleichen);
-window.addEventListener('orientationchange', () => setTimeout(iosAusgleichen, 300));
-
 // ---------- Start ----------
 
 async function start() {
@@ -980,8 +963,8 @@ function messwerteZeigen() {
     'clientHeight': document.documentElement.clientHeight,
     'Rand oben (env)': cs.paddingTop,
     'Rand unten (env)': cs.paddingBottom,
-    '--ios-versatz-oben': getComputedStyle(document.documentElement).getPropertyValue('--ios-versatz-oben').trim(),
-    'Statusleisten-Fläche oben/unten': (() => { const b = getComputedStyle(document.body, '::before'); return `top ${b.top}, Höhe ${b.height}`; })(),
+    'Statusleisten-Fläche': (() => { const r = document.querySelector('.statusleiste').getBoundingClientRect(); return `${Math.round(r.top)} bis ${Math.round(r.bottom)}`; })(),
+    'Datum/Überschrift oben bei': (() => { const e = document.querySelector('#inhalt .ueber, #inhalt h1'); return e ? Math.round(e.getBoundingClientRect().top) : '–'; })(),
     'Tab-Leiste oben/unten': `${Math.round(tabsRect.top)} / ${Math.round(tabsRect.bottom)}`,
     'Inhalt beginnt bei': Math.round(inhalt.getBoundingClientRect().top + window.scrollY),
     'Pixeldichte': window.devicePixelRatio,

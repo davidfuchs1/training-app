@@ -10,20 +10,21 @@
   --rand-unten: env(safe-area-inset-bottom, 0px);
   /* Unter der Tab-Leiste reicht weniger als der volle Home-Balken-Bereich (Leiste wirkt sonst zu hoch) */
   --rand-unten-tabs: max(calc(var(--rand-unten) - 12px), 6px);
-  /* iOS (Home-Bildschirm-App, durchsichtige Statusleiste): „position: fixed; top: 0“
-     sitzt unterhalb der Statusleiste statt am Bildschirmrand. app.js misst den
-     Versatz (innerHeight − clientHeight) und setzt --ios-versatz-oben; sonst 0. */
-  --ios-versatz-oben: 0px;
 }
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; background: var(--farbe-grund); }
 
-/* Hinter der Statusleiste (Uhr, Akku): Fläche, damit gescrollter Inhalt nicht darunter durchscheint */
-body::before {
-  content: ""; position: fixed; top: calc(-1 * var(--ios-versatz-oben)); left: 0; right: 0; z-index: 45;
-  height: var(--rand-oben); pointer-events: none;
+/* Hinter der Statusleiste (Uhr, Akku): Fläche, damit gescrollter Inhalt nicht darunter
+   durchscheint. Bewusst „sticky“ im normalen Seitenfluss statt „fixed“: Feste Elemente
+   rechnet iOS in der Home-Bildschirm-App je nach Version ab der Unterkante der
+   Statusleiste. Die Höhe liefert jedes Gerät selbst (env) – kein Messen, kein Modellwissen.
+   Die negative Außenkante sorgt dafür, dass die Fläche keinen Platz belegt. */
+.statusleiste {
+  position: sticky; top: 0; z-index: 45; display: block;
+  height: var(--rand-oben); margin-bottom: calc(-1 * var(--rand-oben));
+  pointer-events: none;
   background: color-mix(in srgb, var(--farbe-grund) 92%, transparent);
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
 }
@@ -377,15 +378,15 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 .tabs {
   position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); z-index: 20;
   width: min(100%, 440px); height: calc(var(--tabs-hoehe) + var(--rand-unten-tabs));
-  padding-bottom: var(--rand-unten-tabs);
   display: grid; grid-template-columns: repeat(4, 1fr);
   background: color-mix(in srgb, var(--farbe-flaeche) 88%, transparent);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border-top: 1px solid var(--farbe-linie);
 }
+/* Symbol und Beschriftung senkrecht mittig in der ganzen Leiste */
 .tabs a {
-  display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 2px;
-  padding-top: 6px; font-size: 10px; font-weight: 600; color: var(--farbe-text-leise);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  font-size: 10px; font-weight: 600; color: var(--farbe-text-leise);
 }
 .tabs svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .tabs a.aktiv { color: var(--farbe-akzent); }
