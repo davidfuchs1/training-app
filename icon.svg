@@ -1,6 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="512" height="512">
-  <rect width="24" height="24" fill="#0b0d10"/>
-  <g fill="none" stroke="#f2f4f7" stroke-width="1.9" stroke-linecap="round">
-    <path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- App-Symbol: drei Wochenbalken, mittig im sicheren Bereich; iOS rundet die Ecken selbst -->
+  <rect width="512" height="512" fill="#0b0d10"/>
+  <g fill="#f2f4f7">
+    <rect x="108" y="222" width="72" height="150" rx="22"/>
+    <rect x="220" y="128" width="72" height="244" rx="22"/>
+    <rect x="332" y="176" width="72" height="196" rx="22"/>
   </g>
 </svg>
