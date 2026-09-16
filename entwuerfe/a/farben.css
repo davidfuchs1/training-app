@@ -126,4 +126,5 @@
   --farbe-hinweis-coach: var(--farbe-akzent);
   --farbe-fehler: var(--rot);
   --farbe-ausgelassen: var(--grau-700);
+  --farbe-warnung: var(--gelb);             /* Kein Zugriff, wartet auf Verbindung */
 }

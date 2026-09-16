@@ -1,0 +1,11 @@
+{
+  "format_version": 1,
+  "athlet": "demo",
+  "aktualisiert": "2026-09-15T20:10:00+02:00",
+  "wochen": {
+    "2026-W38": {
+      "e4": "erledigt",
+      "m-a": "teilweise"
+    }
+  }
+}

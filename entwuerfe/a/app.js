@@ -12,32 +12,55 @@ const toast = document.getElementById('toast');
 
 let daten = null;
 let letzterTab = 'heute';
+let letzteAdresse = '#heute'; // Seite vor einer Einheit (inkl. Tag/Woche) für „Zurück“
+const scrollStand = new Map(); // Adresse → Scrollposition beim Verlassen
 const archiv = new Map(); // Wochen-Nr → Woche | 'laedt' | Error
+
+// ---------- Entwurf: Zugang & Status – nur simuliert, keine Verbindung zu GitHub ----------
+// ?sim=safari | einrichten | fehler | abgelaufen | coach    ?netz=aus
+const ADRESSE = new URLSearchParams(location.search);
+const SIM = ADRESSE.get('sim') || '';
+const OFFLINE = ADRESSE.get('netz') === 'aus';
+const MELDUNGEN = 'entwurf-meldungen'; // lokale Meldungen {iso: {id: status}}
+const offen = new Map(); // "iso/id" → 'laeuft' | 'wartet'
+let zuletztGespeichert = null;
+
+function meldungenLesen() {
+  try { return JSON.parse(localStorage.getItem(MELDUNGEN)) || {}; } catch { return {}; }
+}
+function meldungenSchreiben(m) {
+  try { localStorage.setItem(MELDUNGEN, JSON.stringify(m)); } catch { /* Entwurf: egal */ }
+}
+const statusAktualisieren = () => D.statusAnwenden(daten.aktuell, daten.statusDatei, meldungenLesen());
 
 // ---------- Laden & Navigation ----------
 
 async function start() {
   // Beim Öffnen immer auf heute, auch wenn zuletzt ein anderer Tag angesehen wurde
   if (location.hash.startsWith('#heute/')) history.replaceState(null, '', `${location.pathname}${location.search}#heute`);
+  if (['safari', 'einrichten', 'fehler'].includes(SIM)) {
+    document.getElementById('tabs').hidden = true;
+    inhalt.innerHTML = seiteZugang(SIM);
+    return;
+  }
   try {
     daten = await D.laden(D.athletId());
+    statusAktualisieren();
     zeichnen();
   } catch (fehler) {
     inhalt.innerHTML = `<div class="karte fehler"><h2>Plan nicht geladen</h2><p>${esc(fehler.message)}</p></div>`;
   }
 }
 
-async function neuLaden(knopf) {
-  knopf.classList.add('dreht');
+async function neuLaden() {
   try {
     daten = await D.laden(daten.id);
+    statusAktualisieren();
     archiv.clear();
     zeichnen(false);
     zeigeToast(`Aktualisiert um ${D.fmtUhrzeit(daten.geladen)}`);
   } catch {
     zeigeToast('Keine Verbindung – alter Stand bleibt');
-  } finally {
-    knopf.classList.remove('dreht');
   }
 }
 
@@ -88,6 +111,7 @@ function zeichnen(nachOben = true) {
     inhalt.innerHTML = seiteEinheit(Number(teile[0]), teile[1]);
   } else {
     letzterTab = seiten[seite] ? seite : 'heute';
+    letzteAdresse = location.hash || '#heute';
     inhalt.innerHTML = seiten[letzterTab](teile);
   }
   document.querySelectorAll('#tabs a').forEach((a) => a.classList.toggle('aktiv', a.dataset.tab === letzterTab));
@@ -95,15 +119,22 @@ function zeichnen(nachOben = true) {
   if (nachOben) window.scrollTo(0, 0);
 }
 
+// Mehrere Pläne = Coach-Sicht; nur dann gibt es oben die Planauswahl
+const mehrerePlaene = () => SIM === 'coach';
+
 function topbarZeichnen(unterseite) {
   const athlet = daten.athleten.find((x) => x.id === daten.id);
-  const links = unterseite
-    ? `<a class="knopf zurueck" href="#${letzterTab}">‹ Zurück</a>`
-    : `<button class="knopf athlet" data-aktion="athlet">${esc(athlet ? athlet.anzeigename : daten.id)} <span>▾</span></button>`;
-  topbar.innerHTML = `${links}
-    <button class="knopf stand" data-aktion="neu" aria-label="Neu laden">
-      <span>Stand ${D.fmtZeitpunkt(daten.aktuell.aktualisiert)}</span><span class="dreh">↻</span>
-    </button>`;
+  const teile = [];
+  if (unterseite) teile.push(`<a class="knopf zurueck" href="${esc(letzteAdresse)}">‹ Zurück</a>`);
+  else if (mehrerePlaene()) {
+    teile.push(`<button class="knopf athlet" data-aktion="athlet">${esc(athlet ? athlet.anzeigename : daten.id)} <span>· Plan wählen ▾</span></button>`);
+  }
+  topbar.hidden = !teile.length; // eine Person ohne Unterseite: keine Kopfleiste, Inhalt rückt nach oben
+  topbar.innerHTML = teile.join('');
+  const wartet = [...offen.values()].filter((z) => z === 'wartet').length;
+  const chip = document.getElementById('wartet');
+  chip.hidden = !wartet;
+  chip.textContent = `${wartet} Meldung${wartet === 1 ? '' : 'en'} wartet auf Verbindung`;
 }
 
 // ---------- Bausteine ----------
@@ -159,19 +190,22 @@ function kernwerte(e) {
 
 function karteGross(e, nr) {
   const sp = D.sport(e.sportart);
+  return `<div class="karte-rahmen sp-${e.sportart}">${karteGrossLink(e, nr, sp, statusMarke(e, nr))}</div>`;
+}
+
+function karteGrossLink(e, nr, sp, marke) {
   return `<a class="karte gross sp-${e.sportart} ${e.status === 'ausgelassen' ? 'ist-ausgelassen' : ''}" href="#einheit/${nr}/${e.id}">
     <div class="karte-kopf">
       <span class="icon">${sp.icon}</span>
       ${e.art === 'mobility' ? '' : `<span class="sp-name">${esc(sp.name)}</span>`}
       ${artBadge(e)}
-      ${STATUS_TEXT[e.status] ? `${punkt(e)}<span class="status">${STATUS_TEXT[e.status]}</span>` : ''}
       <span class="dauer">${D.fmtDauer(e.dauer_min)}</span>
     </div>
     <h3>${esc(e.titel)}</h3>
     ${e.ziel ? `<p class="ziel">${esc(e.ziel)}</p>` : ''}
     ${zeigeDiagramm(e) ? diagramm(e) : ''}
     ${kernwerte(e)}
-    <span class="mehr">Details ›</span>
+    <div class="karte-fuss"><span class="mehr">Details ›</span>${marke}</div>
   </a>`;
 }
 
@@ -250,7 +284,12 @@ function seiteHeute(teile) {
     ? `KW ${D.kw(rahmen)} · Woche ${nr} von ${n}${rahmen.phase ? ` · ${typBadge(rahmen)}` : ''}`
     : 'außerhalb des Blocks';
 
-  let html = `<section class="wochen-nav tag-nav">
+  let html = SIM === 'abgelaufen' ? `<div class="hinweis warnung">
+      <span class="ueber">Kein Zugriff</span>
+      Dein Schlüssel ist abgelaufen oder wurde widerrufen. Du siehst den zuletzt geladenen Stand.
+      <a href="?sim=einrichten">Neuen Schlüssel eintragen ›</a>
+    </div>` : '';
+  html += `<section class="wochen-nav tag-nav">
       ${pfeil(vorher, '‹', 'Vorheriger Tag', vorher < grenzen.min)}
       <div class="kw">
         <p class="ueber">${D.TAGE_LANG[D.wochentag(tag)]}, ${D.fmtTag(tag)}</p>
@@ -400,7 +439,6 @@ function seiteEinheit(nr, id) {
   if (!e) return `<div class="karte fehler"><h2>Einheit nicht gefunden</h2></div>`;
   const sp = D.sport(e.sportart);
   const zonen = daten.aktuell.zonen;
-  let hatAbgeleitet = false;
 
   let html = `<section class="einheit-kopf sp-${e.sportart} ${e.status === 'ausgelassen' ? 'ist-ausgelassen' : ''}">
     <p class="ueber">${sp.icon} ${e.art === 'mobility' ? '' : `${esc(sp.name)} · `}${artBadge(e)}
@@ -408,7 +446,8 @@ function seiteEinheit(nr, id) {
     <h1>${esc(e.titel)}</h1>
     <p class="unter">${D.TAGE_LANG[D.wochentag(e.tag_vorschlag)]}, ${D.fmtTag(e.tag_vorschlag)} · ${D.fmtDauer(e.dauer_min)}</p>
     ${e.ziel ? `<p class="ziel">${esc(e.ziel)}</p>` : ''}
-  </section>`;
+  </section>
+  ${statusWahl(e, nr, quelle)}`;
 
   if (zeigeDiagramm(e)) {
     html += `<div class="karte">${diagramm(e, true)}
@@ -420,7 +459,6 @@ function seiteEinheit(nr, id) {
     html += `<h2 class="abschnitt">Ablauf</h2>`;
     html += e.bloecke.map((b) => {
       const int = D.intensitaet(b, e.sportart, zonen);
-      if (int.werte.some((v) => v.abgeleitet)) hatAbgeleitet = true;
       const dauer = b.typ === 'intervall' ? `${b.wiederholungen} × ${b.dauer_min} min` : D.fmtDauer(b.dauer_min);
       return `<div class="block z-rand-${b.zone || 'x'}">
         <div class="block-kopf"><b>${D.BLOCK_TYP[b.typ] || b.typ}</b><span>${dauer}</span></div>
@@ -432,7 +470,6 @@ function seiteEinheit(nr, id) {
         ${b.pause ? `<p class="pause">Pause ${b.pause.dauer_min} min${b.pause.zone ? ` · ${b.pause.zone}` : ''}${b.pause.beschreibung ? ` – ${esc(b.pause.beschreibung)}` : ''}</p>` : ''}
       </div>`;
     }).join('');
-    if (hatAbgeleitet) html += `<p class="fussnote">Gestrichelte Werte stammen aus deiner Zonentabelle.</p>`;
   }
 
   if (e.uebungen && e.uebungen.length) {
@@ -546,7 +583,8 @@ function seiteBlock() {
     <h2 class="abschnitt">Zonen <small>Stand ${esc(a.zonen.stand || '')}</small></h2>
     <div class="karte tabelle-rahmen"><table class="zonen">
       <thead><tr><th></th><th>HF</th><th>Rad</th><th>Lauf</th></tr></thead><tbody>${zonen}</tbody>
-    </table></div>`;
+    </table></div>
+    ${zugangDetails()}`;
 }
 
 // ---------- Übungs-Blatt ----------
@@ -600,13 +638,143 @@ function uebungZeigen(id, ref) {
   `);
 }
 
-function athletWahl() {
-  blattOeffnen(`<h2>Plan wählen</h2><p class="leise">Coach-Sicht: Auswahl wird im Browser gemerkt.</p>
-    <div class="karte liste">${daten.athleten.map((x) => `
-      <button class="uebung-zeile" data-aktion="athlet-wahl" data-id="${x.id}">
-        <span class="zeile-text"><b>${esc(x.anzeigename)}</b><small>${x.sportarten.map((s) => D.sport(s).name).join(', ')}${x.testdaten ? ' · Testdaten' : ''}</small></span>
-        ${x.id === daten.id ? '<span class="marke">aktiv</span>' : '<span class="pfeil-rechts">›</span>'}
-      </button>`).join('')}</div>`);
+// ---------- Status melden (Entwurf) ----------
+
+const STATUS_WAHL = [
+  { wert: 'erledigt', text: 'Erledigt' },
+  { wert: 'teilweise', text: 'Teilweise' },
+  { wert: 'ausgelassen', text: 'Ausgelassen' },
+];
+
+const schluesselFuer = (w, e) => `${w.iso_woche}/${e.id}`;
+
+// Abhaken erst ab dem geplanten Tag; abgeschlossene Wochen und fehlender Zugang: nur ansehen
+function statusSperre(e, quelle) {
+  if (quelle === 'archiv') return 'Woche abgeschlossen – Status vom Coach übernommen.';
+  if (SIM === 'abgelaufen') return 'Kein Zugriff – Status kann gerade nicht gemeldet werden.';
+  if (e.tag_vorschlag > D.heute()) {
+    return `Abhaken ab ${D.TAGE_LANG[D.wochentag(e.tag_vorschlag)]}, ${D.fmtTag(e.tag_vorschlag)}.`;
+  }
+  return '';
+}
+
+function statusInfo(w, e) {
+  const zustand = offen.get(schluesselFuer(w, e));
+  if (zustand === 'laeuft') return '<span class="dreh-klein">↻</span> Wird gespeichert …';
+  if (zustand === 'wartet') return 'Keine Verbindung – wird gesendet, sobald du online bist.';
+  if (e.status === 'geplant') return 'Tippe, sobald die Einheit vorbei ist.';
+  return 'Gespeichert – der Coach sieht es beim Wochen-Check. Nochmal tippen setzt zurück.';
+}
+
+function statusWahl(e, nr, quelle) {
+  const { woche: w } = wocheNachNr(nr);
+  const sperre = statusSperre(e, quelle);
+  if (quelle === 'archiv') return `<p class="status-hinweis">${sperre}</p>`;
+  const knoepfe = STATUS_WAHL.map((s) => `
+    <button class="st-knopf ${e.status === s.wert ? 'aktiv' : ''}" data-aktion="status" data-nr="${nr}" data-e="${e.id}"
+        data-wert="${s.wert}" ${sperre ? 'disabled' : ''} aria-pressed="${e.status === s.wert}">
+      <i class="p gross voll st-${s.wert}"></i>${s.text}
+    </button>`).join('');
+  return `<section class="status-wahl">
+    <p class="ueber">Status</p>
+    <div class="st-knoepfe">${knoepfe}</div>
+    <p class="status-hinweis">${sperre || statusInfo(w, e)}</p>
+  </section>`;
+}
+
+// Heute-Karte: nur anzeigen, was in der Einheit gewählt wurde – nichts gewählt = nichts anzeigen
+function statusMarke(e, nr) {
+  const { woche: w } = wocheNachNr(nr);
+  const zustand = w && offen.get(schluesselFuer(w, e));
+  if (zustand === 'laeuft') return '<span class="status-marke"><span class="dreh-klein">↻</span> Speichert</span>';
+  if (zustand === 'wartet') return '<span class="status-marke">⏳ Wartet</span>';
+  if (!STATUS_TEXT[e.status]) return '';
+  const text = STATUS_TEXT[e.status];
+  return `<span class="status-marke">${punkt(e)} ${text[0].toUpperCase()}${text.slice(1)}</span>`;
+}
+
+function statusSetzen(nr, id, wert) {
+  const { woche: w } = wocheNachNr(nr);
+  const e = w && D.einheit(w, id);
+  if (!e) return;
+  const neu = e.status === wert ? 'geplant' : wert; // nochmal tippen = zurücksetzen
+  const m = meldungenLesen();
+  m[w.iso_woche] = { ...(m[w.iso_woche] || {}), [id]: neu };
+  meldungenSchreiben(m);
+  statusAktualisieren();
+  const schluessel = `${w.iso_woche}/${id}`;
+  offen.set(schluessel, OFFLINE ? 'wartet' : 'laeuft');
+  zeichnen(false);
+  if (OFFLINE) return;
+  setTimeout(() => { // Entwurf: GitHub-Antwort nach ~1,2 s simuliert
+    offen.delete(schluessel);
+    zuletztGespeichert = new Date();
+    zeichnen(false);
+    zeigeToast(neu === 'geplant' ? 'Zurückgesetzt' : `Gespeichert: ${STATUS_TEXT[neu]}`);
+  }, 1200);
+}
+
+// ---------- Zugang (Entwurf) ----------
+
+const APP_ICON = `<div class="app-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>`;
+
+function seiteZugang(art) {
+  if (art === 'safari') {
+    return `<section class="zugang">
+      ${APP_ICON}
+      <h1>Trainingsplan</h1>
+      <p class="leise">Dein Plan läuft als App auf dem Home-Bildschirm – so bleibt dein Zugang gespeichert.</p>
+      <ol class="ablauf">
+        <li>Unten auf <b>Teilen</b> <span class="teilen-symbol">⎙</span> tippen</li>
+        <li><b>Zum Home-Bildschirm</b> wählen und hinzufügen</li>
+        <li>Die App <b>Trainingsplan</b> öffnen und dort deinen Schlüssel eintragen</li>
+      </ol>
+      <p class="fussnote">Safari und die App speichern getrennt. Ein hier eingetragener Schlüssel wäre in der App nicht vorhanden.</p>
+      <a class="knopf-breit zweit" href="?id=demo">Demo ansehen</a>
+    </section>`;
+  }
+  return `<section class="zugang">
+    ${APP_ICON}
+    <h1>Zugang einrichten</h1>
+    <p class="leise">Den Schlüssel bekommst du von deinem Coach. Er bleibt nur auf diesem Gerät.</p>
+    <form class="karte zugang-form" data-form="zugang">
+      <input class="unsichtbar" type="text" name="username" autocomplete="username" tabindex="-1" aria-hidden="true">
+      <label for="schluessel">Schlüssel</label>
+      <input class="suche" id="schluessel" name="password" type="password" autocomplete="current-password"
+             placeholder="github_pat_…" spellcheck="false" autocapitalize="off">
+      <p class="feld-fehler" id="zugang-fehler" hidden>Schlüssel ungültig, abgelaufen oder für keinen Plan freigegeben. Frag deinen Coach nach einem neuen.</p>
+      <button class="knopf-breit" type="submit">Verbinden</button>
+    </form>
+    <p class="fussnote">Tipp: Im Feld tippen und den Schlüssel aus der Passwörter-App wählen.</p>
+    <a class="knopf-breit zweit" href="?id=demo">Demo ansehen</a>
+  </section>`;
+}
+
+function zugangBlatt() {
+  const athlet = daten.athleten.find((x) => x.id === daten.id);
+  const name = athlet ? athlet.anzeigename : daten.id;
+  if (SIM === 'coach') {
+    const plaene = [...daten.athleten, { id: 'test', anzeigename: 'Test', sportarten: ['laufen'], testdaten: true }];
+    blattOeffnen(`<h2>Plan wählen</h2><p class="leise">Dein Schlüssel gilt für ${plaene.length} Pläne. Auswahl wird gemerkt.</p>
+      <div class="karte liste">${plaene.map((x) => `
+        <button class="uebung-zeile" data-aktion="athlet-wahl" data-id="${x.id}">
+          <span class="zeile-text"><b>${esc(x.anzeigename)}</b><small>${x.sportarten.map((s) => D.sport(s).name).join(', ')}${x.testdaten ? ' · Testdaten' : ''}</small></span>
+          ${x.id === daten.id ? '<span class="marke">aktiv</span>' : '<span class="pfeil-rechts">›</span>'}
+        </button>`).join('')}</div>`);
+    return;
+  }
+  blattOeffnen(`<h2>${esc(name)}</h2><p class="leise">Dein Plan</p>`);
+}
+
+function zugangDetails() {
+  return `<section class="zugang-fuss">
+    <p class="ueber">Zugang</p>
+    <dl>
+      <dt>Plan vom Coach</dt><dd>${D.fmtZeitpunkt(daten.aktuell.aktualisiert)}</dd>
+      <dt>Zuletzt geladen</dt><dd>${D.fmtUhrzeit(daten.geladen)} Uhr</dd>
+    </dl>
+    <button class="text-knopf" data-aktion="abmelden">Schlüssel entfernen</button>
+  </section>`;
 }
 
 function zeigeToast(text) {
@@ -623,9 +791,15 @@ document.addEventListener('click', (ev) => {
   const el = ev.target.closest('[data-aktion]');
   if (!el) return;
   const aktion = el.dataset.aktion;
-  if (aktion === 'neu') neuLaden(el);
-  else if (aktion === 'athlet') athletWahl();
-  else if (aktion === 'athlet-wahl') D.athletWechseln(el.dataset.id);
+  if (aktion === 'athlet') zugangBlatt();
+  else if (aktion === 'athlet-wahl') {
+    if (el.dataset.id === 'test') zeigeToast('Entwurf: nur Demo-Daten vorhanden');
+    else D.athletWechseln(el.dataset.id);
+  } else if (aktion === 'status') {
+    statusSetzen(Number(el.dataset.nr), el.dataset.e, el.dataset.wert);
+  } else if (aktion === 'abmelden') {
+    location.href = '?sim=einrichten';
+  }
   else if (aktion === 'zu') blattSchliessen();
   else if (aktion === 'zu-tag') {
     const ziel = document.getElementById(`tag-${el.dataset.tag}`);
@@ -649,6 +823,60 @@ document.addEventListener('input', (ev) => {
   });
 });
 
+// ---------- Herunterziehen zum Aktualisieren ----------
+
+const ziehen = document.getElementById('ziehen');
+const ZIEH_SCHWELLE = 70;
+let ziehStart = null;
+let ziehWeg = 0;
+
+function ziehAnzeige(text, offsetPx) {
+  ziehen.hidden = false;
+  ziehen.textContent = text;
+  ziehen.style.transform = `translateY(${Math.min(offsetPx, ZIEH_SCHWELLE)}px)`;
+}
+
+function ziehEnde() {
+  ziehen.hidden = true;
+  ziehen.style.transform = '';
+  ziehStart = null;
+  ziehWeg = 0;
+}
+
+function ziehBeginn(y, ziel) {
+  if (!daten || !sheet.hidden || window.scrollY > 0 || (ziel && ziel.closest('.sheet'))) return;
+  ziehStart = y;
+  ziehWeg = 0;
+}
+
+function ziehBewegung(y) {
+  if (ziehStart === null) return;
+  ziehWeg = y - ziehStart;
+  if (window.scrollY > 0 || ziehWeg <= 0) return ziehEnde();
+  ziehAnzeige(ziehWeg > ZIEH_SCHWELLE ? 'Loslassen zum Aktualisieren' : '↓ Zum Aktualisieren ziehen', ziehWeg / 2);
+}
+
+async function ziehLoslassen() {
+  if (ziehStart === null) return;
+  if (ziehWeg <= ZIEH_SCHWELLE) return ziehEnde();
+  ziehAnzeige('Aktualisiert …', ZIEH_SCHWELLE / 2);
+  ziehStart = null;
+  await neuLaden();
+  ziehEnde();
+}
+
+// Maus (Entwurf am Rechner) und Finger (iPhone)
+document.addEventListener('pointerdown', (ev) => { if (ev.pointerType !== 'touch') ziehBeginn(ev.clientY, ev.target); });
+document.addEventListener('pointermove', (ev) => { if (ev.pointerType !== 'touch') ziehBewegung(ev.clientY); });
+document.addEventListener('pointerup', (ev) => { if (ev.pointerType !== 'touch') ziehLoslassen(); });
+document.addEventListener('pointercancel', ziehEnde);
+document.addEventListener('touchstart', (ev) => {
+  if (ev.touches.length === 1) ziehBeginn(ev.touches[0].clientY, ev.target);
+}, { passive: true });
+document.addEventListener('touchmove', (ev) => ziehBewegung(ev.touches[0].clientY), { passive: true });
+document.addEventListener('touchend', ziehLoslassen, { passive: true });
+document.addEventListener('touchcancel', ziehEnde, { passive: true });
+
 // Wischen auf der Heute-Seite: nach links = nächster Tag, nach rechts = vorheriger Tag
 let wischStart = null;
 inhalt.addEventListener('touchstart', (ev) => {
@@ -668,5 +896,31 @@ inhalt.addEventListener('touchend', (ev) => {
   if (ziel) location.hash = ziel.getAttribute('href');
 }, { passive: true });
 
-window.addEventListener('hashchange', () => zeichnen());
+document.addEventListener('submit', (ev) => {
+  if (ev.target.dataset.form !== 'zugang') return;
+  ev.preventDefault();
+  const knopf = ev.target.querySelector('button');
+  const fehlerText = document.getElementById('zugang-fehler');
+  fehlerText.hidden = true;
+  knopf.disabled = true;
+  knopf.textContent = 'Prüfe Schlüssel …';
+  setTimeout(() => { // Entwurf: GitHub-Prüfung simuliert
+    if (SIM === 'fehler') {
+      fehlerText.hidden = false;
+      knopf.disabled = false;
+      knopf.textContent = 'Verbinden';
+    } else {
+      location.href = '?id=demo';
+    }
+  }, 900);
+});
+
+// Zurück von einer Einheit: gleicher Tag/gleiche Woche und alte Scrollposition
+window.addEventListener('hashchange', (ev) => {
+  const vorher = new URL(ev.oldURL).hash;
+  if (!vorher.startsWith('#einheit/')) scrollStand.set(vorher || '#heute', window.scrollY);
+  const zurueck = vorher.startsWith('#einheit/') && scrollStand.has(location.hash);
+  zeichnen(!zurueck);
+  if (zurueck) window.scrollTo(0, scrollStand.get(location.hash));
+});
 start();

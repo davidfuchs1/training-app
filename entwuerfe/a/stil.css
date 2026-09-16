@@ -1,3 +1,4 @@
+@charset "utf-8";
 /* Entwurf A „Heute“: Layout und Formen. Farben nur über Rollen aus farben.css. */
 
 :root {
@@ -161,7 +162,7 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
   color: var(--farbe-text-auf-farbe);
 }
 .p.voll, .p.st-erledigt { background: var(--sp); }
-.p.st-erledigt::after { content: "✓"; }
+.p.st-erledigt::after { content: "\2713"; }
 .p.st-teilweise { background: linear-gradient(90deg, var(--sp) 50%, transparent 50%); }
 .p.st-ausgelassen { border-color: var(--farbe-ausgelassen); background: transparent; }
 .p.gross { --gr: 18px; }
@@ -390,7 +391,7 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 .sheet h3 { margin: 22px 0 8px; color: var(--farbe-text-leise); text-transform: uppercase; letter-spacing: .05em; font-size: 12px; }
 .sheet ul { margin: 0; padding-left: 18px; }
 .sheet li { margin-bottom: 6px; }
-.sheet ul.fehlerliste li::marker { content: "✕  "; color: var(--farbe-fehler); }
+.sheet ul.fehlerliste li::marker { content: "\2715  "; color: var(--farbe-fehler); }
 .sheet .karte.liste { background: var(--farbe-flaeche-2); }
 .dosis {
   display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px;
@@ -428,3 +429,82 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
   background: var(--farbe-akzent); color: var(--farbe-text-auf-akzent);
 }
 a.tag-label { color: inherit; }
+
+/* ---------- Status melden (Entwurf) ---------- */
+.karte-rahmen { position: relative; }
+.karte-rahmen .karte.gross { margin-bottom: 12px; }
+/* Statusmarke: rechts in der Fußzeile der Karte, senkrecht mittig zu „Details“ */
+.karte-fuss { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 12px; }
+.karte-fuss .mehr { margin-top: 0; }
+.status-marke {
+  display: inline-flex; align-items: center; gap: 6.5px;
+  height: 34px; padding: 0 13px; border-radius: 99px;
+  background: color-mix(in srgb, var(--sp, var(--farbe-akzent)) 18%, var(--farbe-flaeche-2));
+  font-size: 13.5px; font-weight: 700;
+}
+.status-marke .p { --gr: 15.5px; }
+
+.status-wahl { margin: 0 0 8px; }
+.st-knoepfe { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.st-knopf {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 9px 6px; border-radius: 11px; text-align: center;
+  background: var(--farbe-flaeche); border: 1px solid transparent;
+  font-size: 13px; font-weight: 600; color: var(--farbe-text-leise);
+  --sp: var(--farbe-text-leise);
+}
+.st-knopf .p { --gr: 15px; }
+.st-knopf.aktiv { color: var(--farbe-text); border-color: var(--farbe-akzent); --sp: var(--farbe-akzent); }
+.st-knopf:disabled { opacity: .35; cursor: default; }
+.status-hinweis { font-size: 12px; color: var(--farbe-text-leise); margin: 10px 2px 0; min-height: 1.45em; }
+.dreh-klein { display: inline-block; animation: drehen .7s linear infinite; }
+.wartet-chip {
+  position: fixed; left: 50%; transform: translateX(-50%); z-index: 25;
+  bottom: calc(var(--tabs-hoehe) + 16px + env(safe-area-inset-bottom));
+  background: var(--farbe-flaeche-2); color: var(--farbe-warnung); font-weight: 700; font-size: 13px;
+  padding: 8px 14px; border-radius: 99px; white-space: nowrap;
+}
+.ziehen {
+  position: absolute; left: 0; right: 0; top: calc(env(safe-area-inset-top) + 4px);
+  text-align: center; font-size: 13px; font-weight: 600; color: var(--farbe-text-leise);
+  transition: transform .1s linear; pointer-events: none;
+}
+.app { position: relative; }
+
+/* ---------- Zugang (Entwurf) ---------- */
+.zugang { padding: calc(40px + env(safe-area-inset-top)) 4px 20px; }
+.zugang h1 { font-size: 30px; font-weight: 800; margin: 18px 0 8px; }
+.zugang > .leise { margin: 0 0 22px; }
+.zugang .ablauf { margin: 8px 0 20px; }
+.app-icon {
+  width: 72px; height: 72px; border-radius: 18px; display: grid; place-items: center;
+  background: var(--farbe-akzent); color: var(--farbe-text-auf-akzent);
+}
+.app-icon svg { width: 38px; height: 38px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+.teilen-symbol { display: inline-block; padding: 0 4px; border-radius: 5px; background: var(--farbe-flaeche-2); }
+.zugang-form label { display: block; font-weight: 600; margin-bottom: 8px; }
+.zugang-form .suche { margin-bottom: 12px; background: var(--farbe-flaeche-2); }
+.unsichtbar { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.feld-fehler { color: var(--farbe-fehler); font-size: 14px; margin: -4px 0 12px; }
+.knopf-breit {
+  display: flex; justify-content: center; align-items: center; width: 100%; height: 48px;
+  border-radius: 14px; font-size: 16px; font-weight: 700; text-align: center;
+  background: var(--farbe-akzent); color: var(--farbe-text-auf-akzent); margin-top: 10px;
+}
+.knopf-breit:disabled { opacity: .6; }
+.knopf-breit.zweit { background: var(--farbe-flaeche); color: var(--farbe-text); }
+.knopf-breit.gefahr { background: var(--farbe-flaeche-2); color: var(--farbe-fehler); margin-top: 16px; }
+
+/* Zugang am Seitenende: zurückhaltend, keine Karte */
+.zugang-fuss { margin: 34px 2px 0; padding-top: 16px; border-top: 1px solid var(--farbe-linie); color: var(--farbe-text-leise); }
+.zugang-fuss .ueber { font-weight: 800; letter-spacing: .08em; }
+.zugang-fuss dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin: 8px 0 0; font-size: 13px; }
+.zugang-fuss dt { color: var(--farbe-text-leise); }
+.zugang-fuss dd { margin: 0; color: var(--farbe-text-leise); }
+.zugang-fuss .fussnote { margin: 10px 0 0; }
+.text-knopf { margin-top: 12px; font-size: 13px; font-weight: 400; color: var(--farbe-text-leise); text-decoration: underline; }
+
+/* Ohne Kopfleiste (eine Person): Inhalt beginnt unter der Notch */
+.topbar[hidden] ~ #inhalt { padding-top: calc(env(safe-area-inset-top) + 10px); }
+.hinweis.warnung { border-left-color: var(--farbe-warnung); margin-top: 6px; }
+.hinweis.warnung a { display: block; margin-top: 6px; font-weight: 700; color: var(--farbe-akzent); }

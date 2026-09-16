@@ -17,21 +17,43 @@
     return antwort.json();
   }
 
+  // status.json ist optional (fehlt, solange nichts gemeldet wurde)
+  const jsonOptional = (pfad) => json(pfad).catch(() => null);
+
   async function laden(id) {
-    const [athleten, uebungen, aktuell, index] = await Promise.all([
+    const [athleten, uebungen, aktuell, index, status] = await Promise.all([
       json('athleten.json'),
       json('uebungen.json'),
       json(`${id}/aktuell.json`),
       json(`${id}/index.json`),
+      jsonOptional(`${id}/status.json`),
     ]);
+    // Planstatus merken; der gemeldete Status wird darübergelegt (datenformat.md → status.json)
+    for (const w of aktuell.wochen) {
+      for (const e of [...w.einheiten, ...w.mobility.einheiten]) e.planStatus = e.status;
+    }
     return {
       id,
       athleten: athleten.athleten,
       uebungen: uebungen.uebungen,
       aktuell,
       index: index.wochen,
+      statusDatei: (status && status.wochen) || {},
       geladen: new Date(),
     };
+  }
+
+  // Gemeldeter Status (status.json + lokale, noch nicht bestätigte Meldungen) über aktuell.json legen
+  function statusAnwenden(aktuell, ...ebenen) {
+    for (const w of aktuell.wochen) {
+      for (const e of [...w.einheiten, ...w.mobility.einheiten]) {
+        const gemeldet = ebenen.reduce((wert, ebene) => {
+          const woche = ebene[w.iso_woche];
+          return woche && e.id in woche ? woche[e.id] : wert;
+        }, undefined);
+        e.status = gemeldet || e.planStatus;
+      }
+    }
   }
 
   // Abgeschlossene Woche aus dem Archiv (datei laut index.json)
@@ -274,7 +296,7 @@
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
   window.PlanDaten = {
-    laden, ladeWoche, athletId, athletWechseln,
+    laden, ladeWoche, athletId, athletWechseln, statusAnwenden,
     TAGE_KURZ, TAGE_LANG, MONATE, datum, iso, plusTage, tageZwischen, wochentag, heute,
     fmtTag, fmtZeitraum, fmtZeitpunkt, fmtUhrzeit, fmtDauer, kw, wochenTage, aktuelleWoche,
     isoWoche, wochenRahmen,

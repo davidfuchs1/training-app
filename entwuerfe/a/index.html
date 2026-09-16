@@ -12,7 +12,8 @@
 </head>
 <body>
   <div class="app">
-    <header class="topbar" id="topbar"></header>
+    <div class="ziehen" id="ziehen" hidden></div>
+    <header class="topbar" id="topbar" hidden></header>
     <main id="inhalt"><p class="laden">Lade Plan …</p></main>
   </div>
 
@@ -39,6 +40,7 @@
     <div class="sheet" role="dialog" aria-modal="true" id="sheet-inhalt"></div>
   </div>
   <div class="toast" id="toast" hidden></div>
+  <div class="wartet-chip" id="wartet" hidden></div>
 
   <script src="../gemeinsam/daten.js"></script>
   <script src="app.js"></script>
