@@ -2,26 +2,36 @@
 
 Trainingspläne als App-artige Webseite (GitHub Pages, PWA).
 
-Dieses Repository ist **öffentlich** und enthält ausschließlich Trainingsinhalte:
-keine Gesundheitsdaten, keine echten Namen.
+Dieses Repository ist **öffentlich** und enthält die App, die Übungsbibliothek
+und Testdaten – **keine Pläne echter Personen**. Diese liegen je in einem
+privaten Repo `plan-<id>`; die App liest sie über die GitHub-API mit einem
+persönlichen Schlüssel, der nur auf dem Gerät der Person gespeichert ist.
 
 ## Aufbau
 
 | Pfad | Zweck |
 |---|---|
-| `plaene/athleten.json` | Liste der Pläne (Anzeigenamen) |
+| `index.html`, `app.js`, `quelle.js` | App: Ansichten sowie Daten und GitHub-Zugriff |
+| `stil.css`, `farben.css` | Gestaltung, Farbwerte nur in `farben.css` |
+| `sw.js`, `manifest.webmanifest` | PWA: Oberfläche gecacht, Vollbild, Icon |
 | `plaene/uebungen.json` | Übungsbibliothek mit IDs und Bewegungsablauf |
-| `plaene/<athlet>/aktuell.json` | laufende und nächste Woche |
-| `plaene/<athlet>/index.json` | Kennzahlen aller Wochen |
-| `plaene/<athlet>/wochen/` | abgeschlossene Wochen |
-| `tools/pruefen.py` | prüft alle Plandateien auf Format und Regeln |
+| `plaene/demo/` | Testdaten (ohne Schlüssel ansehbar) |
+| `tools/pruefen.py` | prüft Plandateien auf Format und Regeln |
+| `entwuerfe/` | Design-Entwürfe |
 
 Das Datenformat ist in [`docs/datenformat.md`](docs/datenformat.md) beschrieben.
 
 ## Prüfen
 
 ```bash
-python3 tools/pruefen.py plaene
+python3 tools/pruefen.py plaene                                              # Testdaten
+python3 tools/pruefen.py --plan ../plan-<id> --uebungen plaene/uebungen.json  # Plan-Repo
 ```
 
-Die Webseite selbst folgt in einem späteren Schritt.
+## Lokal ansehen
+
+```bash
+python3 -m http.server 8000
+```
+
+Dann <http://127.0.0.1:8000/?demo=1> öffnen (Demo, ohne Schlüssel).
