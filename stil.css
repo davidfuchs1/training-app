@@ -9,7 +9,7 @@
   --rand-oben: env(safe-area-inset-top, 0px);
   /* Abstand oben: unter der Statusleiste (meist 0 gemeldet) mit etwas Luft; bei Geräten, die
      doch einen Rand melden (z. B. Querformat, ältere iOS-Versionen), mindestens dieser Rand */
-  --abstand-oben: max(var(--rand-oben), 20px);
+  --abstand-oben: max(var(--rand-oben), 8px);
   --rand-unten: env(safe-area-inset-bottom, 0px);
   /* Unter der Tab-Leiste reicht weniger als der volle Home-Balken-Bereich (Leiste wirkt sonst zu hoch) */
   --rand-unten-tabs: max(calc(var(--rand-unten) - 12px), 6px);
@@ -69,7 +69,7 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 .zurueck { color: var(--farbe-akzent); }
 
 /* ---------- Typo-Bausteine ---------- */
-.titel { padding: 8px 0 18px; }
+.titel { padding: 2px 0 18px; }
 .titel h1 { font-size: 34px; font-weight: 800; line-height: 1.1; }
 .ueber {
   margin: 0 0 4px; font-size: 12px; font-weight: 600; letter-spacing: .06em;
@@ -257,7 +257,7 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 .punkte i.voll { background: var(--farbe-akzent); }
 
 /* ---------- Woche: Navigation & Kalender ---------- */
-.wochen-nav { display: flex; align-items: center; gap: 8px; padding: 6px 0 14px; }
+.wochen-nav { display: flex; align-items: center; gap: 8px; padding: 0 0 14px; }
 .wochen-nav .kw { flex: 1; text-align: center; }
 .wochen-nav .kw .ueber { justify-content: center; margin: 0; }
 .wochen-nav h1 { font-size: 34px; font-weight: 800; line-height: 1.1; }
@@ -299,7 +299,7 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 .leer-woche p { margin: 0; }
 
 /* ---------- Einheit ---------- */
-.einheit-kopf { padding: 6px 0 16px; }
+.einheit-kopf { padding: 0 0 16px; }
 .einheit-kopf h1 { font-size: 28px; font-weight: 800; line-height: 1.15; margin-top: 4px; }
 .einheit-kopf .ziel { margin-top: 12px; color: var(--farbe-text); opacity: .85; }
 .block {
