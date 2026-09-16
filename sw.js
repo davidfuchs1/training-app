@@ -3,7 +3,7 @@
    - Oberfläche (HTML, JS, CSS, Icons): aus dem Cache, im Hintergrund erneuert.
    - Übungsbibliothek und Demo-Daten: erst Netz, Cache nur als Rückfall.
    - Pläne kommen über api.github.com und laufen nie durch den Service Worker. */
-const VERSION = 'v3';
+const VERSION = 'v4';
 const CACHE = `training-${VERSION}`;
 
 const OBERFLAECHE = [

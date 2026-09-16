@@ -8,18 +8,21 @@
   /* Sichere Ränder (Notch/Dynamic Island, Home-Balken) – vom Gerät geliefert, je iPhone verschieden */
   --rand-oben: env(safe-area-inset-top, 0px);
   --rand-unten: env(safe-area-inset-bottom, 0px);
-  /* iOS-Fehler: Home-Bildschirm-App mit durchsichtiger Statusleiste meldet eine zu
-     kleine Fensterhöhe. app.js misst die Differenz und setzt --ios-ausgleich. */
-  --ios-ausgleich: 0px;
+  /* Unter der Tab-Leiste reicht weniger als der volle Home-Balken-Bereich (Leiste wirkt sonst zu hoch) */
+  --rand-unten-tabs: max(calc(var(--rand-unten) - 12px), 6px);
+  /* iOS (Home-Bildschirm-App, durchsichtige Statusleiste): „position: fixed; top: 0“
+     sitzt unterhalb der Statusleiste statt am Bildschirmrand. app.js misst den
+     Versatz (innerHeight − clientHeight) und setzt --ios-versatz-oben; sonst 0. */
+  --ios-versatz-oben: 0px;
 }
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html { -webkit-text-size-adjust: 100%; background: var(--farbe-grund); min-height: calc(100% + var(--ios-ausgleich)); }
+html { -webkit-text-size-adjust: 100%; background: var(--farbe-grund); }
 
 /* Hinter der Statusleiste (Uhr, Akku): Fläche, damit gescrollter Inhalt nicht darunter durchscheint */
 body::before {
-  content: ""; position: fixed; top: 0; left: 0; right: 0; z-index: 45;
+  content: ""; position: fixed; top: calc(-1 * var(--ios-versatz-oben)); left: 0; right: 0; z-index: 45;
   height: var(--rand-oben); pointer-events: none;
   background: color-mix(in srgb, var(--farbe-grund) 92%, transparent);
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
@@ -42,7 +45,7 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
   min-height: 100dvh;
   margin: 0 auto;
   background: var(--farbe-grund);
-  padding: 0 16px calc(var(--tabs-hoehe) + 28px + var(--rand-unten));
+  padding: 0 16px calc(var(--tabs-hoehe) + 28px + var(--rand-unten-tabs));
 }
 
 /* ---------- Kopfleiste ---------- */
@@ -372,9 +375,9 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 
 /* ---------- Tab-Leiste ---------- */
 .tabs {
-  position: fixed; bottom: calc(-1 * var(--ios-ausgleich)); left: 50%; transform: translateX(-50%); z-index: 20;
-  width: min(100%, 440px); height: calc(var(--tabs-hoehe) + var(--rand-unten));
-  padding-bottom: var(--rand-unten);
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); z-index: 20;
+  width: min(100%, 440px); height: calc(var(--tabs-hoehe) + var(--rand-unten-tabs));
+  padding-bottom: var(--rand-unten-tabs);
   display: grid; grid-template-columns: repeat(4, 1fr);
   background: color-mix(in srgb, var(--farbe-flaeche) 88%, transparent);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -433,7 +436,7 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 
 .toast {
   position: fixed; left: 50%; transform: translateX(-50%); z-index: 40;
-  bottom: calc(var(--tabs-hoehe) + 16px + var(--rand-unten));
+  bottom: calc(var(--tabs-hoehe) + 16px + var(--rand-unten-tabs));
   background: var(--farbe-text); color: var(--farbe-grund); font-weight: 600; font-size: 14px;
   padding: 10px 16px; border-radius: 99px; white-space: nowrap;
 }
@@ -479,7 +482,7 @@ a.tag-label { color: inherit; }
 .dreh-klein { display: inline-block; animation: drehen .7s linear infinite; }
 .wartet-chip {
   position: fixed; left: 50%; transform: translateX(-50%); z-index: 25;
-  bottom: calc(var(--tabs-hoehe) + 16px + var(--rand-unten));
+  bottom: calc(var(--tabs-hoehe) + 16px + var(--rand-unten-tabs));
   background: var(--farbe-flaeche-2); color: var(--farbe-warnung); font-weight: 700; font-size: 13px;
   padding: 8px 14px; border-radius: 99px; white-space: nowrap;
 }

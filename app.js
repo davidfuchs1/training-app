@@ -28,19 +28,18 @@ const imHomeBildschirm = () => window.navigator.standalone === true
 const istIOS = () => /iPad|iPhone|iPod/.test(navigator.userAgent)
   || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-/* iOS-Fehler: Eine Home-Bildschirm-App mit durchsichtiger Statusleiste meldet
-   manchmal eine um die Statusleiste zu kleine Fensterhöhe; fest unten verankerte
-   Elemente (Tab-Leiste) sitzen dann zu hoch. Differenz messen und über
-   --ios-ausgleich in stil.css ausgleichen. Auf korrekt meldenden Geräten ist sie 0. */
+/* iOS-Eigenheit: In der Home-Bildschirm-App mit durchsichtiger Statusleiste ist
+   die Layout-Höhe (clientHeight) um die Statusleiste kleiner als das Fenster;
+   „position: fixed; top: 0“ landet dann unter der Statusleiste. Versatz messen
+   und über --ios-versatz-oben in stil.css ausgleichen. Sonst 0.
+   Gemessen 2026-09-16 (393 × 852): innerHeight 852, clientHeight 793 → 59 px. */
 function iosAusgleichen() {
-  let wert = 0;
+  let versatz = 0;
   if (istIOS() && imHomeBildschirm()) {
-    const hochkant = window.innerHeight > window.innerWidth;
-    const hoehe = hochkant ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height);
-    const differenz = hoehe - window.innerHeight;
-    if (differenz > 0 && differenz < 80) wert = differenz;
+    const differenz = window.innerHeight - document.documentElement.clientHeight;
+    if (differenz > 0 && differenz < 100) versatz = differenz;
   }
-  document.documentElement.style.setProperty('--ios-ausgleich', `${wert}px`);
+  document.documentElement.style.setProperty('--ios-versatz-oben', `${versatz}px`);
 }
 iosAusgleichen();
 window.addEventListener('resize', iosAusgleichen);
@@ -981,7 +980,8 @@ function messwerteZeigen() {
     'clientHeight': document.documentElement.clientHeight,
     'Rand oben (env)': cs.paddingTop,
     'Rand unten (env)': cs.paddingBottom,
-    '--ios-ausgleich': getComputedStyle(document.documentElement).getPropertyValue('--ios-ausgleich').trim(),
+    '--ios-versatz-oben': getComputedStyle(document.documentElement).getPropertyValue('--ios-versatz-oben').trim(),
+    'Statusleisten-Fläche oben/unten': (() => { const b = getComputedStyle(document.body, '::before'); return `top ${b.top}, Höhe ${b.height}`; })(),
     'Tab-Leiste oben/unten': `${Math.round(tabsRect.top)} / ${Math.round(tabsRect.bottom)}`,
     'Inhalt beginnt bei': Math.round(inhalt.getBoundingClientRect().top + window.scrollY),
     'Pixeldichte': window.devicePixelRatio,
