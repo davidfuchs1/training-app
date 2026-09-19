@@ -17,7 +17,6 @@ persönlichen Schlüssel, der nur auf dem Gerät der Person gespeichert ist.
 | `plaene/uebungen.json` | Übungsbibliothek mit IDs und Bewegungsablauf |
 | `plaene/demo/` | Testdaten (ohne Schlüssel ansehbar) |
 | `tools/pruefen.py` | prüft Plandateien auf Format und Regeln |
-| `entwuerfe/` | Design-Entwürfe |
 
 Das Datenformat ist in [`docs/datenformat.md`](docs/datenformat.md) beschrieben.
 

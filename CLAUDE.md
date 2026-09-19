@@ -23,7 +23,6 @@ liegen in `training-daten` (lokal `../training-daten`).
 | `plaene/athleten.json`, `plaene/demo/` | Testdaten zum Entwickeln (inkl. `status.json`) |
 | `docs/datenformat.md` | **verbindliches Datenformat** – vor Arbeit an Daten oder Anzeige lesen |
 | `tools/pruefen.py` | Prüfskript; Original im Coach-Skill, beide synchron halten |
-| `entwuerfe/` | Archiv: Design-Entwurf A mit simulierten Zuständen (`?sim=…`); maßgeblich ist die App im Wurzelverzeichnis |
 | `.github/workflows/auto-merge-claude.yml` | übernimmt `claude/**`-Branches nach `main`, wenn nur `plaene/**` geändert und Prüfung ok |
 
 Plan-Repos (privat, aus der Vorlage `plan-vorlage`): `athlet.json`,
@@ -71,7 +70,9 @@ GitHub-Contributions, Ernährungshinweis pro Tag. Später: Push-Benachrichtigung
 - `plan-vorlage` (Vorlage mit Wächter- und Auto-Merge-Action) und `plan-test`
   (Testperson) angelegt; beide Actions in `plan-test` erprobt.
 - **Finale App liegt im Wurzelverzeichnis** (PWA, Zugang, Status melden,
-  Herunterziehen zum Aktualisieren), Design aus Entwurf A.
+  Herunterziehen zum Aktualisieren), Design aus Entwurf A. Der Entwurfsordner
+  `entwuerfe/` wurde 2026-09-19 gelöscht (in der Git-Historie erhalten); neue
+  Design-Ideen direkt in der App auf einem eigenen Branch ausprobieren.
 - Coach-Skill 2.0.0: Abläufe Zugang, Wochen-Check, Onboarding, Handbetrieb.
 - **GitHub Pages läuft auf `main`:** https://davidfuchs1.github.io/training-app/
   – auf dem iPhone (iOS 27) getestet: Einrichtung, Status melden, Symbol.

@@ -5,7 +5,7 @@
      schlechtem Empfang startet die App trotzdem sofort aus dem Cache.
    - Übungsbibliothek und Demo-Daten: erst Netz, Cache nur als Rückfall.
    - Pläne kommen über api.github.com und laufen nie durch den Service Worker. */
-const VERSION = 'v17';
+const VERSION = 'v18';
 const CACHE = `training-${VERSION}`;
 
 const OBERFLAECHE = [

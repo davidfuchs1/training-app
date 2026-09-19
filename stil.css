@@ -1,5 +1,5 @@
 @charset "utf-8";
-/* Entwurf A „Heute“: Layout und Formen. Farben nur über Rollen aus farben.css. */
+/* Trainings-App: Layout und Formen. Farben nur über Rollen aus farben.css. */
 
 :root {
   --radius: 18px;
@@ -466,7 +466,7 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 }
 a.tag-label { color: inherit; }
 
-/* ---------- Status melden (Entwurf) ---------- */
+/* ---------- Status melden ---------- */
 .karte-rahmen { position: relative; }
 .karte-rahmen .karte.gross { margin-bottom: 12px; }
 /* Statusmarke: rechts in der Fußzeile der Karte, senkrecht mittig zu „Details“ */
@@ -508,7 +508,7 @@ a.tag-label { color: inherit; }
 }
 .app { position: relative; }
 
-/* ---------- Zugang (Entwurf) ---------- */
+/* ---------- Zugang ---------- */
 .zugang { padding: 28px 4px 20px; }
 .zugang h1 { font-size: 30px; font-weight: 800; margin: 18px 0 8px; }
 .zugang > .leise { margin: 0 0 22px; }
