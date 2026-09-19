@@ -18,7 +18,7 @@ liegen in `training-daten` (lokal `../training-daten`).
 |---|---|
 | `index.html`, `app.js`, `quelle.js` | die App: Ansichten bzw. Daten und GitHub-Zugriff |
 | `stil.css`, `farben.css` | Gestaltung; **Farbwerte ausschließlich in `farben.css`** |
-| `sw.js`, `manifest.webmanifest`, `icon.png` | PWA: Oberfläche gecacht, App-Symbol (= Symbol des Tabs „Block“, 180 px), Vollbild |
+| `sw.js`, `manifest.webmanifest`, `icon.png` | PWA: Oberfläche gecacht, App-Symbol (Ring aus Sportarten-Segmenten in den Farben aus `farben.css`, Entwurf des Projektinhabers 2026-09-19; 180 px, randlos – iOS rundet selbst), Vollbild |
 | `plaene/uebungen.json` | Übungsbibliothek, alle Pläne verweisen per ID |
 | `plaene/athleten.json`, `plaene/demo/` | Testdaten zum Entwickeln (inkl. `status.json`) |
 | `docs/datenformat.md` | **verbindliches Datenformat** – vor Arbeit an Daten oder Anzeige lesen |
