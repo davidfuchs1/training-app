@@ -95,8 +95,8 @@ GitHub-Contributions, Ernährungshinweis pro Tag. Später: Push-Benachrichtigung
   Gerätespeicher statt Abbruch bei der Planliste, Übungen und abgeschlossene
   Wochen mitgespeichert, gemeldeter Status nach dem Senden im Speicher
   nachgezogen, beim Wiederverbinden erst laden, dann senden. Getestet im
-  Desktop-Browser mit nachgestellter GitHub-API; **Test auf dem iPhone
-  (Flugmodus) offen.** Kein Zeitlimit bei sehr schwachem Empfang.
+  Desktop-Browser mit nachgestellter GitHub-API und vom Projektinhaber auf dem
+  iPhone (2026-10-13). Kein Zeitlimit bei sehr schwachem Empfang.
 - **Offen:** Coach-Token neu erzeugen und um `plan-david` erweitern.
 - Später: Tablet-Layout (Media Queries), Push-Benachrichtigungen.
 
