@@ -18,6 +18,7 @@ let daten = null;
 let plaeneListe = [];
 let zugangFehler = false;   // Schlüssel abgelaufen oder widerrufen
 let sendetGerade = false;
+let laedtGerade = false;
 let letzteAdresse = '#heute'; // Seite vor einer Einheit (inkl. Tag/Woche) für „Zurück“
 let letzterTab = 'heute';
 const scrollStand = new Map();
@@ -54,7 +55,13 @@ async function planLaden() {
   inhalt.innerHTML = '<p class="laden">Lade Plan …</p>';
   try {
     if (!D.demoModus()) {
-      plaeneListe = await D.plaene();
+      try {
+        plaeneListe = await D.plaene();
+      } catch (fehler) {
+        // Ohne Verbindung: zuletzt bekannte Pläne; der Plan kommt dann aus dem Zwischenspeicher
+        plaeneListe = D.plaeneGemerkt();
+        if (fehler instanceof D.ZugangFehler || !plaeneListe.length) throw fehler;
+      }
       if (!plaeneListe.length) throw new Error('Für diesen Schlüssel ist kein Plan freigegeben.');
       const gewaehlt = plaeneListe.includes(D.auswahl()) ? D.auswahl() : plaeneListe[0];
       D.auswahlSetzen(gewaehlt);
@@ -73,9 +80,14 @@ async function planLaden() {
   }
 }
 
-async function neuLaden() {
+// leise = von selbst ausgelöst (wieder online): ohne Verbindung bleibt alles, wie es ist
+async function neuLaden(leise = false) {
+  if (laedtGerade) return;
+  laedtGerade = true;
   try {
-    daten = await D.laden(daten.id);
+    const neu = await D.laden(daten.id);
+    if (leise && neu.ausCache) return;
+    daten = neu;
     statusAnwenden();
     archiv.clear();
     zeichnen(false);
@@ -83,7 +95,9 @@ async function neuLaden() {
     sendenVersuchen();
   } catch (fehler) {
     if (fehler instanceof D.ZugangFehler) { zugangFehler = true; zeichnen(false); }
-    zeigeToast('Keine Verbindung – alter Stand bleibt');
+    if (!leise) zeigeToast('Keine Verbindung – alter Stand bleibt');
+  } finally {
+    laedtGerade = false;
   }
 }
 
@@ -998,9 +1012,14 @@ document.addEventListener('input', (ev) => {
   });
 });
 
-// Wieder online: offene Meldungen nachsenden
-window.addEventListener('online', () => sendenVersuchen());
-document.addEventListener('visibilitychange', () => { if (!document.hidden) sendenVersuchen(); });
+// Wieder online: nach einem Start ohne Verbindung erst den Plan holen (sendet
+// danach selbst), sonst nur offene Meldungen nachsenden
+function wiederOnline() {
+  if (daten && daten.ausCache) neuLaden(true);
+  else sendenVersuchen();
+}
+window.addEventListener('online', wiederOnline);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) wiederOnline(); });
 
 // Zurück von einer Einheit: gleicher Tag/gleiche Woche und alte Scrollposition
 window.addEventListener('hashchange', (ev) => {

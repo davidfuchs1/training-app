@@ -6,6 +6,8 @@ Dieses Repository ist **öffentlich** und enthält die App, die Übungsbibliothe
 und Testdaten – **keine Pläne echter Personen**. Diese liegen je in einem
 privaten Repo `plan-<id>`; die App liest sie über die GitHub-API mit einem
 persönlichen Schlüssel, der nur auf dem Gerät der Person gespeichert ist.
+Nach dem Laden liegt eine Kopie des Plans im Gerätespeicher, damit die App auch
+ohne Verbindung nutzbar ist; Meldungen werden vorgemerkt und später gesendet.
 
 ## Aufbau
 
@@ -13,7 +15,7 @@ persönlichen Schlüssel, der nur auf dem Gerät der Person gespeichert ist.
 |---|---|
 | `index.html`, `app.js`, `quelle.js` | App: Ansichten sowie Daten und GitHub-Zugriff |
 | `stil.css`, `farben.css` | Gestaltung, Farbwerte nur in `farben.css` |
-| `sw.js`, `manifest.webmanifest` | PWA: Oberfläche gecacht, Vollbild, Icon |
+| `sw.js`, `manifest.webmanifest`, `icon.png` | PWA: Oberfläche gecacht, Vollbild, Icon |
 | `plaene/uebungen.json` | Übungsbibliothek mit IDs und Bewegungsablauf |
 | `plaene/demo/` | Testdaten (ohne Schlüssel ansehbar) |
 | `tools/pruefen.py` | prüft Plandateien auf Format und Regeln |

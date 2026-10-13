@@ -6,8 +6,10 @@
              Schlüssel (fine-grained Token), der nur auf diesem Gerät liegt.
 
    Plandaten werden immer frisch geladen; der Zwischenspeicher im Gerät dient
-   nur als Rückfall ohne Verbindung. Status-Meldungen laufen über eine
-   Warteschlange, damit auch ohne Empfang nichts verloren geht.
+   nur als Rückfall ohne Verbindung. Dort liegt alles, was die App offline
+   braucht: Planliste, Plan, gemeldeter Status, Übungen, abgeschlossene Wochen.
+   Status-Meldungen laufen über eine Warteschlange, damit auch ohne Empfang
+   nichts verloren geht.
    Datenformat: docs/datenformat.md */
 (function () {
   'use strict';
@@ -22,6 +24,8 @@
   const S_AUSWAHL = 'plan-auswahl';
   const S_WARTESCHLANGE = 'plan-warteschlange';
   const S_CACHE = 'plan-cache-';
+  const S_PLAENE = 'plan-liste';
+  const S_UEBUNGEN = 'plan-uebungen';
 
   const param = (name) => new URLSearchParams(location.search).get(name);
   const pad = (n) => String(n).padStart(2, '0');
@@ -52,6 +56,7 @@
     speicherSchreiben(S_SCHLUESSEL, null);
     speicherSchreiben(S_AUSWAHL, null);
     speicherSchreiben(S_WARTESCHLANGE, null);
+    speicherSchreiben(S_PLAENE, null);
     for (const k of Object.keys(localStorage)) {
       if (k.startsWith(S_CACHE)) localStorage.removeItem(k);
     }
@@ -109,10 +114,15 @@
   async function plaene() {
     const antwort = await api('/user/repos?per_page=100&sort=full_name');
     if (antwort.status !== 200) throw new Error(`Pläne nicht geladen (HTTP ${antwort.status})`);
-    return antwort.daten
+    const liste = antwort.daten
       .filter((r) => r.private && r.name.startsWith(REPO_PRAEFIX))
       .map((r) => r.name.slice(REPO_PRAEFIX.length));
+    speicherSchreiben(S_PLAENE, liste);
+    return liste;
   }
+
+  // Zuletzt bekannte Pläne – für den Start ohne Verbindung
+  const plaeneGemerkt = () => speicherLesen(S_PLAENE, []) || [];
 
   // ---------- Öffentliche Dateien (Übungen, Demo) ----------
 
@@ -157,22 +167,31 @@
   }
 
   /* Plan laden. Ohne Verbindung greift der Zwischenspeicher (ausCache = true).
-     Übungen kommen aus dem öffentlichen Repo und dürfen aus dem Cache des
-     Service Workers kommen. */
+     Übungen kommen aus dem öffentlichen Repo und liegen ebenfalls im
+     Zwischenspeicher, damit sie ohne Verbindung sicher da sind. */
   async function laden(id) {
     const demo = demoModus();
+    const platz = demo ? 'demo' : id;
     let teile;
     let ausCache = false;
     try {
       teile = demo ? await ausDemo() : await ausGitHub(id);
-      cacheSchreiben(demo ? 'demo' : id, teile);
+      cacheSchreiben(platz, teile);
     } catch (fehler) {
-      const gespeichert = cacheLesen(demo ? 'demo' : id);
+      const gespeichert = cacheLesen(platz);
       if (!gespeichert || fehler instanceof ZugangFehler) throw fehler;
       teile = gespeichert;
       ausCache = true;
     }
-    const uebungen = await oeffentlich('uebungen.json');
+    let uebungen;
+    try {
+      uebungen = await oeffentlich('uebungen.json');
+      speicherSchreiben(S_UEBUNGEN, uebungen);
+    } catch (fehler) {
+      uebungen = speicherLesen(S_UEBUNGEN);
+      if (!uebungen) throw fehler;
+    }
+    if (!ausCache) archivVorladen(platz, teile.index);
 
     for (const w of teile.aktuell.wochen) {
       for (const e of [...w.einheiten, ...w.mobility.einheiten]) e.planStatus = e.status;
@@ -190,10 +209,37 @@
     };
   }
 
-  // Abgeschlossene Woche aus dem Archiv (datei laut index.json)
-  const ladeWoche = (id, name) => (demoModus()
-    ? oeffentlich(`demo/${name}`)
-    : datei(id, name));
+  // Abgeschlossene Woche aus dem Archiv (datei laut index.json); ohne
+  // Verbindung aus dem Zwischenspeicher
+  async function ladeWoche(id, name) {
+    const demo = demoModus();
+    const platz = `${demo ? 'demo' : id}/${name}`;
+    try {
+      const woche = await (demo ? oeffentlich(`demo/${name}`) : datei(id, name));
+      cacheSchreiben(platz, woche);
+      return woche;
+    } catch (fehler) {
+      const gespeichert = cacheLesen(platz);
+      if (!gespeichert) throw fehler;
+      return gespeichert;
+    }
+  }
+
+  /* Abgeschlossene Wochen im Hintergrund auf das Gerät holen, damit sie auch
+     ohne Verbindung da sind. Wochen, die nicht mehr im Index stehen (neuer
+     Block), fliegen aus dem Zwischenspeicher. */
+  async function archivVorladen(id, index) {
+    const dateien = index.map((x) => x.datei).filter((d) => d !== 'aktuell.json');
+    const praefix = `${S_CACHE}${id}/`;
+    try {
+      for (const k of Object.keys(localStorage)) {
+        if (k.startsWith(praefix) && !dateien.includes(k.slice(praefix.length))) localStorage.removeItem(k);
+      }
+      for (const name of dateien) {
+        if (!cacheLesen(`${id}/${name}`)) await ladeWoche(id, name);
+      }
+    } catch { /* beim nächsten Laden erneut */ }
+  }
 
   // ---------- Status melden ----------
 
@@ -285,6 +331,9 @@
       });
       if (antwort.status === 200 || antwort.status === 201) {
         warteschlangeSetzen(warteschlange().filter((m) => m.id !== id));
+        // Auch im Zwischenspeicher nachziehen, sonst fehlt der Stand beim Start ohne Verbindung
+        const gespeichert = cacheLesen(id);
+        if (gespeichert) cacheSchreiben(id, { ...gespeichert, statusDatei: wochen });
         return { gesendet: offen.length, wochen };
       }
       if (antwort.status !== 409) { // 409 = jemand anderes war schneller → neu lesen
@@ -513,7 +562,7 @@
   window.Plan = {
     // Zugang und Daten
     schluessel, schluesselSetzen, abmelden, demoModus, auswahl, auswahlSetzen,
-    plaene, laden, ladeWoche, ZugangFehler, NetzFehler,
+    plaene, plaeneGemerkt, laden, ladeWoche, ZugangFehler, NetzFehler,
     // Status melden
     GEMELDETER_STATUS, melden, senden, warteschlange, offeneEbene, offenFuer, statusAnwenden,
     // Darstellung

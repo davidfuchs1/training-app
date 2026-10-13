@@ -40,6 +40,12 @@ python3 tools/pruefen.py --plan ../plan-<id> --uebungen plaene/uebungen.json  # 
 - Oberfläche gecacht (sofortiger Start), **Plandaten immer frisch** laden;
   Cache nur als Offline-Fallback. Stand des Plans und letztes Laden im Tab
   „Block“; Aktualisieren durch **Herunterziehen** am oberen Rand.
+- **Ohne Verbindung nutzbar:** Nach dem letzten Laden liegen Planliste, Plan,
+  gemeldeter Status, Übungen und abgeschlossene Wochen im Gerätespeicher
+  (`localStorage`, nur auf dem Gerät – nie im öffentlichen Repo). Die App
+  startet daraus, merkt Meldungen vor und holt beim Wiederverbinden erst den
+  Plan, dann sendet sie. „Schlüssel entfernen“ löscht alles außer den
+  (öffentlichen) Übungen.
 - **Eine Adresse für alle.** Welcher Plan erscheint, bestimmt der Schlüssel auf
   dem Gerät, nicht die Adresse. Gilt ein Schlüssel für mehrere Pläne
   (Coach-Sicht), erscheint oben der Umschalter; letzte Auswahl wird gemerkt.
@@ -61,7 +67,7 @@ Ideensammlung (nicht entschieden): „Heute“-Karte zuerst, Intervalle als
 Blockdiagramm, Saison-Zeitstrahl, Form-Kurve, Mobility-Raster à la
 GitHub-Contributions, Ernährungshinweis pro Tag. Später: Push-Benachrichtigungen.
 
-## Stand (2026-09-16)
+## Stand (2026-10-13)
 - Fundament fertig (Datenformat v1 inkl. `athlet.json` und `status.json`,
   Übungsbibliothek, Demo-Daten, Prüfskript mit Plan-Repo-Modus).
 - **Modell Profile getrennt:** privates Repo pro Person, Token pro Repo,
@@ -83,8 +89,15 @@ GitHub-Contributions, Ernährungshinweis pro Tag. Später: Push-Benachrichtigung
   Tab-Leiste als schwebende Kapsel; keine `position: fixed; top: 0`-Flächen.
 - Übungsbibliothek: 78 Übungen (inkl. Studio-Alternativen, Aufwärmen, Lauf-ABC).
 - `plan-david` angelegt (Skiblock 2026, Woche 1–2 ausgearbeitet).
-- **Offen:** Coach-Token neu erzeugen und um `plan-david` erweitern; eigener
-  iPhone-Token nur für `plan-david` (Projektinhaber, vor 2026-10-07).
+- Zugang zu `plan-david` auf dem iPhone des Projektinhabers eingerichtet (Plan
+  wird in der App angezeigt, 2026-10-13).
+- **Ohne Verbindung nutzbar (2026-10-13, `sw.js` v19):** Start aus dem
+  Gerätespeicher statt Abbruch bei der Planliste, Übungen und abgeschlossene
+  Wochen mitgespeichert, gemeldeter Status nach dem Senden im Speicher
+  nachgezogen, beim Wiederverbinden erst laden, dann senden. Getestet im
+  Desktop-Browser mit nachgestellter GitHub-API; **Test auf dem iPhone
+  (Flugmodus) offen.** Kein Zeitlimit bei sehr schwachem Empfang.
+- **Offen:** Coach-Token neu erzeugen und um `plan-david` erweitern.
 - Später: Tablet-Layout (Media Queries), Push-Benachrichtigungen.
 
 ## Arbeitsweise
