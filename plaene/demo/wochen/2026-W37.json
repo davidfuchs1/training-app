@@ -75,7 +75,7 @@
       "titel": "Lange Grundlage Rolle 90 min",
       "tag_vorschlag": "2026-09-12",
       "dauer_min": 90,
-      "ziel": "Aerobe Basis für lange Skitage, Zonendisziplin.",
+      "ziel": "Aerobe Basis, Zonendisziplin.",
       "status": "erledigt",
       "bloecke": [
         {
@@ -83,8 +83,8 @@
           "dauer_min": 10,
           "zone": "Z1",
           "leistung_w": [
-            100,
-            125
+            115,
+            144
           ]
         },
         {
@@ -92,12 +92,12 @@
           "dauer_min": 70,
           "zone": "Z2",
           "hf": [
-            136,
-            147
+            129,
+            140
           ],
           "leistung_w": [
-            150,
-            170
+            172,
+            195
           ],
           "trittfrequenz": [
             85,
@@ -139,12 +139,12 @@
           "dauer_min": 30,
           "zone": "Z2",
           "hf": [
-            136,
-            147
+            129,
+            140
           ],
           "pace": [
-            "6:23",
-            "6:50"
+            "6:48",
+            "7:15"
           ]
         },
         {
@@ -175,8 +175,8 @@
           "wiederholungen": 4,
           "zone": "Z3",
           "leistung_w": [
-            180,
-            200
+            207,
+            230
           ],
           "trittfrequenz": [
             55,
@@ -194,8 +194,8 @@
           "dauer_min": 6,
           "zone": "Z2",
           "leistung_w": [
-            150,
-            170
+            172,
+            195
           ]
         },
         {

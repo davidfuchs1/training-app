@@ -21,7 +21,7 @@ Gültige Beispiele: `plaene/demo/` und die Beispiele im Coach-Skill.
 ## Verzeichnis
 
 Pläne echter Personen liegen je in einem **privaten Plan-Repo**
-`davidfuchs1/plan-<id>`; die App liest sie mit dem Schlüssel (Token) der
+`<github-name>/plan-<id>`; die App liest sie mit dem Schlüssel (Token) der
 Person über die GitHub-API. Im öffentlichen Repo `training-app` liegen nur die
 Übungsbibliothek und Testdaten.
 
@@ -78,8 +78,8 @@ Jeder Athletenordner muss hier stehen und umgekehrt. Nur für `plaene/`
 ```json
 {
   "format_version": 1,
-  "id": "david",
-  "anzeigename": "david",
+  "id": "mia",
+  "anzeigename": "mia",
   "sportarten": ["kraft", "rad", "laufen"]
 }
 ```
@@ -254,18 +254,18 @@ Webseite den Eintrag grau.
   "athlet": "demo",
   "aktualisiert": "2026-09-14T18:00:00+02:00",
   "block": {
-    "name": "Skiblock",
-    "ziel": "6 Skitage in Folge ohne limitierende Beine",
-    "zieldatum": "2026-12-26",
+    "name": "Halbmarathon-Block",
+    "ziel": "Halbmarathon unter 2 Stunden",
+    "zieldatum": "2026-12-20",
     "start": "2026-10-07",
     "ende": "2026-12-25",
     "phasen": [{"name": "Eingewöhnung", "typ": "eingewoehnung", "wochen": [1, 2]}]
   },
   "zonen": {
     "stand": "2026-04",
-    "hf": {"Z1": [null, 135], "Z2": [136, 147]},
-    "leistung_w": {"Z2": [128, 171]},
-    "pace": {"Z2": ["6:23", "6:50"]}
+    "hf": {"Z1": [null, 128], "Z2": [129, 140]},
+    "leistung_w": {"Z2": [147, 197]},
+    "pace": {"Z2": ["6:48", "7:15"]}
   },
   "wochen": [ { "…Wochenobjekt laufende Woche…" }, { "…nächste Woche…" } ]
 }

@@ -15,7 +15,11 @@
   'use strict';
 
   const API = 'https://api.github.com';
-  const BESITZER = 'davidfuchs1';
+  // GitHub-Konto, dem die Plan-Repos gehören: auf GitHub Pages aus der Adresse
+  // (<konto>.github.io), sonst – z. B. lokal – der hier eingetragene Name.
+  const BESITZER = location.hostname.endsWith('.github.io')
+    ? location.hostname.split('.')[0]
+    : 'davidfuchs1';
   const REPO_PRAEFIX = 'plan-';
   const STATUS_DATEI = 'status.json';
   const GEMELDETER_STATUS = ['erledigt', 'teilweise', 'ausgelassen'];

@@ -60,59 +60,59 @@
     "hf": {
       "Z1": [
         null,
-        135
+        128
       ],
       "Z2": [
-        136,
-        147
+        129,
+        140
       ],
       "Z3": [
-        147,
-        160
+        140,
+        153
       ],
       "Z4": [
-        160,
-        171
+        153,
+        164
       ],
       "Z5": [
-        171,
+        164,
         null
       ]
     },
     "leistung_w": {
       "Z1": [
         null,
-        125
+        144
       ],
       "Z2": [
-        128,
-        171
+        147,
+        197
       ],
       "Z3": [
-        173,
-        205
+        199,
+        236
       ],
       "Z4": [
-        207,
-        239
+        238,
+        275
       ],
       "Z5": [
-        242,
+        278,
         null
       ]
     },
     "pace": {
       "Z2": [
-        "6:23",
-        "6:50"
+        "6:48",
+        "7:15"
       ],
       "Z3": [
-        "5:50",
-        "6:10"
+        "6:15",
+        "6:35"
       ],
       "Z4": [
-        "5:30",
-        "5:50"
+        "5:55",
+        "6:15"
       ]
     }
   },
@@ -134,7 +134,7 @@
           "titel": "Kraft B – Exzentrik & lateral",
           "tag_vorschlag": "2026-09-16",
           "dauer_min": 55,
-          "ziel": "Bremsende Beinkraft und seitliche Stabilität für lange Skitage.",
+          "ziel": "Bremsende Beinkraft und seitliche Stabilität.",
           "status": "geplant",
           "bloecke": [
             {
@@ -196,7 +196,7 @@
           "titel": "Lange Grundlage Rolle 105 min",
           "tag_vorschlag": "2026-09-19",
           "dauer_min": 105,
-          "ziel": "Aerobe Basis für lange Skitage, Zonendisziplin.",
+          "ziel": "Aerobe Basis, Zonendisziplin.",
           "status": "geplant",
           "bloecke": [
             {
@@ -204,8 +204,8 @@
               "dauer_min": 10,
               "zone": "Z1",
               "leistung_w": [
-                100,
-                125
+                115,
+                144
               ]
             },
             {
@@ -213,12 +213,12 @@
               "dauer_min": 85,
               "zone": "Z2",
               "hf": [
-                136,
-                147
+                129,
+                140
               ],
               "leistung_w": [
-                150,
-                170
+                172,
+                195
               ],
               "trittfrequenz": [
                 85,
@@ -260,12 +260,12 @@
               "dauer_min": 30,
               "zone": "Z2",
               "hf": [
-                136,
-                147
+                129,
+                140
               ],
               "pace": [
-                "6:23",
-                "6:50"
+                "6:48",
+                "7:15"
               ]
             },
             {
@@ -296,8 +296,8 @@
               "wiederholungen": 4,
               "zone": "Z3",
               "leistung_w": [
-                180,
-                200
+                207,
+                230
               ],
               "trittfrequenz": [
                 55,
@@ -315,8 +315,8 @@
               "dauer_min": 6,
               "zone": "Z2",
               "leistung_w": [
-                150,
-                170
+                172,
+                195
               ]
             },
             {
@@ -443,7 +443,7 @@
           "titel": "Kraft B – reduziert",
           "tag_vorschlag": "2026-09-23",
           "dauer_min": 35,
-          "ziel": "Bremsende Beinkraft und seitliche Stabilität für lange Skitage.",
+          "ziel": "Bremsende Beinkraft und seitliche Stabilität.",
           "status": "geplant",
           "bloecke": [
             {
@@ -505,7 +505,7 @@
           "titel": "Lange Grundlage Rolle 60 min",
           "tag_vorschlag": "2026-09-26",
           "dauer_min": 60,
-          "ziel": "Aerobe Basis für lange Skitage, Zonendisziplin.",
+          "ziel": "Aerobe Basis, Zonendisziplin.",
           "status": "geplant",
           "bloecke": [
             {
@@ -513,8 +513,8 @@
               "dauer_min": 10,
               "zone": "Z1",
               "leistung_w": [
-                100,
-                125
+                115,
+                144
               ]
             },
             {
@@ -522,12 +522,12 @@
               "dauer_min": 40,
               "zone": "Z2",
               "hf": [
-                136,
-                147
+                129,
+                140
               ],
               "leistung_w": [
-                150,
-                170
+                172,
+                195
               ],
               "trittfrequenz": [
                 85,
@@ -569,12 +569,12 @@
               "dauer_min": 11,
               "zone": "Z2",
               "hf": [
-                136,
-                147
+                129,
+                140
               ],
               "pace": [
-                "6:23",
-                "6:50"
+                "6:48",
+                "7:15"
               ]
             },
             {

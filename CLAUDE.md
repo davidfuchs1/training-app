@@ -29,6 +29,13 @@ Plan-Repos (privat, aus der Vorlage `plan-vorlage`): `athlet.json`,
 `aktuell.json`, `index.json`, `wochen/`, `status.json` (schreibt **nur die
 App**) sowie die Actions „Plan prüfen“ und „Auto-Merge“.
 
+**GitHub-Konto:** `quelle.js` liest die Plan-Repos von `<konto>/plan-<id>`.
+Auf GitHub Pages ergibt sich `<konto>` aus der Adresse (`<konto>.github.io`);
+lokal gilt der in `quelle.js` eingetragene Name (`davidfuchs1`). Die Actions
+der Plan-Repos holen `training-app` vom eigenen Konto
+(`github.repository_owner`). So läuft die App ohne Codeänderung auch unter
+einem anderen Konto.
+
 Vor jedem Commit mit Änderungen an Plandaten:
 ```bash
 python3 tools/pruefen.py plaene                                              # Testdaten
@@ -97,6 +104,10 @@ GitHub-Contributions, Ernährungshinweis pro Tag. Später: Push-Benachrichtigung
   nachgezogen, beim Wiederverbinden erst laden, dann senden. Getestet im
   Desktop-Browser mit nachgestellter GitHub-API und vom Projektinhaber auf dem
   iPhone (2026-10-13). Kein Zeitlimit bei sehr schwachem Empfang.
+- **Weitergabe vorbereitet (2026-10-17, `sw.js` v20):** Konto der Plan-Repos
+  aus der Pages-Adresse statt fest eingetragen; Demo- und Beispieldaten
+  neutralisiert (keine echten Zonen, kein Ski-Ziel). Übergabe-Paket ohne
+  Personendaten liegt lokal in `../Uebergabe/` (nicht in einem Repo).
 - **Offen:** Coach-Token neu erzeugen und um `plan-david` erweitern.
 - Später: Tablet-Layout (Media Queries), Push-Benachrichtigungen.
 
