@@ -684,9 +684,18 @@ function blattZugEnde() {
 sheetInhalt.addEventListener('touchstart', (ev) => {
   if (ev.touches.length === 1) blattZugBeginn(ev.touches[0].clientY, ev.target);
 }, { passive: true });
-sheetInhalt.addEventListener('touchmove', (ev) => blattZugBewegung(ev.touches[0].clientY), { passive: true });
+/* Nicht passiv: Sobald wirklich nach unten gezogen wird, muss die Geste gesperrt
+   werden (preventDefault). Sonst übernimmt iOS sie als Überdehnen des Inhalts,
+   bricht unseren Zug mit „touchcancel“ ab und das Blatt bliebe offen. */
+sheetInhalt.addEventListener('touchmove', (ev) => {
+  if (!blattZug || ev.touches.length !== 1) return;
+  const y = ev.touches[0].clientY;
+  if (y > blattZug.start && sheetInhalt.scrollTop <= 0) ev.preventDefault();
+  blattZugBewegung(y);
+}, { passive: false });
 sheetInhalt.addEventListener('touchend', blattZugEnde, { passive: true });
-sheetInhalt.addEventListener('touchcancel', blattZugZuruecksetzen, { passive: true });
+// Bricht iOS die Geste doch ab, zählt der bisherige Weg trotzdem
+sheetInhalt.addEventListener('touchcancel', blattZugEnde, { passive: true });
 sheetInhalt.addEventListener('pointerdown', (ev) => { if (ev.pointerType !== 'touch') blattZugBeginn(ev.clientY, ev.target); });
 sheetInhalt.addEventListener('pointermove', (ev) => { if (ev.pointerType !== 'touch') blattZugBewegung(ev.clientY); });
 sheetInhalt.addEventListener('pointerup', (ev) => { if (ev.pointerType !== 'touch') blattZugEnde(); });
