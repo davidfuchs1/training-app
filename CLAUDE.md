@@ -65,6 +65,9 @@ python3 tools/pruefen.py --plan ../plan-<id> --uebungen plaene/uebungen.json  # 
   Home-Bildschirm-App (Safari und App speichern getrennt). Kein Freitext, keine
   Fremdskripte, Content-Security-Policy erlaubt nur eigene Dateien und
   `api.github.com`.
+- **Blätter (Übungsdetails, Planauswahl)** schließen per Wisch nach unten
+  (ab 90 px oder schnellem Wisch) und über das ✕; der Zug greift nur, wenn der
+  Inhalt ganz oben steht, damit das Scrollen im Blatt frei bleibt.
 - Wochen laufen Montag–Sonntag; erste/letzte Woche eines Blocks kann kürzer sein.
 - Intensitäten werden mit Zone und absoluten Werten (bpm, Watt, Pace) angezeigt.
 - Mobility & Core ist in jeder Woche enthalten; Übungen mit Bewegungsablauf aus der Bibliothek anzeigen.

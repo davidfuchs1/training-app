@@ -621,7 +621,8 @@ function seiteBlock() {
 // ---------- Übungs-Blatt ----------
 
 function blattOeffnen(html) {
-  sheetInhalt.innerHTML = `<div class="griff"></div><button class="knopf-rund zu" data-aktion="zu" aria-label="Schließen">✕</button>${html}`;
+  blattZugZuruecksetzen();
+  sheetInhalt.innerHTML = `<div class="griff" aria-hidden="true"></div><button class="knopf-rund zu" data-aktion="zu" aria-label="Schließen">✕</button>${html}`;
   sheet.hidden = false;
   document.body.classList.add('gesperrt');
   requestAnimationFrame(() => requestAnimationFrame(() => sheet.classList.add('offen')));
@@ -629,10 +630,67 @@ function blattOeffnen(html) {
 }
 
 function blattSchliessen() {
+  blattZug = null;
   sheet.classList.remove('offen');
   document.body.classList.remove('gesperrt');
   setTimeout(() => { sheet.hidden = true; }, 250);
 }
+
+/* Blatt nach unten wegwischen (wie bei iOS-Blättern). Der Zug greift nur, wenn
+   der Inhalt ganz oben steht – sonst würde das Scrollen im Blatt hängen. */
+const BLATT_SCHWELLE = 90; // ab hier schließt das Blatt auch ohne Schwung
+let blattZug = null;
+
+function blattZugZuruecksetzen() {
+  blattZug = null;
+  sheetInhalt.style.transition = '';
+  sheetInhalt.style.transform = '';
+}
+
+function blattZugBeginn(y, ziel) {
+  if (sheet.hidden || sheetInhalt.scrollTop > 0 || (ziel && ziel.closest('[data-aktion]'))) return;
+  blattZug = { start: y, weg: 0, zeit: Date.now(), gezogen: false };
+}
+
+function blattZugBewegung(y) {
+  if (!blattZug) return;
+  const weg = y - blattZug.start;
+  if (weg <= 0 || sheetInhalt.scrollTop > 0) {
+    if (blattZug.gezogen) {
+      sheetInhalt.style.transform = '';
+      blattZug.weg = 0;
+    }
+    return;
+  }
+  blattZug.weg = weg;
+  blattZug.gezogen = true;
+  sheetInhalt.style.transition = 'none';
+  sheetInhalt.style.transform = `translateY(${weg}px)`;
+}
+
+function blattZugEnde() {
+  if (!blattZug) return;
+  const { weg, zeit, gezogen } = blattZug;
+  blattZug = null;
+  if (!gezogen) return;
+  sheetInhalt.style.transition = '';
+  sheetInhalt.style.transform = '';
+  // schneller Wisch schließt auch unterhalb der Schwelle, langsames Ziehen nicht
+  const dauer = Math.max(Date.now() - zeit, 1);
+  const schwung = weg > 40 && weg / dauer > 0.4;
+  if (weg > BLATT_SCHWELLE || schwung) blattSchliessen();
+}
+
+sheetInhalt.addEventListener('touchstart', (ev) => {
+  if (ev.touches.length === 1) blattZugBeginn(ev.touches[0].clientY, ev.target);
+}, { passive: true });
+sheetInhalt.addEventListener('touchmove', (ev) => blattZugBewegung(ev.touches[0].clientY), { passive: true });
+sheetInhalt.addEventListener('touchend', blattZugEnde, { passive: true });
+sheetInhalt.addEventListener('touchcancel', blattZugZuruecksetzen, { passive: true });
+sheetInhalt.addEventListener('pointerdown', (ev) => { if (ev.pointerType !== 'touch') blattZugBeginn(ev.clientY, ev.target); });
+sheetInhalt.addEventListener('pointermove', (ev) => { if (ev.pointerType !== 'touch') blattZugBewegung(ev.clientY); });
+sheetInhalt.addEventListener('pointerup', (ev) => { if (ev.pointerType !== 'touch') blattZugEnde(); });
+sheetInhalt.addEventListener('pointercancel', blattZugZuruecksetzen);
 
 function uebungZeigen(id, ref) {
   const u = daten.uebungen[id];
