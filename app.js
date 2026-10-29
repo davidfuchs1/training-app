@@ -593,8 +593,18 @@ function seiteBlock() {
     </a>`;
   }).join('');
 
-  const zonen = D.zonenZeilen(a.zonen).map((z) =>
-    `<tr><td><span class="chip zone z-${z.zone}">${z.zone}</span></td><td>${z.hf || '–'}</td><td>${z.leistung_w || '–'}</td><td>${z.pace || '–'}</td></tr>`).join('');
+  /* `zonen` ist laut Datenformat optional und fehlt, solange keine Werte
+     erhoben sind (neuer Athlet vor dem ersten Test). Dann statt einer Tabelle
+     voller Striche einen kurzen Hinweis zeigen. */
+  const z = a.zonen || {};
+  const reihen = D.zonenZeilen(z);
+  const hatZonen = reihen.some((r) => r.hf || r.leistung_w || r.pace);
+  const zonenKarte = hatZonen
+    ? `<div class="karte tabelle-rahmen"><table class="zonen">
+      <thead><tr><th></th><th>HF</th><th>Rad</th><th>Lauf</th></tr></thead><tbody>${reihen.map((r) =>
+        `<tr><td><span class="chip zone z-${r.zone}">${r.zone}</span></td><td>${r.hf || '–'}</td><td>${r.leistung_w || '–'}</td><td>${r.pace || '–'}</td></tr>`).join('')}</tbody>
+    </table></div>`
+    : '<div class="karte"><p class="leer-zonen">Aktuell sind keine Zonenwerte bekannt.</p></div>';
 
   return `<section class="titel">
       <p class="ueber">Trainingsblock</p>
@@ -611,10 +621,8 @@ function seiteBlock() {
     </div>
     <h2 class="abschnitt">Wochen</h2>
     <div class="karte liste">${zeilen}</div>
-    <h2 class="abschnitt">Zonen <small>Stand ${esc(a.zonen.stand || '')}</small></h2>
-    <div class="karte tabelle-rahmen"><table class="zonen">
-      <thead><tr><th></th><th>HF</th><th>Rad</th><th>Lauf</th></tr></thead><tbody>${zonen}</tbody>
-    </table></div>
+    <h2 class="abschnitt">Zonen${z.stand ? ` <small>Stand ${esc(z.stand)}</small>` : ''}</h2>
+    ${zonenKarte}
     ${zugangDetails()}`;
 }
 

@@ -304,6 +304,7 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 .leer-woche .ueber { justify-content: center; }
 .leer-woche h2 { font-size: 20px; margin: 8px 0 6px; }
 .leer-woche p { margin: 0; }
+.leer-zonen { margin: 0; color: var(--farbe-text-leise); }
 
 /* ---------- Einheit ---------- */
 .einheit-kopf { padding: 0 0 16px; }
