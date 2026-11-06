@@ -2244,7 +2244,7 @@
         "Aufrecht tief beugen.",
         "Nach oben drücken."
       ],
-      "hinweise": ["Funktioniert auch ohne Rack (Stange aus den Sicherungen oder aus der tiefen Hocke aufnehmen)."],
+      "hinweise": ["Funktioniert ohne Rack: Stange aus dem Kreuzheben auf die Oberschenkel legen und aus der Hocke in die Armbeugen nehmen."],
       "fehler": ["Rundrücken", "Ellbogen fallen nach unten"],
       "standard": {"saetze": 3, "wdh": 6},
       "leichter": null,
@@ -2697,10 +2697,10 @@
       "name": "Sissy-Kniebeuge",
       "kategorie": "kraft",
       "sportarten": ["alle"],
-      "equipment": ["rack"],
+      "equipment": ["wand"],
       "zielmuskeln": ["vorderer Oberschenkel"],
       "ablauf": [
-        "Mit einer Hand am Rack festhalten, auf die Fußballen gehen.",
+        "Mit einer Hand an Wand oder Türrahmen festhalten, auf die Fußballen gehen.",
         "Knie weit nach vorne schieben und den Körper von Knie bis Kopf gerade nach hinten lehnen.",
         "So tief wie kontrolliert möglich, dann zurück."
       ],
@@ -3353,7 +3353,7 @@
       "equipment": ["band"],
       "zielmuskeln": ["vorderer Oberschenkel", "Patellasehne"],
       "ablauf": [
-        "Schweres Band an einem festen Punkt (Rack) auf Kniehöhe fixieren, beide Kniekehlen in die Schlaufe.",
+        "Schweres Band an einem festen Punkt (Treppengeländer, schweres Möbel) auf Kniehöhe fixieren, beide Kniekehlen in die Schlaufe.",
         "Zurücktreten, bis das Band straff ist.",
         "Nach hinten in die Hocke sinken, Schienbeine bleiben senkrecht, Knie etwa 70–90°.",
         "Position halten, Gewicht auf den Fersen."
@@ -4439,10 +4439,10 @@
       "name": "Einarmiges Seitheben, angelehnt",
       "kategorie": "oberkoerper",
       "sportarten": ["alle"],
-      "equipment": ["kurzhantel", "rack"],
+      "equipment": ["kurzhantel", "wand"],
       "zielmuskeln": ["seitliche Schulter"],
       "ablauf": [
-        "Mit einer Hand am Rack festhalten und den Körper leicht davon weg lehnen.",
+        "Mit einer Hand am Türrahmen festhalten und den Körper leicht davon weg lehnen.",
         "Mit dem freien Arm die Kurzhantel seitlich bis Schulterhöhe heben.",
         "Langsam ablassen, Seite wechseln."
       ],
