@@ -97,7 +97,10 @@ GitHub-Contributions, Ernährungshinweis pro Tag. Später: Push-Benachrichtigung
   wirkt erst nach Neuinstallation); oben eine deckende, haftende `.oberkante`
   (ohne Transparenz/Weichzeichner), Verlauf darunter nur beim Scrollen;
   Tab-Leiste als schwebende Kapsel; keine `position: fixed; top: 0`-Flächen.
-- Übungsbibliothek: 78 Übungen (inkl. Studio-Alternativen, Aufwärmen, Lauf-ABC).
+- Übungsbibliothek: 313 Übungen (2026-11-06 ausgebaut: Langhantel, Kurzhantel,
+  Rack, Klimmzugstange, Scheiben, Band, Halteübungen, Schwimmen an Land,
+  Muskelaufbau). Neue Kategorien `oberkoerper` (Indigo) und `stabilitaet`
+  (Petrol); `stabilitaet` zählt in Mobility-Einheiten mit.
 - `plan-david` angelegt (Skiblock 2026, Woche 1–2 ausgearbeitet).
 - Zugang zu `plan-david` auf dem iPhone des Projektinhabers eingerichtet (Plan
   wird in der App angezeigt, 2026-10-13).

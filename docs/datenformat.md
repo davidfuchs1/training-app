@@ -115,11 +115,11 @@ entsprechen. Repo-Name: `plan-<id>`.
 
 | Feld | Typ | Pflicht | Bedeutung |
 |---|---|---|---|
-| Schlüssel | ID | ja | Präfix nach Kategorie empfohlen (`mob-`, `faszien-`, `core-`, `kraft-`, `plyo-`, `aufw-`, `abc-`) |
+| Schlüssel | ID | ja | Präfix nach Kategorie empfohlen (`mob-`, `faszien-`, `core-`, `stab-`, `kraft-`, `ok-`, `plyo-`, `aufw-`, `abc-`) |
 | `name` | Text | ja | Anzeigename der Übung |
-| `kategorie` | `mobility` `faszien` `core` `kraft` `plyometrie` `lauf-abc` `aufwaermen` | ja | andere → Warnung, siehe [Feste Listen](#feste-listen-und-neue-einträge) |
+| `kategorie` | `mobility` `faszien` `core` `stabilitaet` `kraft` `oberkoerper` `plyometrie` `lauf-abc` `aufwaermen` | ja | andere → Warnung, siehe [Feste Listen](#feste-listen-und-neue-einträge) |
 | `sportarten` | Liste Text | ja | `alle` oder z. B. `ski`, `laufen` |
-| `equipment` | Liste Text | ja | leer = nur Körpergewicht; z. B. `matte`, `blackroll`, `band`, `treppe`, `wand`, `stuhl`, `handtuch`; `studio` = nur im Fitnessstudio (nie für Pflichteinheiten, wenn das Profil kein sicheres Studio nennt) |
+| `equipment` | Liste Text | ja | leer = nur Körpergewicht; z. B. `matte`, `blackroll`, `band`, `treppe`, `wand`, `stuhl`, `handtuch`, `tisch`, `kissen`, `ball`, `springseil`, `box`, `rucksack`, `hantelscheibe`, `kurzhantel`, `langhantel`, `rack`, `bank`, `klimmzugstange`; `studio` = nur im Fitnessstudio (nie für Pflichteinheiten, wenn das Profil kein sicheres Studio nennt) |
 | `zielmuskeln` | Liste Text | nein | |
 | `ablauf` | Liste Text, ≥ 2 | ja | Bewegungsablauf Schritt für Schritt |
 | `hinweise` | Liste Text | nein | Atmung, Fokus, Tempo |
@@ -210,7 +210,7 @@ Archivdatei zusätzlich: `format_version`, `athlet`.
 Regeln (Fehler, wenn verletzt):
 - `soll_pro_woche` ≥ 1, Anzahl `einheiten` ≥ `soll_pro_woche`.
 - Jede Einheit hat ≥ 1 Übungsverweis, davon mind. einer der Kategorie
-  `mobility`, `faszien` oder `core`.
+  `mobility`, `faszien`, `core` oder `stabilitaet`.
 - Einheiten-`status` wie bei Einheit.
 - `tag_vorschlag` Pflicht (Datum innerhalb der Woche), wie bei Einheit.
 

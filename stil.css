@@ -222,6 +222,8 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 .kat-mobility { background: var(--farbe-kategorie-mobility); }
 .kat-faszien { background: var(--farbe-kategorie-faszien); }
 .kat-core { background: var(--farbe-kategorie-core); }
+.kat-stabilitaet { background: var(--farbe-kategorie-stabilitaet); }
+.kat-oberkoerper { background: var(--farbe-kategorie-oberkoerper); }
 .kat-kraft { background: var(--farbe-kategorie-kraft); }
 .kat-plyometrie { background: var(--farbe-kategorie-plyometrie); }
 .kat-lauf-abc { background: var(--farbe-kategorie-lauf-abc); }

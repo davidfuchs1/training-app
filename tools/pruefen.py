@@ -27,8 +27,8 @@ ISO_WOCHE_RE = re.compile(r"^(\d{4})-W(\d{2})$")
 PACE_RE = re.compile(r"^\d{1,2}:[0-5]\d$")
 ZONEN = {"Z1", "Z2", "Z3", "Z4", "Z5"}
 
-KATEGORIEN = {"mobility", "faszien", "core", "kraft", "plyometrie", "lauf-abc", "aufwaermen"}
-MOBILITY_KATEGORIEN = {"mobility", "faszien", "core"}
+KATEGORIEN = {"mobility", "faszien", "core", "stabilitaet", "kraft", "oberkoerper", "plyometrie", "lauf-abc", "aufwaermen"}
+MOBILITY_KATEGORIEN = {"mobility", "faszien", "core", "stabilitaet"}
 WOCHEN_TYPEN = {"eingewoehnung", "grundlage", "aufbau", "entlastung", "peak", "taper", "wettkampf", "pause"}
 SPORTARTEN = {"kraft", "laufen", "rad", "schwimmen", "koppel", "mobility", "core", "ski", "wandern", "sonstiges"}
 BLOCK_TYPEN = {"aufwaermen", "haupt", "intervall", "technik", "cooldown"}
@@ -490,7 +490,7 @@ class Pruefer:
                 if isinstance(u, dict) and katalog.get(u.get("id"), {}).get("kategorie") in MOBILITY_KATEGORIEN:
                     passende = True
             if uebungen and not passende:
-                self.f(eort, "enthält keine Übung der Kategorie mobility, faszien oder core")
+                self.f(eort, "enthält keine Übung der Kategorie mobility, faszien, core oder stabilitaet")
         return ergebnis
 
     def block(self, b, ort):

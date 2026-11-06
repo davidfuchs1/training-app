@@ -47,6 +47,8 @@
   --eisweiss: #f0f7fd;
   --mintgruen: #6bd28d;
   --mintgruen-hell: #a3e4ba;
+  --indigo: #7c83f7;
+  --petrol: #4fc3c7;
 
   /* Phasen */
   --phase-hellgruen: #c2e4bd;
@@ -100,6 +102,8 @@
   --farbe-kategorie-faszien: var(--mintgruen-hell);
   --farbe-kategorie-kraft: var(--violett);
   --farbe-kategorie-core: var(--violett-hell);
+  --farbe-kategorie-stabilitaet: var(--petrol);
+  --farbe-kategorie-oberkoerper: var(--indigo);
   --farbe-kategorie-plyometrie: var(--violett-dunkel);
   --farbe-kategorie-lauf-abc: var(--farbe-sport-laufen);
   --farbe-kategorie-aufwaermen: var(--farbe-standard);

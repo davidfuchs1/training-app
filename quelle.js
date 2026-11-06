@@ -556,7 +556,8 @@
     technik: 'Technik', cooldown: 'Ausklang',
   };
   const KATEGORIE = {
-    mobility: 'Mobility', faszien: 'Faszien', core: 'Core', kraft: 'Kraft',
+    mobility: 'Mobility', faszien: 'Faszien', core: 'Core', stabilitaet: 'Stabilität',
+    kraft: 'Kraft', oberkoerper: 'Oberkörper',
     plyometrie: 'Plyometrie', 'lauf-abc': 'Lauf-ABC', aufwaermen: 'Aufwärmen',
   };
 
