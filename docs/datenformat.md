@@ -33,7 +33,7 @@ training-app/plaene/          öffentlich
 
 plan-<id>/                    privat, ein Repo pro Person
 ├── athlet.json               id, Anzeigename, Sportarten
-├── aktuell.json              laufende + nächste Woche      (schreibt der Coach)
+├── aktuell.json              laufende + geplante Wochen    (schreibt der Coach)
 ├── index.json                Kennzahlen aller Wochen       (schreibt der Coach)
 ├── wochen/<JJJJ-Www>.json    abgeschlossene Wochen         (schreibt der Coach)
 └── status.json               gemeldeter Status             (schreibt nur die App)
@@ -271,7 +271,9 @@ Webseite den Eintrag grau.
 }
 ```
 
-- `wochen`: 1–2 Einträge, aufsteigend, `nr` fortlaufend, ISO-Wochen direkt
+- `wochen`: laufende Woche und alle bereits ausgearbeiteten Folgewochen
+  (mindestens 1 Eintrag; Standard: laufende + nächste, auf Wunsch bis
+  Blockende), aufsteigend, `nr` fortlaufend, ISO-Wochen direkt
   aufeinanderfolgend.
 - `block.phasen[].wochen`: Wochennummern; jede Woche in `aktuell.json` und
   im Archiv muss einer Phase zugeordnet sein.

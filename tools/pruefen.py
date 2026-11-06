@@ -549,8 +549,8 @@ class Pruefer:
                 phasen_wochen = self.block_info(daten, ort)
                 self.zonen(daten, ort)
                 wochen = self.pflicht(daten, "wochen", list, ort) or []
-                if not 1 <= len(wochen) <= 2:
-                    self.f(ort, "'wochen' muss 1–2 Wochen enthalten (laufende + nächste)")
+                if not wochen:
+                    self.f(ort, "'wochen' muss mindestens die laufende Woche enthalten")
                 vorher = None
                 for i, w in enumerate(wochen):
                     k = self.woche(w, f"{ort} wochen[{i}]", katalog)
