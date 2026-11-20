@@ -29,6 +29,7 @@ Person über die GitHub-API. Im öffentlichen Repo `training-app` liegen nur die
 training-app/plaene/          öffentlich
 ├── athleten.json             nur Testathleten (demo)
 ├── uebungen.json             Übungsbibliothek für alle Pläne
+├── uebungsgrafiken/           optionale Übungsgrafiken, je <übungs-id>.png
 └── demo/                     gleicher Aufbau wie ein Plan-Repo, ohne athlet.json
 
 plan-<id>/                    privat, ein Repo pro Person
@@ -121,6 +122,7 @@ entsprechen. Repo-Name: `plan-<id>`.
 | `sportarten` | Liste Text | ja | `alle` oder z. B. `ski`, `laufen` |
 | `equipment` | Liste Text | ja | leer = nur Körpergewicht; z. B. `matte`, `blackroll`, `band`, `treppe`, `wand`, `stuhl`, `handtuch`, `tisch`, `kissen`, `ball`, `springseil`, `box`, `rucksack`, `hantelscheibe`, `kurzhantel`, `langhantel`, `rack`, `bank`, `klimmzugstange`; `studio` = nur im Fitnessstudio (nie für Pflichteinheiten, wenn das Profil kein sicheres Studio nennt) |
 | `zielmuskeln` | Liste Text | nein | |
+| `grafik` | Objekt | nein | `datei` (Dateiname `<übungs-id>.png` in `plaene/uebungsgrafiken/`) und `alt` (Beschreibung der Grafik) |
 | `ablauf` | Liste Text, ≥ 2 | ja | Bewegungsablauf Schritt für Schritt |
 | `hinweise` | Liste Text | nein | Atmung, Fokus, Tempo |
 | `fehler` | Liste Text | nein | typische Fehler |

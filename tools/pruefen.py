@@ -25,6 +25,7 @@ ID_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 DATUM_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 ISO_WOCHE_RE = re.compile(r"^(\d{4})-W(\d{2})$")
 PACE_RE = re.compile(r"^\d{1,2}:[0-5]\d$")
+GRAFIKORDNER = "uebungsgrafiken"
 ZONEN = {"Z1", "Z2", "Z3", "Z4", "Z5"}
 
 KATEGORIEN = {"mobility", "faszien", "core", "stabilitaet", "kraft", "oberkoerper", "plyometrie", "lauf-abc", "aufwaermen"}
@@ -229,7 +230,7 @@ class Pruefer:
 
     # ---------- uebungen.json ----------
 
-    def uebungen(self, pfad, basis):
+    def uebungen(self, pfad, basis, grafikdateien_pruefen=False):
         if not pfad.exists():
             self.f("uebungen.json", "Datei fehlt")
             return {}
@@ -255,6 +256,15 @@ class Pruefer:
                     self.f(ort, "'ablauf' braucht mindestens 2 nicht-leere Schritte")
             for feld in ("zielmuskeln", "hinweise", "fehler"):
                 self.optional(u, feld, list, ort)
+            grafik = self.optional(u, "grafik", dict, ort)
+            if grafik is not None:
+                gort = ort + " grafik"
+                datei = self.pflicht(grafik, "datei", str, gort)
+                self.pflicht(grafik, "alt", str, gort, erlaubt_leer=False)
+                if datei is not None and datei != f"{uid}.png":
+                    self.f(gort, f"'datei' muss '{uid}.png' sein")
+                elif datei and grafikdateien_pruefen and not (pfad.parent / GRAFIKORDNER / datei).is_file():
+                    self.f(gort, f"Bilddatei '{datei}' fehlt in {GRAFIKORDNER}/")
             standard = self.optional(u, "standard", dict, ort)
             if standard is not None:
                 self.mengenangabe(standard, ort + " standard", pflicht=False)
@@ -784,8 +794,9 @@ class Pruefer:
 
     def alles(self, basis):
         athleten = self.athleten(basis)
-        katalog = self.uebungen(basis / "uebungen.json", basis)
-        ordner = {p.name for p in basis.iterdir() if p.is_dir() and not p.name.startswith(".")}
+        katalog = self.uebungen(basis / "uebungen.json", basis, grafikdateien_pruefen=True)
+        ordner = {p.name for p in basis.iterdir()
+                  if p.is_dir() and not p.name.startswith(".") and p.name != GRAFIKORDNER}
         for aid in sorted(ordner - set(athleten)):
             self.f(aid, "Athletenordner ohne Eintrag in athleten.json")
         for aid in sorted(set(athleten) - ordner):

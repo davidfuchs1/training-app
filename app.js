@@ -708,6 +708,9 @@ sheetInhalt.addEventListener('pointerdown', (ev) => { if (ev.pointerType !== 'to
 sheetInhalt.addEventListener('pointermove', (ev) => { if (ev.pointerType !== 'touch') blattZugBewegung(ev.clientY); });
 sheetInhalt.addEventListener('pointerup', (ev) => { if (ev.pointerType !== 'touch') blattZugEnde(); });
 sheetInhalt.addEventListener('pointercancel', blattZugZuruecksetzen);
+sheetInhalt.addEventListener('error', (ev) => {
+  if (ev.target.matches('img.uebungsgrafik')) ev.target.remove();
+}, true);
 
 function uebungZeigen(id, ref) {
   const u = daten.uebungen[id];
@@ -733,6 +736,8 @@ function uebungZeigen(id, ref) {
       ${(u.equipment.length ? u.equipment : ['ohne Geräte']).map((x) => `<span class="chip">${esc(x)}</span>`).join('')}
       ${(u.zielmuskeln || []).map((x) => `<span class="chip leise">${esc(x)}</span>`).join('')}
     </div>
+    ${u.grafik?.datei ? `<img class="uebungsgrafik" src="plaene/uebungsgrafiken/${encodeURIComponent(u.grafik.datei)}"
+      alt="${esc(u.grafik.alt)}" width="1536" height="1024" decoding="async">` : ''}
     <h3>Ablauf</h3>
     <ol class="ablauf">${u.ablauf.map((s) => `<li>${esc(s)}</li>`).join('')}</ol>
     ${liste('Hinweise', u.hinweise)}

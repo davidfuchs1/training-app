@@ -443,6 +443,10 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
 .dosis p { flex-basis: 100%; margin: 2px 0 0; font-size: 14px; }
 .dosis.leise { border-left-color: var(--farbe-linie); }
 .dosis.leise b { font-size: 15px; }
+.uebungsgrafik {
+  display: block; width: 100%; height: auto; margin-top: 16px;
+  background: var(--farbe-grund); border: 1px solid var(--farbe-linie); border-radius: 12px;
+}
 .ablauf { counter-reset: schritt; list-style: none; padding: 0; margin: 0; }
 .ablauf li { counter-increment: schritt; position: relative; padding: 0 0 14px 40px; margin: 0; }
 .ablauf li::before {
