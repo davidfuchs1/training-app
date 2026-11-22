@@ -86,7 +86,7 @@ Prüfe den sichtbaren Kontrast zwischen Hintergrund, Figur, Konturen und Zielber
 
 Prüfe die RGB-Werte an der gespeicherten Grafik. Der freie, unbeschattete Hintergrund entspricht exakt der aufgelösten Hintergrundrolle. Bei jeder großen, klar abgegrenzten Fläche muss eine zusammenhängende Teilfläche im Inneren exakt der zuständigen Rolle entsprechen. Das gilt auch für die Zielmarkierungen in jeder Pose. Prüfe mehrere Pixel im Flächeninneren und gleiche ihre Lage mit dem Bild ab. Einzelne passende Pixel oder der häufigste Wert des gesamten Bildes reichen dafür nicht aus.
 
-Erhalte weiche Übergänge, geglättete Kanten, anatomische Innenkonturen und Schattierungen. In diesen Bereichen sind Farbzwischenwerte zulässig. Korrigiere bei vorhandenen Grafiken nur die betroffenen Farbflächen. Prüfe danach die exakten Farben im Flächeninneren sowie den sichtbaren Kontrast und die erhaltenen Details. Verwende dafür bei einem Auftrag zur reinen Farbkorrektur die kurze Anleitung [Farbkorrektur](Neue_uebungen/farbkorrektur/SKILL.md).
+Erhalte weiche Übergänge, geglättete Kanten, anatomische Innenkonturen und Schattierungen. In diesen Bereichen sind Farbzwischenwerte zulässig. Korrigiere bei vorhandenen Grafiken nur die betroffenen Farbflächen. Prüfe danach die exakten Farben im Flächeninneren sowie den sichtbaren Kontrast und die erhaltenen Details.
 
 Dokumentiere die verwendeten Rollen und aufgelösten Werte je Erstellungslauf in der Begleitübersicht. Diese Werte sind eine Aufzeichnung des jeweiligen Laufs, keine Farbquelle für spätere Aufrufe.
 
