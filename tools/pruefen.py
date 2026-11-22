@@ -259,12 +259,13 @@ class Pruefer:
             grafik = self.optional(u, "grafik", dict, ort)
             if grafik is not None:
                 gort = ort + " grafik"
-                datei = self.pflicht(grafik, "datei", str, gort)
+                datei = self.optional(grafik, "datei", str, gort)
                 self.pflicht(grafik, "alt", str, gort, erlaubt_leer=False)
-                if datei is not None and datei != f"{uid}.png":
-                    self.f(gort, f"'datei' muss '{uid}.png' sein")
-                elif datei and grafikdateien_pruefen and not (pfad.parent / GRAFIKORDNER / datei).is_file():
-                    self.f(gort, f"Bilddatei '{datei}' fehlt in {GRAFIKORDNER}/")
+                standarddatei = f"{uid}.png"
+                if datei is not None and datei != standarddatei:
+                    self.f(gort, f"'datei' muss '{standarddatei}' sein")
+                elif grafikdateien_pruefen and not (pfad.parent / GRAFIKORDNER / standarddatei).is_file():
+                    self.f(gort, f"Bilddatei '{standarddatei}' fehlt in {GRAFIKORDNER}/")
             standard = self.optional(u, "standard", dict, ort)
             if standard is not None:
                 self.mengenangabe(standard, ort + " standard", pflicht=False)

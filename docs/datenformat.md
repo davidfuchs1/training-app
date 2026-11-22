@@ -122,12 +122,15 @@ entsprechen. Repo-Name: `plan-<id>`.
 | `sportarten` | Liste Text | ja | `alle` oder z. B. `ski`, `laufen` |
 | `equipment` | Liste Text | ja | leer = nur Körpergewicht; z. B. `matte`, `blackroll`, `band`, `treppe`, `wand`, `stuhl`, `handtuch`, `tisch`, `kissen`, `ball`, `springseil`, `box`, `rucksack`, `hantelscheibe`, `kurzhantel`, `langhantel`, `rack`, `bank`, `klimmzugstange`; `studio` = nur im Fitnessstudio (nie für Pflichteinheiten, wenn das Profil kein sicheres Studio nennt) |
 | `zielmuskeln` | Liste Text | nein | |
-| `grafik` | Objekt | nein | `datei` (Dateiname `<übungs-id>.png` in `plaene/uebungsgrafiken/`) und `alt` (Beschreibung der Grafik) |
+| `grafik` | Objekt | nein | `alt` (individuelle Bildbeschreibung), optional `datei` (Dateiname `<übungs-id>.png`) |
 | `ablauf` | Liste Text, ≥ 2 | ja | Bewegungsablauf Schritt für Schritt |
 | `hinweise` | Liste Text | nein | Atmung, Fokus, Tempo |
 | `fehler` | Liste Text | nein | typische Fehler |
 | `standard` | Objekt | nein | Vorschlag: `saetze`, `wdh` oder `dauer_s`, `tempo`, `seitig` (bool) |
 | `leichter` / `schwerer` | ID oder null | nein | Regression/Progression, muss existieren |
+
+Die App lädt Übungsbilder anhand der Übungs-ID aus `plaene/uebungsgrafiken/<übungs-id>.png`.
+Ohne Bilddatei erscheint kein Bild im Übungsblatt. Ein `grafik`-Eintrag wird nur für eine individuelle Bildbeschreibung benötigt.
 
 ---
 

@@ -3,7 +3,7 @@
   "uebungen": {
     "mob-hueftbeuger-kniend": {
       "name": "Hüftbeuger-Dehnung kniend",
-      "grafik": {"datei": "mob-hueftbeuger-kniend.png", "alt": "Halbkniestand mit aufrechtem Oberkörper und Händen am Becken. In der zweiten Position ist die Hüfte etwas weiter vorn."},
+      "grafik": {"alt": "Halbkniestand mit aufrechtem Oberkörper und Händen am Becken. In der zweiten Position ist die Hüfte etwas weiter vorn."},
       "kategorie": "mobility",
       "sportarten": ["alle", "laufen", "rad", "triathlon"],
       "equipment": ["matte"],
@@ -23,7 +23,7 @@
     },
     "mob-couch-stretch": {
       "name": "Couch-Stretch",
-      "grafik": {"datei": "mob-couch-stretch.png", "alt": "Halbkniestand mit dem hinteren Fuß an der Wand. Der Oberkörper richtet sich aus leichter Vorneigung auf."},
+      "grafik": {"alt": "Halbkniestand mit dem hinteren Fuß an der Wand. Der Oberkörper richtet sich aus leichter Vorneigung auf."},
       "kategorie": "mobility",
       "sportarten": ["alle", "laufen", "rad", "triathlon"],
       "equipment": ["matte", "wand"],
@@ -43,7 +43,7 @@
     },
     "mob-90-90": {
       "name": "90/90 Hüftrotation",
-      "grafik": {"datei": "mob-90-90.png", "alt": "Aufrechter Sitz mit beiden Beinen angewinkelt. Die Knie sind erst zu einer Seite abgelegt, dann spiegelverkehrt zur anderen."},
+      "grafik": {"alt": "Aufrechter Sitz mit beiden Beinen angewinkelt. Die Knie sind erst zu einer Seite abgelegt, dann spiegelverkehrt zur anderen."},
       "kategorie": "mobility",
       "sportarten": ["alle", "ski", "laufen", "triathlon"],
       "equipment": ["matte"],
@@ -63,7 +63,7 @@
     },
     "mob-worlds-greatest-stretch": {
       "name": "World's Greatest Stretch",
-      "grafik": {"datei": "mob-worlds-greatest-stretch.png", "alt": "Vier Phasen aus einem tiefen Ausfallschritt: Hände unten, Ellbogen zum Boden, Arm nach oben aufdrehen und vorderes Bein strecken."},
+      "grafik": {"alt": "Vier Phasen aus einem tiefen Ausfallschritt: Hände unten, Ellbogen zum Boden, Arm nach oben aufdrehen und vorderes Bein strecken."},
       "kategorie": "mobility",
       "sportarten": ["alle", "laufen", "rad", "triathlon"],
       "equipment": ["matte"],
@@ -82,7 +82,7 @@
     },
     "mob-katze-kuh": {
       "name": "Katze-Kuh",
-      "grafik": {"datei": "mob-katze-kuh.png", "alt": "Katze-Kuh im Vierfüßlerstand. Links ist der Rücken gerundet, rechts leicht durchgebogen."},
+      "grafik": {"alt": "Katze-Kuh im Vierfüßlerstand. Links ist der Rücken gerundet, rechts leicht durchgebogen."},
       "kategorie": "mobility",
       "sportarten": ["alle", "rad", "triathlon"],
       "equipment": ["matte"],
@@ -100,7 +100,7 @@
     },
     "mob-bws-rotation-seitlage": {
       "name": "Brustwirbelsäulen-Rotation in Seitlage (Open Book)",
-      "grafik": {"datei": "mob-bws-rotation-seitlage.png", "alt": "In Seitlage mit angewinkelten Beinen liegen die Arme zunächst übereinander. Danach öffnet sich der obere Arm zur Gegenseite."},
+      "grafik": {"alt": "In Seitlage mit angewinkelten Beinen liegen die Arme zunächst übereinander. Danach öffnet sich der obere Arm zur Gegenseite."},
       "kategorie": "mobility",
       "sportarten": ["alle", "rad", "schwimmen", "ski", "triathlon"],
       "equipment": ["matte"],
@@ -119,7 +119,7 @@
     },
     "mob-knie-zur-wand": {
       "name": "Knie zur Wand (Sprunggelenk)",
-      "grafik": {"datei": "mob-knie-zur-wand.png", "alt": "Im Stand vor der Wand bewegt sich das vordere Knie zur Wand, während der Fuß flach am Boden bleibt."},
+      "grafik": {"alt": "Im Stand vor der Wand bewegt sich das vordere Knie zur Wand, während der Fuß flach am Boden bleibt."},
       "kategorie": "mobility",
       "sportarten": ["alle", "ski", "laufen", "triathlon"],
       "equipment": ["wand"],
@@ -139,7 +139,7 @@
     },
     "mob-adduktoren-frosch": {
       "name": "Froschhaltung (Adduktoren)",
-      "grafik": {"datei": "mob-adduktoren-frosch.png", "alt": "Draufsicht auf die Froschhaltung mit weit gespreizten Knien und aufgestützten Unterarmen. Die inneren Oberschenkel sind grün markiert."},
+      "grafik": {"alt": "Draufsicht auf die Froschhaltung mit weit gespreizten Knien und aufgestützten Unterarmen. Die inneren Oberschenkel sind grün markiert."},
       "kategorie": "mobility",
       "sportarten": ["alle", "ski"],
       "equipment": ["matte"],
@@ -159,7 +159,7 @@
     },
     "mob-hamstring-band": {
       "name": "Hintere Oberschenkel mit Band",
-      "grafik": {"datei": "mob-hamstring-band.png", "alt": "In Rückenlage ist ein Band um den angehobenen Fuß gelegt. Das Bein wird mit dem Band weiter nach oben geführt."},
+      "grafik": {"alt": "In Rückenlage ist ein Band um den angehobenen Fuß gelegt. Das Bein wird mit dem Band weiter nach oben geführt."},
       "kategorie": "mobility",
       "sportarten": ["alle", "laufen", "rad", "triathlon"],
       "equipment": ["matte", "band"],
@@ -178,7 +178,7 @@
     },
     "mob-taube": {
       "name": "Taube (Gesäß-Dehnung)",
-      "grafik": {"datei": "mob-taube.png", "alt": "Das vordere Bein ist angewinkelt, das hintere lang nach hinten gelegt. Der Oberkörper neigt sich aus der aufrechten Position nach vorne."},
+      "grafik": {"alt": "Das vordere Bein ist angewinkelt, das hintere lang nach hinten gelegt. Der Oberkörper neigt sich aus der aufrechten Position nach vorne."},
       "kategorie": "mobility",
       "sportarten": ["alle", "laufen", "rad", "triathlon"],
       "equipment": ["matte"],
@@ -198,7 +198,7 @@
     },
     "mob-wade-wand": {
       "name": "Wadendehnung an der Wand",
-      "grafik": {"datei": "mob-wade-wand.png", "alt": "Hände an der Wand im Schrittstand. Die hintere Wade ist grün markiert, die Ferse bleibt am Boden."},
+      "grafik": {"alt": "Hände an der Wand im Schrittstand. Die hintere Wade ist grün markiert, die Ferse bleibt am Boden."},
       "kategorie": "mobility",
       "sportarten": ["alle", "laufen", "triathlon"],
       "equipment": ["wand"],
@@ -216,7 +216,7 @@
     },
     "mob-tiefe-hocke": {
       "name": "Tiefe Hocke halten",
-      "grafik": {"datei": "mob-tiefe-hocke.png", "alt": "Tiefe Hocke mit breitem Stand, flachen Füßen und zusammengelegten Händen. Die Ellbogen liegen innen an den Knien."},
+      "grafik": {"alt": "Tiefe Hocke mit breitem Stand, flachen Füßen und zusammengelegten Händen. Die Ellbogen liegen innen an den Knien."},
       "kategorie": "mobility",
       "sportarten": ["alle", "ski"],
       "equipment": [],
@@ -236,7 +236,7 @@
     },
     "mob-thread-the-needle": {
       "name": "Thread the Needle (Brustwirbelsäule)",
-      "grafik": {"datei": "mob-thread-the-needle.png", "alt": "Im Vierfüßlerstand wird ein Arm unter dem Körper hindurchgeschoben und in der zweiten Position nach oben aufgedreht."},
+      "grafik": {"alt": "Im Vierfüßlerstand wird ein Arm unter dem Körper hindurchgeschoben und in der zweiten Position nach oben aufgedreht."},
       "kategorie": "mobility",
       "sportarten": ["alle", "rad", "ski", "schwimmen", "triathlon"],
       "equipment": ["matte"],
@@ -256,7 +256,7 @@
     },
     "mob-wandengel": {
       "name": "Wandengel (Wall Angels)",
-      "grafik": {"datei": "mob-wandengel.png", "alt": "Rücken zur Wand. Beide Arme gleiten aus angewinkelter Haltung auf Schulterhöhe nach oben."},
+      "grafik": {"alt": "Rücken zur Wand. Beide Arme gleiten aus angewinkelter Haltung auf Schulterhöhe nach oben."},
       "kategorie": "mobility",
       "sportarten": ["alle", "rad", "schwimmen", "triathlon"],
       "equipment": ["wand"],
@@ -276,7 +276,7 @@
     },
     "mob-brust-tuerrahmen": {
       "name": "Brustdehnung im Türrahmen",
-      "grafik": {"datei": "mob-brust-tuerrahmen.png", "alt": "Ein angewinkelter Arm stützt sich am Türrahmen ab. In der zweiten Position ist der Oberkörper weiter nach vorne verlagert."},
+      "grafik": {"alt": "Ein angewinkelter Arm stützt sich am Türrahmen ab. In der zweiten Position ist der Oberkörper weiter nach vorne verlagert."},
       "kategorie": "mobility",
       "sportarten": ["alle", "rad", "schwimmen", "triathlon"],
       "equipment": ["wand"],
@@ -296,7 +296,7 @@
     },
     "mob-hueftkreise-vierfuessler": {
       "name": "Hüftkreise im Vierfüßlerstand",
-      "grafik": {"datei": "mob-hueftkreise-vierfuessler.png", "alt": "Drei Positionen im Vierfüßlerstand zeigen, wie ein gebeugtes Bein angehoben und aus der Hüfte weitergeführt wird."},
+      "grafik": {"alt": "Drei Positionen im Vierfüßlerstand zeigen, wie ein gebeugtes Bein angehoben und aus der Hüfte weitergeführt wird."},
       "kategorie": "mobility",
       "sportarten": ["alle", "ski", "laufen", "triathlon"],
       "equipment": ["matte"],
@@ -316,7 +316,7 @@
     },
     "mob-kinderstellung-seitlich": {
       "name": "Kinderstellung mit Seitneigung",
-      "grafik": {"datei": "mob-kinderstellung-seitlich.png", "alt": "Draufsicht auf die Kinderstellung mit ausgestreckten Armen. In der zweiten Position wandern Hände und Oberkörper zur Seite."},
+      "grafik": {"alt": "Draufsicht auf die Kinderstellung mit ausgestreckten Armen. In der zweiten Position wandern Hände und Oberkörper zur Seite."},
       "kategorie": "mobility",
       "sportarten": ["alle", "schwimmen", "triathlon"],
       "equipment": ["matte"],
@@ -336,7 +336,7 @@
     },
     "mob-lat-dehnung-stuhl": {
       "name": "Latissimus-Dehnung am Stuhl",
-      "grafik": {"datei": "mob-lat-dehnung-stuhl.png", "alt": "Im Kniestand liegen die Ellbogen auf dem Stuhl. Der Brustkorb sinkt zwischen den Oberarmen nach unten."},
+      "grafik": {"alt": "Im Kniestand liegen die Ellbogen auf dem Stuhl. Der Brustkorb sinkt zwischen den Oberarmen nach unten."},
       "kategorie": "mobility",
       "sportarten": ["schwimmen", "rad", "triathlon"],
       "equipment": ["stuhl"],
@@ -354,7 +354,7 @@
     },
     "mob-bws-streckung-blackroll": {
       "name": "BWS-Streckung über der Blackroll",
-      "grafik": {"datei": "mob-bws-streckung-blackroll.png", "alt": "Rückenlage mit aufgestellten Füßen und Rolle unter der Brustwirbelsäule. Der Oberkörper sinkt kontrolliert über die Rolle nach hinten."},
+      "grafik": {"alt": "Rückenlage mit aufgestellten Füßen und Rolle unter der Brustwirbelsäule. Der Oberkörper sinkt kontrolliert über die Rolle nach hinten."},
       "kategorie": "mobility",
       "sportarten": ["rad", "schwimmen", "triathlon"],
       "equipment": ["blackroll", "matte"],
@@ -372,7 +372,7 @@
     },
     "mob-band-durchschwingen": {
       "name": "Schulter-Durchschwingen mit Band",
-      "grafik": {"datei": "mob-band-durchschwingen.png", "alt": "Das mit beiden Händen gehaltene Band ist in drei Positionen zu sehen: vor der Hüfte, über dem Kopf und hinter dem Körper."},
+      "grafik": {"alt": "Das mit beiden Händen gehaltene Band ist in drei Positionen zu sehen: vor der Hüfte, über dem Kopf und hinter dem Körper."},
       "kategorie": "mobility",
       "sportarten": ["schwimmen", "triathlon"],
       "equipment": ["band"],
@@ -390,7 +390,7 @@
     },
     "mob-schulterkreise-kontrolliert": {
       "name": "Kontrollierte Schulterkreise",
-      "grafik": {"datei": "mob-schulterkreise-kontrolliert.png", "alt": "Ein gestreckter Arm ist zuerst über dem Kopf und dann leicht hinter dem Körper zu sehen. Die Schulter ist grün markiert."},
+      "grafik": {"alt": "Ein gestreckter Arm ist zuerst über dem Kopf und dann leicht hinter dem Körper zu sehen. Die Schulter ist grün markiert."},
       "kategorie": "mobility",
       "sportarten": ["schwimmen", "triathlon"],
       "equipment": [],
@@ -408,7 +408,7 @@
     },
     "mob-wade-soleus": {
       "name": "Wadendehnung mit gebeugtem Knie",
-      "grafik": {"datei": "mob-wade-soleus.png", "alt": "Hände an der Wand im Schrittstand. Das hintere Knie beugt sich, während die Ferse am Boden bleibt."},
+      "grafik": {"alt": "Hände an der Wand im Schrittstand. Das hintere Knie beugt sich, während die Ferse am Boden bleibt."},
       "kategorie": "mobility",
       "sportarten": ["laufen", "triathlon"],
       "equipment": ["wand"],
@@ -426,7 +426,7 @@
     },
     "mob-zehen-kniestand": {
       "name": "Zehenstreckung im Kniestand",
-      "grafik": {"datei": "mob-zehen-kniestand.png", "alt": "Mit aufgestellten Zehen aus dem Vierfüßlerstand zurück auf die Fersen setzen. Der Vorfuß ist grün markiert."},
+      "grafik": {"alt": "Mit aufgestellten Zehen aus dem Vierfüßlerstand zurück auf die Fersen setzen. Der Vorfuß ist grün markiert."},
       "kategorie": "mobility",
       "sportarten": ["laufen", "triathlon"],
       "equipment": ["matte"],
@@ -444,7 +444,7 @@
     },
     "mob-hamstring-aktiv": {
       "name": "Aktive Beinstreckung in Rückenlage",
-      "grafik": {"datei": "mob-hamstring-aktiv.png", "alt": "In Rückenlage halten die Hände ein angehobenes Bein am Oberschenkel. Das Knie ist zuerst gebeugt, dann gestreckt."},
+      "grafik": {"alt": "In Rückenlage halten die Hände ein angehobenes Bein am Oberschenkel. Das Knie ist zuerst gebeugt, dann gestreckt."},
       "kategorie": "mobility",
       "sportarten": ["laufen", "rad", "triathlon"],
       "equipment": ["matte"],
@@ -462,7 +462,7 @@
     },
     "mob-nacken-seitlich": {
       "name": "Nackendehnung seitlich",
-      "grafik": {"datei": "mob-nacken-seitlich.png", "alt": "Im Sitz neigt sich der Kopf zur Seite. Eine Hand liegt am Kopf, die andere bleibt tief am Stuhl."},
+      "grafik": {"alt": "Im Sitz neigt sich der Kopf zur Seite. Eine Hand liegt am Kopf, die andere bleibt tief am Stuhl."},
       "kategorie": "mobility",
       "sportarten": ["rad", "triathlon"],
       "equipment": [],
@@ -480,7 +480,7 @@
     },
     "mob-skorpion": {
       "name": "Skorpion in Bauchlage",
-      "grafik": {"datei": "mob-skorpion.png", "alt": "Draufsicht in Bauchlage mit seitlich ausgestreckten Armen. Ein gebeugtes Bein wird über die Körpermitte zur Gegenseite geführt."},
+      "grafik": {"alt": "Draufsicht in Bauchlage mit seitlich ausgestreckten Armen. Ein gebeugtes Bein wird über die Körpermitte zur Gegenseite geführt."},
       "kategorie": "mobility",
       "sportarten": ["alle"],
       "equipment": ["matte"],
@@ -498,7 +498,7 @@
     },
     "mob-streamline-wand": {
       "name": "Streamline an der Wand",
-      "grafik": {"datei": "mob-streamline-wand.png", "alt": "Leichte Kniebeuge mit dem Rücken an der Wand und beiden Armen eng über dem Kopf ausgestreckt."},
+      "grafik": {"alt": "Leichte Kniebeuge mit dem Rücken an der Wand und beiden Armen eng über dem Kopf ausgestreckt."},
       "kategorie": "mobility",
       "sportarten": ["schwimmen", "triathlon"],
       "equipment": ["wand"],
@@ -516,7 +516,7 @@
     },
     "mob-schulter-hinten-querzug": {
       "name": "Hintere Schulter dehnen (Arm quer)",
-      "grafik": {"datei": "mob-schulter-hinten-querzug.png", "alt": "Ein gestreckter Arm liegt quer vor der Brust. Die andere Hand zieht ihn näher zum Oberkörper."},
+      "grafik": {"alt": "Ein gestreckter Arm liegt quer vor der Brust. Die andere Hand zieht ihn näher zum Oberkörper."},
       "kategorie": "mobility",
       "sportarten": ["schwimmen", "triathlon"],
       "equipment": [],
@@ -533,7 +533,7 @@
     },
     "faszien-oberschenkel-vorne": {
       "name": "Blackroll vorderer Oberschenkel",
-      "grafik": {"datei": "faszien-oberschenkel-vorne.png", "alt": "Im Unterarmstütz liegt die Rolle in zwei Positionen unter der Vorderseite der Oberschenkel."},
+      "grafik": {"alt": "Im Unterarmstütz liegt die Rolle in zwei Positionen unter der Vorderseite der Oberschenkel."},
       "kategorie": "faszien",
       "sportarten": ["alle", "ski", "rad", "laufen", "triathlon"],
       "equipment": ["blackroll", "matte"],
@@ -552,7 +552,7 @@
     },
     "faszien-gesaess": {
       "name": "Blackroll Gesäß und Hüfte seitlich",
-      "grafik": {"datei": "faszien-gesaess.png", "alt": "Sitzend mit aufgestützten Händen liegt ein Fuß auf dem anderen Knie. Die Rolle liegt unter dem seitlichen Gesäß."},
+      "grafik": {"alt": "Sitzend mit aufgestützten Händen liegt ein Fuß auf dem anderen Knie. Die Rolle liegt unter dem seitlichen Gesäß."},
       "kategorie": "faszien",
       "sportarten": ["alle", "laufen", "rad", "triathlon"],
       "equipment": ["blackroll", "matte"],
@@ -571,7 +571,7 @@
     },
     "faszien-wade": {
       "name": "Blackroll Wade",
-      "grafik": {"datei": "faszien-wade.png", "alt": "Im Sitz liegt die Rolle in zwei Positionen unter der Wade des gestreckten Beins. Der andere Fuß ist aufgestellt."},
+      "grafik": {"alt": "Im Sitz liegt die Rolle in zwei Positionen unter der Wade des gestreckten Beins. Der andere Fuß ist aufgestellt."},
       "kategorie": "faszien",
       "sportarten": ["alle", "laufen", "ski", "triathlon"],
       "equipment": ["blackroll", "matte"],
@@ -590,7 +590,7 @@
     },
     "faszien-adduktoren": {
       "name": "Blackroll Adduktoren",
-      "grafik": {"datei": "faszien-adduktoren.png", "alt": "In Bauchlage wird ein Knie seitlich angewinkelt. Zwei Bilder zeigen die Rolle an verschiedenen Stellen unter dem inneren Oberschenkel."},
+      "grafik": {"alt": "In Bauchlage wird ein Knie seitlich angewinkelt. Zwei Bilder zeigen die Rolle an verschiedenen Stellen unter dem inneren Oberschenkel."},
       "kategorie": "faszien",
       "sportarten": ["alle", "ski"],
       "equipment": ["blackroll", "matte"],
@@ -609,7 +609,7 @@
     },
     "faszien-hamstrings": {
       "name": "Blackroll Oberschenkelrückseite",
-      "grafik": {"datei": "faszien-hamstrings.png", "alt": "Im Sitz trägt die Rolle den gestreckten Oberschenkel, während der andere Fuß aufgestellt ist."},
+      "grafik": {"alt": "Im Sitz trägt die Rolle den gestreckten Oberschenkel, während der andere Fuß aufgestellt ist."},
       "kategorie": "faszien",
       "sportarten": ["alle", "laufen", "rad", "triathlon"],
       "equipment": ["blackroll", "matte"],
@@ -628,7 +628,7 @@
     },
     "faszien-bws": {
       "name": "Blackroll Brustwirbelsäule",
-      "grafik": {"datei": "faszien-bws.png", "alt": "In Rückenlage mit aufgestellten Füßen und Händen am Hinterkopf liegt die Rolle quer unter dem oberen Rücken."},
+      "grafik": {"alt": "In Rückenlage mit aufgestellten Füßen und Händen am Hinterkopf liegt die Rolle quer unter dem oberen Rücken."},
       "kategorie": "faszien",
       "sportarten": ["alle", "rad", "schwimmen", "triathlon"],
       "equipment": ["blackroll", "matte"],
@@ -648,7 +648,7 @@
     },
     "faszien-fusssohle-ball": {
       "name": "Fußsohle mit Ball rollen",
-      "grafik": {"datei": "faszien-fusssohle-ball.png", "alt": "Im Stand liegt ein kleiner Ball zuerst unter dem Vorfuß und dann weiter hinten unter der Fußsohle."},
+      "grafik": {"alt": "Im Stand liegt ein kleiner Ball zuerst unter dem Vorfuß und dann weiter hinten unter der Fußsohle."},
       "kategorie": "faszien",
       "sportarten": ["laufen", "triathlon"],
       "equipment": ["ball"],
@@ -666,7 +666,7 @@
     },
     "faszien-latissimus": {
       "name": "Blackroll Latissimus",
-      "grafik": {"datei": "faszien-latissimus.png", "alt": "In Seitlage liegt die Rolle unter dem seitlichen Rücken nahe der Achsel. Der untere Arm ist über den Kopf ausgestreckt."},
+      "grafik": {"alt": "In Seitlage liegt die Rolle unter dem seitlichen Rücken nahe der Achsel. Der untere Arm ist über den Kopf ausgestreckt."},
       "kategorie": "faszien",
       "sportarten": ["schwimmen", "triathlon"],
       "equipment": ["blackroll", "matte"],
@@ -683,7 +683,7 @@
     },
     "faszien-brust-ball": {
       "name": "Brustmuskel mit Ball an der Wand",
-      "grafik": {"datei": "faszien-brust-ball.png", "alt": "Im Stand wird ein Ball zwischen Brust und Wand gedrückt. Die Brustmuskulatur ist grün markiert."},
+      "grafik": {"alt": "Im Stand wird ein Ball zwischen Brust und Wand gedrückt. Die Brustmuskulatur ist grün markiert."},
       "kategorie": "faszien",
       "sportarten": ["rad", "schwimmen", "triathlon"],
       "equipment": ["ball", "wand"],
@@ -700,7 +700,7 @@
     },
     "aufw-hampelmann": {
       "name": "Hampelmann",
-      "grafik": {"datei": "aufw-hampelmann.png", "alt": "Links geschlossener Stand mit Armen am Körper, rechts gegrätschte Beine und Arme über dem Kopf."},
+      "grafik": {"alt": "Links geschlossener Stand mit Armen am Körper, rechts gegrätschte Beine und Arme über dem Kopf."},
       "kategorie": "aufwaermen",
       "sportarten": ["alle"],
       "equipment": [],
@@ -720,7 +720,7 @@
     },
     "aufw-beinpendel": {
       "name": "Beinpendel vor-zurück und seitlich",
-      "grafik": {"datei": "aufw-beinpendel.png", "alt": "An der Wand abgestützt pendelt ein gestrecktes Bein erst nach vorne und hinten, dann seitlich nach außen."},
+      "grafik": {"alt": "An der Wand abgestützt pendelt ein gestrecktes Bein erst nach vorne und hinten, dann seitlich nach außen."},
       "kategorie": "aufwaermen",
       "sportarten": ["alle", "laufen", "ski", "triathlon"],
       "equipment": ["wand"],
@@ -739,7 +739,7 @@
     },
     "aufw-inchworm": {
       "name": "Inchworm (Raupe)",
-      "grafik": {"datei": "aufw-inchworm.png", "alt": "Aus der Vorbeuge mit Händen am Boden in den hohen Stütz mit gestreckten Armen und Beinen."},
+      "grafik": {"alt": "Aus der Vorbeuge mit Händen am Boden in den hohen Stütz mit gestreckten Armen und Beinen."},
       "kategorie": "aufwaermen",
       "sportarten": ["alle"],
       "equipment": [],
@@ -759,7 +759,7 @@
     },
     "aufw-armkreisen": {
       "name": "Arm- und Schulterkreisen",
-      "grafik": {"datei": "aufw-armkreisen.png", "alt": "Aufrechter Stand mit seitlich ausgestreckten Armen, danach ein Arm schräg nach oben und der andere nach unten."},
+      "grafik": {"alt": "Aufrechter Stand mit seitlich ausgestreckten Armen, danach ein Arm schräg nach oben und der andere nach unten."},
       "kategorie": "aufwaermen",
       "sportarten": ["schwimmen", "alle", "triathlon"],
       "equipment": [],
@@ -777,7 +777,7 @@
     },
     "aufw-ausfallschritt-rotation": {
       "name": "Ausfallschritt gehend mit Rotation",
-      "grafik": {"datei": "aufw-ausfallschritt-rotation.png", "alt": "Ausfallschritt mit ausgestreckten Armen, zuerst gerade nach vorne und dann mit gedrehtem Oberkörper zur Seite."},
+      "grafik": {"alt": "Ausfallschritt mit ausgestreckten Armen, zuerst gerade nach vorne und dann mit gedrehtem Oberkörper zur Seite."},
       "kategorie": "aufwaermen",
       "sportarten": ["alle"],
       "equipment": [],
@@ -794,7 +794,7 @@
     },
     "aufw-frankenstein": {
       "name": "Frankenstein-Gehen",
-      "grafik": {"datei": "aufw-frankenstein.png", "alt": "Im Gehen werden die gestreckten Beine abwechselnd nach vorne zu den ausgestreckten Armen gehoben."},
+      "grafik": {"alt": "Im Gehen werden die gestreckten Beine abwechselnd nach vorne zu den ausgestreckten Armen gehoben."},
       "kategorie": "aufwaermen",
       "sportarten": ["laufen", "triathlon"],
       "equipment": [],
@@ -812,7 +812,7 @@
     },
     "aufw-hueftoeffner-gehend": {
       "name": "Hüfte öffnen und schließen im Gehen",
-      "grafik": {"datei": "aufw-hueftoeffner-gehend.png", "alt": "Ein Knie wird im Stand zuerst nach vorne angehoben und dann zur Seite geöffnet."},
+      "grafik": {"alt": "Ein Knie wird im Stand zuerst nach vorne angehoben und dann zur Seite geöffnet."},
       "kategorie": "aufwaermen",
       "sportarten": ["laufen", "alle", "triathlon"],
       "equipment": [],
@@ -829,7 +829,7 @@
     },
     "aufw-fersen-zehengang": {
       "name": "Fersen- und Zehengang",
-      "grafik": {"datei": "aufw-fersen-zehengang.png", "alt": "Zwei Schritte im Seitenprofil. Links sind die Fersen angehoben, rechts die Zehen."},
+      "grafik": {"alt": "Zwei Schritte im Seitenprofil. Links sind die Fersen angehoben, rechts die Zehen."},
       "kategorie": "aufwaermen",
       "sportarten": ["laufen", "triathlon"],
       "equipment": [],
@@ -847,7 +847,7 @@
     },
     "core-unterarmstuetz": {
       "name": "Unterarmstütz (Plank)",
-      "grafik": {"datei": "core-unterarmstuetz.png", "alt": "Unterarmstütz auf Unterarmen und Zehenspitzen mit gestreckten Beinen. Bauch und Schultern sind violett markiert."},
+      "grafik": {"alt": "Unterarmstütz auf Unterarmen und Zehenspitzen mit gestreckten Beinen. Bauch und Schultern sind violett markiert."},
       "kategorie": "core",
       "sportarten": ["alle", "laufen", "rad", "schwimmen", "triathlon"],
       "equipment": ["matte"],
@@ -867,7 +867,7 @@
     },
     "core-unterarmstuetz-schulter-tippen": {
       "name": "Liegestützposition mit Schultertippen",
-      "grafik": {"datei": "core-unterarmstuetz-schulter-tippen.png", "alt": "Hoher Stütz mit beiden Händen am Boden. In der zweiten Position tippt eine Hand die gegenüberliegende Schulter an."},
+      "grafik": {"alt": "Hoher Stütz mit beiden Händen am Boden. In der zweiten Position tippt eine Hand die gegenüberliegende Schulter an."},
       "kategorie": "core",
       "sportarten": ["alle", "ski"],
       "equipment": ["matte"],
@@ -886,7 +886,7 @@
     },
     "core-seitstuetz-knie": {
       "name": "Seitstütz auf den Knien",
-      "grafik": {"datei": "core-seitstuetz-knie.png", "alt": "Seitstütz auf Unterarm und angewinkelten Knien. Links liegt die Hüfte auf, rechts ist sie angehoben."},
+      "grafik": {"alt": "Seitstütz auf Unterarm und angewinkelten Knien. Links liegt die Hüfte auf, rechts ist sie angehoben."},
       "kategorie": "core",
       "sportarten": ["alle"],
       "equipment": ["matte"],
@@ -904,7 +904,7 @@
     },
     "core-seitstuetz": {
       "name": "Seitstütz",
-      "grafik": {"datei": "core-seitstuetz.png", "alt": "Seitstütz auf einem Unterarm mit angehobener Hüfte und gestreckten Beinen. Die seitliche Bauchmuskulatur ist violett markiert."},
+      "grafik": {"alt": "Seitstütz auf einem Unterarm mit angehobener Hüfte und gestreckten Beinen. Die seitliche Bauchmuskulatur ist violett markiert."},
       "kategorie": "core",
       "sportarten": ["alle", "ski", "laufen", "rad", "triathlon"],
       "equipment": ["matte"],
@@ -922,7 +922,7 @@
     },
     "core-seitstuetz-beinheben": {
       "name": "Seitstütz mit Beinheben",
-      "grafik": {"datei": "core-seitstuetz-beinheben.png", "alt": "Seitstütz auf einem Unterarm. Links liegen die Beine übereinander, rechts ist das obere Bein angehoben."},
+      "grafik": {"alt": "Seitstütz auf einem Unterarm. Links liegen die Beine übereinander, rechts ist das obere Bein angehoben."},
       "kategorie": "core",
       "sportarten": ["alle", "ski"],
       "equipment": ["matte"],
