@@ -210,16 +210,16 @@ Dokumentiere den tatsächlichen Dateinamen zusammen mit der ursprünglichen Übu
 
 Setze ab fünf beauftragten Grafiken Subagenten ein, soweit sie in der Sitzung verfügbar sind. Teile die Übungs-IDs in unabhängige Pakete auf. Nutze bei größeren Serien weitere verfügbare Plätze, wenn dadurch mehr Bilder pro Zeiteinheit fertig werden. Bei kleineren Aufträgen kann der Hauptagent unabhängige Bildaufträge direkt parallel starten.
 
-- Der Hauptagent stellt je Paket die vollständigen Übungseinträge, die aktuell aufgelösten CSS-Farbrollen sowie die Pfade und Rollen der beiden Referenztafeln bereit. Jeder Bildauftrag erhält die beiden Tafeln als Bilddateien.
-- Jeder Subagent bearbeitet die zugewiesenen IDs und meldet je Grafik die Bilddatei, die verwendeten Referenzen und den Prüfstand. Weise die visuelle Gegenprüfung nach Möglichkeit einem Subagenten zu, der die betreffende Grafik nicht erzeugt hat.
+- Stelle je Paket eine kompakte Arbeitsgrundlage bereit. Sie enthält nur die zugewiesenen IDs mit vollständigen Übungseinträgen, die für dieses Paket frisch ausgelesenen und aufgelösten CSS-Farbrollen und die Pfade und Rollen beider Referenztafeln. Ergänze bei Korrekturen je ID Ausgangsdatei, konkrete Befunde, betroffene Posen und die zu erhaltenden Bildbereiche. Verwende diese Grundlage auch für die Gegenprüfung. Jeder Bildauftrag erhält beide Tafeln als Bilddateien.
+- Weise die visuelle Gegenprüfung nach Möglichkeit einem Subagenten zu, der die Grafik nicht erzeugt hat. Führe je Ergebnisdatei einen gemeinsamen strukturierten Befund mit Dateiname, SHA-256, Messpunkten und kurzen Posennotizen. Der Gegenprüfer ergänzt Befunde und Abweichungen am selben Datensatz. Übernimm ihn in die Übersicht. Sind PNG und Prüfvorgabe unverändert, verwende bereits vorliegende Messungen weiter.
 - Der Hauptagent führt die Befunde zusammen, klärt Abweichungen und schreibt die versionierte Prüfübersicht nach jedem Paket fort. Die Zahl gleichzeitig gestarteter Bildaufträge richtet sich danach, wie viele das Bildwerkzeug tatsächlich abarbeiten kann. Während Renderings laufen, können Subagenten bereits vorliegende Grafiken prüfen.
 
 ## Teilkorrekturen an vorhandenen Bildern
 
 1. Lege vor der Bearbeitung für jede Pose fest, welche Bildbereiche sich ändern sollen. Notiere die Ausgangsdatei und welche Bereiche aus ihr übernommen werden. Halte gegebenenfalls eine separate Vorlage für Stil, Pose oder einzelne Details fest. Bei der 90/90-Hüftrotation kann der freigegebene Körper aus dem Ausgangsbild und die vordere Fußstellung aus einer separat benannten Pose stammen. Die Schuhansichten bestimmen das Schuhmodell.
-2. Bearbeite ein einzelnes Detail möglichst direkt im betreffenden Ausschnitt. Verwende vorhandene, passende Bildausschnitte, wenn ihre Übernahme zum Auftrag passt. Stimme Übergänge an Konturen, Kontaktflächen und Hintergrund auf das Ausgangsbild ab.
+2. Bearbeite ein einzelnes Detail möglichst direkt im betreffenden Ausschnitt. Verwende vorhandene, passende Bildausschnitte, wenn ihre Übernahme zum Auftrag passt. Stimme Übergänge an Konturen, Kontaktflächen und Hintergrund auf das Ausgangsbild ab. Lege bei schwer ablesbaren Gelenken, Seitenwechseln oder Stützpunkten vor dem Rendern eine Posenvorlage mit den entscheidenden Gelenkstellungen und Kontakten fest.
 3. Vergleiche Ergebnis und Ausgangsbild in gleicher Größe nebeneinander oder als Überlagerung. Prüfe die beauftragte Änderung in Nahansicht gegen die Detailvorlage und jede Pose im Gesamtbild. Prüfe auch ausdrücklich die zu erhaltenden Bereiche. Wenn die Bearbeitung pixelgenau auf die festgelegten Ausschnitte begrenzt sein soll, vergleiche die Pixel außerhalb dieser Ausschnitte mit dem Ausgangsbild. Wiederhole diesen Abgleich mit der gespeicherten PNG-Datei.
-4. Korrigiere unbeabsichtigte Änderungen, bevor du die Fassung als `visuell_geprueft` kennzeichnest. Bleibt eine Abweichung offen, verwende `korrektur_noetig` und benenne betroffene Pose, Bildbereich und Unterschied.
+4. Korrigiere unbeabsichtigte Änderungen vor der Freigabe. Bleibt derselbe Befund nach einem gezielten Korrekturversuch bestehen oder verschlechtert sich ein zuvor stimmiges Merkmal, entscheide vor dem nächsten Rendern, was sich an der Methode ändert. Verwende eine präzisere Posenvorlage, einen kleineren Ausschnitt, eine besser prüfbare Ansicht oder eine geeignete Montage. Halte kurz fest, welchen Befund die neue Methode lösen soll. Bleibt eine Abweichung offen, verwende `korrektur_noetig` und benenne betroffene Pose, Bildbereich und Unterschied.
 
 ## Visuelle Prüfung und Status
 
@@ -235,7 +235,7 @@ Prüfe bei jeder Grafik:
 6. richtige Zielbereiche und Körperseiten;
 7. exakte CSS-Farben im Inneren großer Farbflächen, Hintergrundanschluss und Kontrast nach dem Abschnitt zur Farbprüfung;
 8. gemeinsame Bildgröße, unverdeckte Darstellung und Lesbarkeit in App-Größe;
-9. richtige Zuordnung von ID, Name und Datei. Prüfe Format, Abmessungen und Dateizuordnung, wenn möglich, gesammelt anhand der gespeicherten Dateien.
+9. richtige Zuordnung von ID, Name und Datei. Prüfe bei Serien Dateizuordnung, PNG-Format, Abmessungen, freie Hintergrundflächen und zusammenhängende Zielfarbflächen pro Pose in einem gemeinsamen, möglichst skriptgestützten Lauf anhand der gespeicherten Dateien. Ergänze bei pixelgenauen Teilkorrekturen den Vergleich außerhalb der freigegebenen Ausschnitte. Gleiche die Messpunkte mit ihrer Lage im Bild ab.
 
 ### Schuhe und Fußkontakt im Detail prüfen
 
